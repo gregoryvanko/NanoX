@@ -1,6 +1,6 @@
 {
   "name": "@gregvanko/nanox",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "NanoX",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "vanko": "ssh root@vanko.be -p 9922"
   },
   "nodemonConfig": {
-  "ext": "css, js",
-  "delay": "5000"
+    "ext": "css, js",
+    "delay": "5000"
   },
   "repository": {
     "type": "git",
