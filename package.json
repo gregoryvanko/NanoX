@@ -1,0 +1,25 @@
+{
+  "name": "@gregvanko/nanox",
+  "version": "1.0.0",
+  "description": "NanoX",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon —inspect exemple.js",
+    "up": "npm version minor && npm publish && git push",
+    "vanko": "ssh root@vanko.be -p 9922"
+  },
+  "nodemonConfig": {
+  "ext": "css, js",
+  "delay": "5000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregoryvanko/NanoX.git"
+  },
+  "author": "gregvanko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gregoryvanko/NanoX/issues"
+  },
+  "homepage": "https://github.com/gregoryvanko/NanoX#readme"
+}
