@@ -18,10 +18,10 @@ class TestNanoX{
     Start(){
         this._MyApp.Start()
 
-        // NLog
+        // Test NLog
         //this.TestLog()
 
-        // Mongoose
+        // Test Mongoose
         //this.TestMongooseSave()
     }
 
