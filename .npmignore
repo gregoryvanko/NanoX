@@ -1,2 +1,4 @@
 exemple.js
-/.vscode
+.vscode
+node_modules
+TestApp
