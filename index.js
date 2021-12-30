@@ -26,13 +26,15 @@ class NanoX {
      * Start de l'application
      */
     async Start(){
-        //this._NLog.LogStat(this._NLog.Stat_ConnectionValided, this._UserServer)
         
         // Connect Mongoose
         await this._Mongoose.Connect(this._MongoDbName, this._MongoUrl)
 
         // Initiation of User Collection and Admin user
         this._Mongoose.InitiationUserCollection()
+
+        // Log start appliation
+        this._NLog.LogInfo("Application Started", this._UserServer)
     }
 
     
