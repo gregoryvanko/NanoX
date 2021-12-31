@@ -10,9 +10,17 @@ class NanoX {
 
         // Setup Mongoose
         this._Mongoose = require("./N_Mongoose/Mongoose")
+
         // Setup Log
-        this._NlogR = require('./N_Log/Log.js').NLog
-        this._NLog = new this._NlogR(this._Debug)
+        let SetDebugMode = require('./N_Log/Log.js').SetDebugMode
+        if (this._Debug){SetDebugMode()}
+        this._LogInfo = require('./N_Log/Log.js').LogInfo
+        this._LogError = require('./N_Log/Log.js').LogError
+        this._LogStat = require('./N_Log/Log.js').LogStat
+        this._Stat_FirstGet = require('./N_Log/Log.js').Stat_FirstGet
+        this._Stat_ConnectionValided = require('./N_Log/Log.js').Stat_ConnectionValided
+        this._Stat_ConnectionError = require('./N_Log/Log.js').Stat_ConnectionError
+
         // Setup User server
         this._UserServer = {Name: "Server", Id: "ServerId"}
     }
@@ -20,24 +28,28 @@ class NanoX {
     /**
      * Return N_Log class
      */
-    get NLog() {return this._NLog}
+    get LogInfo() {return this._LogInfo}
+    get LogError() {return this._LogError}
     
     /**
      * Start de l'application
      */
-    async Start(){
-        
-        // Connect Mongoose
-        await this._Mongoose.Connect(this._MongoDbName, this._MongoUrl)
+    Start(){
+        return new Promise(async(resolve) => {
+            // Connect Mongoose
+            await this._Mongoose.Connect(this._MongoDbName, this._MongoUrl)
 
-        // Initiation of User Collection and Admin user
-        this._Mongoose.InitiationUserCollection()
+            // Log start appliation
+            this._LogInfo("Start Application", this._UserServer)
 
-        // Log start appliation
-        this._NLog.LogInfo("Application Started", this._UserServer)
+            // Initiation of User Collection and Admin user
+            await this._Mongoose.InitiationUserCollection()
+
+            // Log appliation Started
+            this._LogInfo("Application Started", this._UserServer)
+            resolve()
+        })
     }
-
-    
 }
 
 module.exports.NanoX = NanoX

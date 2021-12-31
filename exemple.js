@@ -10,31 +10,33 @@ class TestNanoX{
             Debug: Debug
         }
         this._MyApp = new MyNanoX(OptionNanoX)
-        this._UserServer = {Name: "Server", Id: "ServerId"}
 
-        this._NLog = this._MyApp.NLog
+        // User Server
+        this._UserServer = {Name: "Server", Id: "ServerId"}
+        // Log
+        this._LogInfo = this._MyApp.LogInfo
+        this._LogError = this._MyApp.LogError
     }
 
-    Start(){
-        this._MyApp.Start()
+    async Start(){
+        await this._MyApp.Start()
 
         // Test NLog
         //this.TestLog()
 
         // Test Mongoose
-        //this.TestMongooseSave()
+        this.TestMongooseSave()
     }
 
     TestLog(){
-        this._NLog.LogInfo("Premier test from app de test", this._UserServer)
-        this._NLog.LogError("Premier erreur", this._UserServer)
+        this._LogInfo("Premier test from app de test", this._UserServer)
+        this._LogError("Premier erreur", this._UserServer)
     }
 
     TestMongooseSave(){
-        var Model_Users = require("./TestApp/Backend/TestMongoose/Model_Users")
-        const NewUser = new Model_Users({Nom: "VanKo", Prenom: "Gregory"})
-        NewUser.save().catch(err => console.log(err))
-        console.log("NewTest saved in db")
+        var Model_Livre = require("./TestApp/Backend/TestMongoose/Model_Livres")
+        const NewLivre = new Model_Livre({Nom: "Roman", Auteur: "Gregory"})
+        NewLivre.save().then(()=> {console.log("New Livre saved in db")}).catch(err => console.log(err))
     }
 }
 
