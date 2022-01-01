@@ -1,5 +1,7 @@
 let DebugMode = false
 
+let MyUserServer = {Name: "Server", Id: "ServerId"}
+
 function SetDebugMode(){
     DebugMode = true
 }
@@ -34,15 +36,15 @@ function SaveLog(Type, Message, User){
     ConsoleLog(now,Type, Message, User)
 }
 
-function LogInfo(Message, User){
+function LogInfo(Message = "No log message", User = MyUserServer){
     SaveLog("Info", Message, User)
 }
 
-function LogError(Message, User){
+function LogError(Message = "No log message", User = MyUserServer){
     SaveLog("Error", Message, User)
 }
 
-function LogStat(StatType, User){
+function LogStat(StatType = "No log message", User = MyUserServer){
     SaveLog("Stat", StatType, User)
 }
 

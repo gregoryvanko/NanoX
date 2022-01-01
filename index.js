@@ -4,7 +4,6 @@ let MyAppSecret = "EncryptSecret"
 let MyMongoUrl= "mongodb://localhost:27017"
 let MyMongoDbName = MyAppName
 let MyDebug = false
-let MyUserServer = {Name: "Server", Id: "ServerId"}
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -37,7 +36,7 @@ function NanoXStart(){
         await Mongoose.Connect(MyMongoDbName, MyMongoUrl)
 
         // Log start appliation
-        LogInfo(`Start of Nonox application: ${MyAppName}`, MyUserServer)
+        LogInfo(`Start of Nonox application: ${MyAppName}`)
 
         // Initiation of User Collection and Admin user
         await Mongoose.InitiationUserCollection()
@@ -46,7 +45,7 @@ function NanoXStart(){
         Express.StartExpressServer(MyNAppPort)
 
         // Log appliation Started
-        LogInfo(`Nonox application Started`, MyUserServer)
+        LogInfo(`Nonox application Started`)
         resolve()
     })
 }
