@@ -1,20 +1,18 @@
-// NonoX Option
-let OptionNanoX = {
-    AppName: "NanoXDev",                          // Nom de l'application
-    AppPort: 1234,                          // Port du serveur
-    AppSecret: "TestNonoXSecret",             // phrase secrete pour l'encodage du token 
-    MongoUrl: "mongodb://localhost:27017",  // Url de la DB Mongo
-    Debug: false
-}
-
 // Get Nonox Log
 let LogInfo = require('../index').LogInfo
 let LogError = require('../index').LogError
 
 // Start TestApp
-async function Start(Port, Debug){
-    OptionNanoX.AppPort = Port
-    OptionNanoX.Debug = Debug
+async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
+
+    // NonoX Option
+    const OptionNanoX = {
+        AppName: Name,
+        AppPort: Port,
+        AppSecret: "TestNonoXSecret",
+        MongoUrl: "mongodb://localhost:27017",
+        Debug: Debug
+    }
 
     // Initiation de NanoX
     require('../index').NanoXInitiation(OptionNanoX)
@@ -22,7 +20,7 @@ async function Start(Port, Debug){
     await require('../index').NanoXStart()
 
     // Test Log fonction
-    TestLog()
+    //TestLog()
 
     // Test Mongoose
     //TestMongooseSave()

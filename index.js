@@ -5,9 +5,7 @@ let MyMongoUrl= "mongodb://localhost:27017"
 let MyMongoDbName = MyAppName
 let MyDebug = false
 let MyUserServer = {Name: "Server", Id: "ServerId"}
-
 let Mongoose = require("./N_Mongoose/Mongoose")
-
 let LogR = require('./N_Log/Log.js')
 let SetDebugMode = LogR.SetDebugMode
 let LogInfo = LogR.LogInfo
@@ -35,13 +33,13 @@ function NanoXStart(){
         await Mongoose.Connect(MyMongoDbName, MyMongoUrl)
 
         // Log start appliation
-        LogInfo("Start Application", MyUserServer)
+        LogInfo(`Start of Nonox application: ${MyAppName}`, MyUserServer)
 
         // Initiation of User Collection and Admin user
         await Mongoose.InitiationUserCollection()
 
         // Log appliation Started
-        LogInfo("Application Started", MyUserServer)
+        LogInfo(`Nonox application Started`, MyUserServer)
         resolve()
     })
 }
