@@ -2,3 +2,4 @@ exemple.js
 .vscode
 node_modules
 TestApp
+TestApi.rest

@@ -1,0 +1,20 @@
+@hostname = dev.gregvanko.com 
+@contentType = application/json
+
+### Auth
+POST https://{{hostname}}/nanoxauth
+content-type: {{contentType}}
+
+{
+    "User":"Admin",
+    "Pass":"Admin"
+}
+
+### AppTest
+POST https://{{hostname}}/test
+content-type: {{contentType}}
+
+{
+    "Livre":"Roman",
+    "Auteur":"Greg"
+}

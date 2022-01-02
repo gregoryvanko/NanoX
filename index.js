@@ -5,6 +5,8 @@ let MyMongoUrl= "mongodb://localhost:27017"
 let MyMongoDbName = MyAppName
 let MyDebug = false
 let MyIconPath = null
+let MyApiServer = false
+let MyAllowSignUp = false
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -15,24 +17,31 @@ let SetDebugMode = LogR.SetDebugMode
 let LogInfo = LogR.LogInfo
 let LogError = LogR.LogError
 let LogStat = LogR.LogStat
-let Stat_FirstGet = LogR.Stat_FirstGet
-let Stat_ConnectionValided = LogR.Stat_ConnectionValided
-let Stat_ConnectionError = LogR.Stat_ConnectionError
 
 let ServerRoutes = []
 
 
-function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null}) {
+function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false}) {
     MyAppName = AppName
     MyNAppPort = AppPort
     MyAppSecret = AppSecret
     MyMongoUrl = MongoUrl
     MyDebug = Debug
     MyIconPath = IconPath
+    MyApiServer = ApiServer
+    MyAllowSignUp = AllowSignUp
+
     // Set MongoDb name
     MyMongoDbName = AppName
     // Set Debug mode
     if (Debug){SetDebugMode()}
+    // Set ApiServer
+    if (MyApiServer){
+        NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
+    }
+    if (MyAllowSignUp){
+        NanoXAddRoute("/nanoxSignUp", require('./N_Express/Route_SignUp'))
+    }
 }
 
 function NanoXStart(){
@@ -61,10 +70,16 @@ function NanoXAddRoute(Path = null, Route = null ){
     }
 }
 
+function GetAppSecret(){
+    return MyAppSecret
+}
+
 module.exports.NanoXStart = NanoXStart
 module.exports.NanoXInitiation = NanoXInitiation
 module.exports.NanoXLogInfo = LogInfo
 module.exports.NanoXLogError = LogError
+module.exports.NanoXLogStat = LogStat
 module.exports.Mongoose = require("mongoose")
 module.exports.NanoXAddRoute = NanoXAddRoute
 module.exports.Express = require("express")
+module.exports.NanoXGetAppSecret = GetAppSecret

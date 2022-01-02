@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/gregoryvanko/NanoX#readme",
   "dependencies": {
+    "cryptr": "^6.0.2",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.4"
   }
 }

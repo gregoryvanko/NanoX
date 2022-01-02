@@ -20,14 +20,14 @@ function StartExpressServer(Port = 3000, Routes = [], IconPath = null){
             let MyIconPath = (IconPath != null) ? IconPath : __dirname + "/apple-icon-192x192.png"
             console.log(`ÌconPath: ${MyIconPath}`)
 
+            // Parametre de express
+            MyServer.use(Express.json({limit: "200mb"}))
+
             // Ajouter les routes
             Routes.forEach(element => {
                 MyServer.use(element.Path, element.Route)
             });
-
-            // Parametre de express
-            MyServer.use(Express.json({limit: "200mb"}))
-
+            
             // Route pour icone
             MyServer.get('/apple-icon.png', (req, res) => {
                 if(!SendIcon(MyIconPath, res)){LogError('Icon not found')}
