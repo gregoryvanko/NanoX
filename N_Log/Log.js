@@ -9,11 +9,11 @@ function SetDebugMode(){
 function ConsoleLog(Now, Type, Message, User){
     if(DebugMode){
         if (Type == "Error"){
-            console.log('\x1b[31m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.Name + ": " + Message)
+            console.log('\x1b[31m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.Name + " => " + Message)
         } else if (Type == "Stat"){
-            console.log('\x1b[34m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.Name + ": " + Message)
+            console.log('\x1b[34m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.Name + " => " + Message)
         } else {
-            console.log(GetDateString(Now) + " " + Type + " " + User.Name + ": " + Message)
+            console.log(GetDateString(Now) + " " + Type + " " + User.Name + " => " + Message)
         }
     }
 }

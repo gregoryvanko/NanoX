@@ -8,7 +8,7 @@ const express = require("express")
 const router = express.Router()
 
 router.post("/", (req, res) => {
-    LogInfo(`API Auth : ${JSON.stringify(req.body)}`)
+    LogInfo(`API nanoxauth : ${JSON.stringify(req.body)}`)
     // Vérifier si les parametres User et Pass sont present
     if (req.body.User && req.body.Pass){
         // Get User
@@ -20,6 +20,7 @@ router.post("/", (req, res) => {
                 if (FoundUser.Password == req.body.Pass){
                     // Create Token
                     FoundUser.Password = null
+                    FoundUser.Admin = null
                     let token = require("../N_Crypt/Crypt").EncryptDataToken(FoundUser)
                     res.send({Error: false, ErrorMsg: "no error",  Data:{Token: token}})
                     LogStat(LogR.Stat_ConnectionValided, {Name: FoundUser.User, Id : FoundUser._id})

@@ -1,7 +1,9 @@
 @hostname = dev.gregvanko.com 
 @contentType = application/json
+@tokenAdmin = dbd7f450e753730b3d432445bab605cae06487d7f9ec77367bd89a6467f46a27b4438881af96e6aa29c1eb35b566d714647fc9c672523876271e32f22a5c53185d014551482bd29bf7f38996548e8c03a88c4f20914fd37511d9ef1886b90bc83f45f0f723c6e9da11218b9e4952fc8613b63ba857f0aac93b833f8e6073c96b1b0ea1148de2ed7cfe6dc3e420f172a849b8a57e1ef0a9e05d42e134e5686b9152009ee175ad1493fb75df4ee7ddd71c784aa78a137fda54fa4438a10ba1b69a2c40c456eee1eaf8aabb3dc54f0fd3bbc8058ad53e32c209a493c38a80eae9762ad0b206a230e98811c1481778be30365d95e0b540e4490bf4e8ab0d8376f77f9296a84c665ebf94ba5d93983e967be686cc1f37ffd7d32e9cb8d85434026e361ebbb2ce2073dcec225dc0bb3fc95be956eff401183e5b519babb9967eb3a1fb9c4d06867bc6cec46c2c498d48870e2aa7af17fe9ea99fc5c28f79eb67d1a6259b9108d50c28d169b3a973e862a5ec5db162e42e4b55225b600019ef3b4ec8808823ba028cdd603520a678dcb3c42eca19
+@tokenGreg = 7f2333cc267e5dcff30b8ea48389ccca13725c1ff67858da7786bd89f29a837cd683329f3bb5b8ff9bffae4808830813085a6e633f95f87741ff141111e4fbf0136f6be77b9070cf620d5c0b69494f64d5c0df5133acc7a36bab237d43b6251dfa970f8b5f4d701cc7baa3e1d9bd5099df4c4b986c1370fad466eb00221f02b1658b19ccbfc7d18a129819957bcb3552471e6257fe2f00cefe6ad7a2b2ad3f4b2f47aa17e4ecb2a3cdb6dce55fad86ba1efb1804d47dcef2ed6ca51b9dc61c82b0ea0280a55aae40f81bceb3fdc80c325d163f8b64864b189588799214c816812c7929b7bab401bd80974c4288d54e124c6ed50f6521ae7db060aab81235e82f399ab93dfb5f852ab28ed3564657e25860d6c15950b1dde618d53658b9f051c9053a111354d5be4ac784a12cbb8080234ecd766714290278dd31b2bef169e7f42663de1fa862bb3b0b080f00806c2c4222d0443018d74dab093f97cbfcf530e72fde544eb2463954a629d2e231d8ca8331046a1d1bd5a4ee5837c443f7957d799b32a3627515927796
 
-### Auth
+### nanoxauth Admin
 POST https://{{hostname}}/nanoxauth
 content-type: {{contentType}}
 
@@ -10,7 +12,47 @@ content-type: {{contentType}}
     "Pass":"Admin"
 }
 
-### AppTest
+### nanoxauth Greg
+POST https://{{hostname}}/nanoxauth
+content-type: {{contentType}}
+
+{
+    "User":"greg@greg.com",
+    "Pass":"gregory"
+}
+
+### nanoxSignUp
+POST https://{{hostname}}/nanoxSignUp
+content-type: {{contentType}}
+
+{
+    "User":"greg@greg.com",
+    "FirstName":"Gregory",
+    "LastName":"Van Ko",
+    "Password": "gregory"
+}
+
+### nanoxuser get user data with tokenGreg
+get https://{{hostname}}/nanoxuser
+x-auth-token: {{tokenGreg}}
+
+### nanoxuser get user data with tokenAdmin
+get https://{{hostname}}/nanoxuser
+x-auth-token: {{tokenAdmin}}
+
+
+
+
+### AppTest get tokenGreg
+get https://{{hostname}}/test
+x-auth-token: {{tokenGreg}}
+
+### AppTest get tokenAdmin
+get https://{{hostname}}/test
+x-auth-token: {{tokenAdmin}}
+
+
+### AppTest post
 POST https://{{hostname}}/test
 content-type: {{contentType}}
 

@@ -31,17 +31,23 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="Encry
     MyApiServer = ApiServer
     MyAllowSignUp = AllowSignUp
 
+    console.log("Start of Init NanoX")
     // Set MongoDb name
     MyMongoDbName = AppName
     // Set Debug mode
     if (Debug){SetDebugMode()}
     // Set ApiServer
     if (MyApiServer){
+        console.log("Route nanoxauth added")
         NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
+        console.log("Route nanoxuser added")
+        NanoXAddRoute("/nanoxuser", require('./N_Express/Route_User'))
     }
     if (MyAllowSignUp){
+        console.log("Route nanoxSignUp added")
         NanoXAddRoute("/nanoxSignUp", require('./N_Express/Route_SignUp'))
     }
+    console.log("End of Init NanoX")
 }
 
 function NanoXStart(){
@@ -83,3 +89,5 @@ module.exports.Mongoose = require("mongoose")
 module.exports.NanoXAddRoute = NanoXAddRoute
 module.exports.Express = require("express")
 module.exports.NanoXGetAppSecret = GetAppSecret
+module.exports.AuthBasic = require("./N_Express/Mid_AuthBasic")
+module.exports.AuthAdmin = require("./N_Express/Mid_AuthAdmin")
