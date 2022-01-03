@@ -11,8 +11,8 @@ function StartExpressServer(Port = 3000, PagesToBuild = [], Routes = [], IconPat
         let LogError = require('../index').NanoXLogError
         let LogStat = require('../index').NanoXLogStat
 
-        // On demarre le serveur que si il existe au moins une route
-        if (Routes.length != 0){
+        // On demarre le serveur que si il existe au moins une route ou une page
+        if ((Routes.length != 0) || (PagesToBuild.length != 0)){
 
             // Definition de l'icon
             let MyIconPath = (IconPath != null) ? IconPath : __dirname + "/apple-icon-192x192.png"
@@ -37,16 +37,18 @@ function StartExpressServer(Port = 3000, PagesToBuild = [], Routes = [], IconPat
                             LogStat(`Page:/${element.PageRoute}`)
                         }
                     })
-                    console.log(`Page build and add to server: (PageName:${element.PageName}, PageRoute:/${element.PageRoute})`)
+                    console.log(`Page build and added in the server: (PageName:${element.PageName}, PageRoute:/${element.PageRoute})`)
                 });
             } else {
                 console.log("No page to build")
             }
             
             // Ajouter les routes
-            Routes.forEach(element => {
-                MyServer.use(element.Path, element.Route)
-            });
+            if (Routes.length != 0){
+                Routes.forEach(element => {
+                    MyServer.use(element.Path, element.Route)
+                });
+            }
             
             // Route pour icone
             MyServer.get('/apple-icon.png', (req, res) => {
@@ -77,7 +79,7 @@ function StartExpressServer(Port = 3000, PagesToBuild = [], Routes = [], IconPat
                 process.exit(1)
             })
         } else {
-            console.log(`Server not started because no route existe`)
+            console.log(`Server not started because no route or no page defined`)
             resolve()
         }
     })

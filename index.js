@@ -54,10 +54,10 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
         NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
         console.log("Route added: nanoxuser")
         NanoXAddRoute("/nanoxuser", require('./N_Express/Route_User'))
-    }
-    if (MyAllowSignUp){
-        console.log("Route added: nanoxSignUp ")
-        NanoXAddRoute("/nanoxSignUp", require('./N_Express/Route_SignUp'))
+        if (MyAllowSignUp){
+            console.log("Route added: nanoxSignUp ")
+            NanoXAddRoute("/nanoxSignUp", require('./N_Express/Route_SignUp'))
+        }
     }
     console.log("End of Init NanoX")
 }
