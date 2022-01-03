@@ -2,16 +2,14 @@
 const Express = require('express')
 const MyServer = Express()
 
-// Log
-let LogError = null
 
-
-function StartExpressServer(Port = 3000, Routes = [], IconPath = null){
+function StartExpressServer(Port = 3000, PagesToBuild = [], Routes = [], IconPath = null){
     return new Promise(async(resolve) => {
         let MyPort = Port
 
         // Get Nonox Log
-        LogError = require('../index').NanoXLogError
+        let LogError = require('../index').NanoXLogError
+        let LogStat = require('../index').NanoXLogStat
 
         // On demarre le serveur que si il existe au moins une route
         if (Routes.length != 0){
@@ -23,6 +21,28 @@ function StartExpressServer(Port = 3000, Routes = [], IconPath = null){
             // Parametre de express
             MyServer.use(Express.json({limit: "200mb"}))
 
+            // Ajouter les pages a builder
+            if (PagesToBuild.length != 0){
+                // Create Output folder
+                require("../N_PageBuilder/PageBuilder").CreateOutputFolder()
+                // Get Output path
+                const OutputPath = require("../N_PageBuilder/PageBuilder").GetOutputPath()
+                PagesToBuild.forEach(element => {
+                    require("../N_PageBuilder/PageBuilder").BuildPages(element)
+                    MyServer.get(`/${element.PageRoute}`, (req, res) => {
+                        res.sendFile(`${OutputPath}/${element.PageName}`)
+                        if (req.user){
+                            LogStat(`Page:/${element.PageRoute}`, req.user)
+                        } else {
+                            LogStat(`Page:/${element.PageRoute}`)
+                        }
+                    })
+                    console.log(`Page build and add to server: (PageName:${element.PageName}, PageRoute:/${element.PageRoute})`)
+                });
+            } else {
+                console.log("No page to build")
+            }
+            
             // Ajouter les routes
             Routes.forEach(element => {
                 MyServer.use(element.Path, element.Route)

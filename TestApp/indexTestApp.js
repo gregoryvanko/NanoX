@@ -8,6 +8,7 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
     // NonoX Option
     const OptionNanoX = {
         AppName: Name,
+        AppColor: "rgb(20, 163, 255)",
         AppPort: Port,
         AppSecret: "TestNonoXSecret",
         MongoUrl: "mongodb://localhost:27017",
@@ -15,7 +16,7 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
         IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,
         AllowSignUp: true,
-        AppPath: "app",
+        AppPath: "",
         StartApp: true
     }
 
@@ -24,6 +25,9 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
 
     // Test add route
     //TestAddRoute()
+
+    // Test add page builder
+    //TestAddPageBuilder()
 
     // Start NanoX
     await require('../index').NanoXStart()
@@ -52,6 +56,14 @@ function TestMongooseSave(){
 function TestAddRoute(){
     let NanoXAddRoute = require('../index').NanoXAddRoute
     NanoXAddRoute("/test", require('./Backend/TestRoute/Route_Test'))
+}
+// Test Add Page Builder
+function TestAddPageBuilder(){
+    let NanoXAddPageToBuild = require('../index').NanoXAddPageToBuild
+    NanoXAddPageToBuild("gg.html", "gg.html", TestBuildPage)
+}
+function TestBuildPage(){
+    return "<div>page gg.html</div>"
 }
 
 module.exports.Start = Start

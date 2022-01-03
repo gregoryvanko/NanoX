@@ -44,14 +44,13 @@ function LogError(Message = "No log message", User = MyUserServer){
     SaveLog("Error", Message, User)
 }
 
-function LogStat(StatType = "No log message", User = MyUserServer){
-    SaveLog("Stat", StatType, User)
+function LogStat(Message = "No log message", User = MyUserServer){
+    SaveLog("Stat", Message, User)
 }
 
 module.exports.SetDebugMode = SetDebugMode
 module.exports.LogInfo = LogInfo
 module.exports.LogError = LogError
 module.exports.LogStat = LogStat
-module.exports.Stat_FirstGet = "FirstGet"
 module.exports.Stat_ConnectionValided = "ConnectionValided"
 module.exports.Stat_ConnectionError = "ConnectionError"

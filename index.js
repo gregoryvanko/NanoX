@@ -1,4 +1,5 @@
 let MyAppName = "MyNanoXApp"
+let MyAppColor = "rgb(20, 163, 255)"
 let MyNAppPort = 3000
 let MyAppSecret = "EncryptSecret"
 let MyMongoUrl= "mongodb://localhost:27017"
@@ -20,11 +21,13 @@ let LogInfo = LogR.LogInfo
 let LogError = LogR.LogError
 let LogStat = LogR.LogStat
 
-let ServerRoutes = []
+let ListOfRoute = []
+let ListOfPageToBuild = []
 
 
-function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", StartApp = false}) {
+function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", StartApp = false}) {
     MyAppName = AppName
+    MyAppColor = AppColor
     MyNAppPort = AppPort
     MyAppSecret = AppSecret
     MyMongoUrl = MongoUrl
@@ -41,8 +44,7 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="Encry
     // Set App
     if (MyStartApp){
         MyApiServer = true
-        console.log(`Route added for App: /${MyAppPath}`)
-        // ToDo
+        NanoXAddPageToBuild("initpage.html", MyAppPath, BuildFunction = require('./N_App/App').BuildInitialHtml)
     }
     // Set Debug mode
     if (Debug){SetDebugMode()}
@@ -72,7 +74,7 @@ function NanoXStart(){
         await Mongoose.InitiationUserCollection()
 
         // Initiation of express
-        await Express.StartExpressServer(MyNAppPort, ServerRoutes, MyIconPath)
+        await Express.StartExpressServer(MyNAppPort, ListOfPageToBuild, ListOfRoute, MyIconPath)
 
         // Log appliation Started
         console.log(`Nonox application Started`)
@@ -82,12 +84,27 @@ function NanoXStart(){
 
 function NanoXAddRoute(Path = null, Route = null ){
     if ((Path != null) && (Route != null)){
-        ServerRoutes.push({Path: Path, Route : Route})
+        ListOfRoute.push({Path: Path, Route : Route})
+    }
+}
+
+function NanoXAddPageToBuild(PageName = null, PageRoute = null, BuildFunction = null){
+    if ((PageName != null) && (PageRoute != null) && (BuildFunction != null)){
+        let PageToBuild = {PageName: PageName, PageRoute:PageRoute, BuildFunction: BuildFunction}
+        ListOfPageToBuild.push(PageToBuild)
     }
 }
 
 function GetAppSecret(){
     return MyAppSecret
+}
+
+function GetAppName(){
+    return MyAppName
+}
+
+function GetAppColor(){
+    return MyAppColor
 }
 
 module.exports.NanoXStart = NanoXStart
@@ -99,5 +116,8 @@ module.exports.Mongoose = require("mongoose")
 module.exports.NanoXAddRoute = NanoXAddRoute
 module.exports.Express = require("express")
 module.exports.NanoXGetAppSecret = GetAppSecret
+module.exports.NanoXGetAppName = GetAppName
+module.exports.NanoXGetAppColor = GetAppColor
 module.exports.AuthBasic = require("./N_Express/Mid_AuthBasic")
 module.exports.AuthAdmin = require("./N_Express/Mid_AuthAdmin")
+module.exports.NanoXAddPageToBuild = NanoXAddPageToBuild
