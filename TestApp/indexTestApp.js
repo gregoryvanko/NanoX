@@ -14,7 +14,9 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
         Debug: Debug,
         IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,
-        AllowSignUp: true
+        AllowSignUp: true,
+        AppPath: "app",
+        StartApp: true
     }
 
     // Initiation de NanoX

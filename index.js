@@ -7,6 +7,8 @@ let MyDebug = false
 let MyIconPath = null
 let MyApiServer = false
 let MyAllowSignUp = false
+let MyAppPath = ""
+let MyStartApp = false
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -21,7 +23,7 @@ let LogStat = LogR.LogStat
 let ServerRoutes = []
 
 
-function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false}) {
+function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", StartApp = false}) {
     MyAppName = AppName
     MyNAppPort = AppPort
     MyAppSecret = AppSecret
@@ -30,10 +32,18 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="Encry
     MyIconPath = IconPath
     MyApiServer = ApiServer
     MyAllowSignUp = AllowSignUp
+    MyAppPath = AppPath
+    MyStartApp = StartApp
 
     console.log("Start of Init NanoX")
     // Set MongoDb name
     MyMongoDbName = AppName
+    // Set App
+    if (MyStartApp){
+        MyApiServer = true
+        console.log(`Route added for App: /${MyAppPath}`)
+        // ToDo
+    }
     // Set Debug mode
     if (Debug){SetDebugMode()}
     // Set ApiServer

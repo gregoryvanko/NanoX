@@ -34,7 +34,29 @@ router.patch("/", AuthBasic, (req, res) => {
     ModelUsers.findById(req.user.Id)
     .then(user => {
         if (user != null){
-            // ToDo
+            if (req.body.FirstName != null){
+                user.FirstName = req.body.FirstName
+            }
+            if (req.body.LastName != null){
+                user.LastName = req.body.LastName
+            }
+            if (req.body.Password != null){
+                user.Password = req.body.Password
+            }
+            user.save()
+            .then(() => {
+                // Create user data
+                let UserData = {User: user.User, Id: user._id, FirstName: user.FirstName, LastName: user.LastName}
+                // Create token
+                let token = require("../N_Crypt/Crypt").EncryptDataToken(UserData)
+                res.send({Error: false, ErrorMsg: "no error",  Data:{Token: token}})
+                LogInfo("User updated")
+            })
+            .catch((err) => {
+                res.status(500).json({Error: true, ErrorMsg: "User update error"})
+                LogError(`Mongoose update user error: ${err.message}`)
+            })
+
         } else {
             res.status(500).send({Error: true, ErrorMsg: "User not found"})
             LogError(`User not found`, req.user)
