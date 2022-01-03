@@ -34,7 +34,7 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
 }
 
 // Test User
-let TestUser = {Name: "Test", Id: "TestID"}
+let TestUser = {User: "Test", Id: "TestID"}
 // Test Log
 function TestLog(){
     LogInfo("Premier test from app de test", TestUser)

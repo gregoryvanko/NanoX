@@ -38,13 +38,13 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppPort=3000, AppSecret="Encry
     if (Debug){SetDebugMode()}
     // Set ApiServer
     if (MyApiServer){
-        console.log("Route nanoxauth added")
+        console.log("Route added: nanoxauth")
         NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
-        console.log("Route nanoxuser added")
+        console.log("Route added: nanoxuser")
         NanoXAddRoute("/nanoxuser", require('./N_Express/Route_User'))
     }
     if (MyAllowSignUp){
-        console.log("Route nanoxSignUp added")
+        console.log("Route added: nanoxSignUp ")
         NanoXAddRoute("/nanoxSignUp", require('./N_Express/Route_SignUp'))
     }
     console.log("End of Init NanoX")

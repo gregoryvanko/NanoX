@@ -3,7 +3,6 @@ let LogError = require("../index").NanoXLogError
 let LogStat = require("../index").NanoXLogStat
 const LogR = require("../N_Log/Log")
 
-
 const express = require("express")
 const router = express.Router()
 
@@ -18,12 +17,12 @@ router.post("/", (req, res) => {
             if (users.length == 1){
                 let FoundUser = users[0]
                 if (FoundUser.Password == req.body.Pass){
-                    // Create Token
-                    FoundUser.Password = null
-                    FoundUser.Admin = null
-                    let token = require("../N_Crypt/Crypt").EncryptDataToken(FoundUser)
+                    // Create user data
+                    let UserData = {User: FoundUser.User, Id: FoundUser._id, FirstName: FoundUser.FirstName, LastName: FoundUser.LastName}
+                    // Create token
+                    let token = require("../N_Crypt/Crypt").EncryptDataToken(UserData)
                     res.send({Error: false, ErrorMsg: "no error",  Data:{Token: token}})
-                    LogStat(LogR.Stat_ConnectionValided, {Name: FoundUser.User, Id : FoundUser._id})
+                    LogStat(LogR.Stat_ConnectionValided, UserData)
                 } else {
                     res.status(500).json({Error: true, ErrorMsg: "Auth error"})
                     LogStat(LogR.Stat_ConnectionError)

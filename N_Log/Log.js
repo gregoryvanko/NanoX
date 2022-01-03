@@ -1,6 +1,6 @@
 let DebugMode = false
 
-let MyUserServer = {Name: "Server", Id: "ServerId"}
+let MyUserServer = {User: "Server", Id: "ServerId"}
 
 function SetDebugMode(){
     DebugMode = true
@@ -9,11 +9,11 @@ function SetDebugMode(){
 function ConsoleLog(Now, Type, Message, User){
     if(DebugMode){
         if (Type == "Error"){
-            console.log('\x1b[31m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.Name + " => " + Message)
+            console.log('\x1b[31m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.User + " => " + Message)
         } else if (Type == "Stat"){
-            console.log('\x1b[34m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.Name + " => " + Message)
+            console.log('\x1b[34m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.User + " => " + Message)
         } else {
-            console.log(GetDateString(Now) + " " + Type + " " + User.Name + " => " + Message)
+            console.log(GetDateString(Now) + " " + Type + " " + User.User + " => " + Message)
         }
     }
 }
@@ -31,7 +31,7 @@ function GetDateString(DateString){
 function SaveLog(Type, Message, User){
     let now = new Date()
     var ModelLog = require("./Model_Log")
-    const NewLog = new ModelLog({Date: now, Type: Type, Valeur: Message, User: User.Name, UserId: User.Id})
+    const NewLog = new ModelLog({Date: now, Type: Type, Valeur: Message, User: User.User, UserId: User.Id})
     NewLog.save().catch(err => console.error(err))
     ConsoleLog(now,Type, Message, User)
 }

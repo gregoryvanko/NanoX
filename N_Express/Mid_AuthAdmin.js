@@ -16,24 +16,24 @@ module.exports = (req, res, next) => {
 
     // Get User
     let ModelUsers = require("../N_Mongoose/Model_User")
-    ModelUsers.find({ User: TokenUserData.User})
-        .then(users => {
-            if (users.length == 1){
-                let FoundUser = users[0]
-                if (FoundUser.Admin){
-                    req.user = TokenUserData
-                    next()
-                } else {
-                    LogError(`User not Admin`, {Name: TokenUserData.User, Id: TokenUserData._id})
-                    return res.status(401).send({Error: true, ErrorMsg: "User not Admin"})
-                }
+    ModelUsers.findById(TokenUserData.Id)
+    .then(user => {
+        if (user != null){
+            let FoundUser = user
+            if (FoundUser.Admin){
+                req.user = TokenUserData
+                next()
             } else {
-                LogError(`Number of User found not equal to 1`, {Name: TokenUserData.User, Id: TokenUserData._id})
-                return res.status(401).send({Error: true, ErrorMsg: "Number of User found not equal to 1"})
+                LogError(`User not Admin`, {User: TokenUserData.User, Id: TokenUserData._id})
+                return res.status(401).send({Error: true, ErrorMsg: "User not Admin"})
             }
-        })
-        .catch((err) => {
-            LogError(`Mongoose find error: ${err.message}`, {Name: TokenUserData.User, Id: TokenUserData._id})
-            return res.status(401).send({Error: true, ErrorMsg: "Mongoose find error"})
-        })
+        } else {
+            LogError(`User not found by id in db`, {User: TokenUserData.User, Id: TokenUserData._id})
+            return res.status(401).send({Error: true, ErrorMsg: "User not found by id in db"})
+        }
+    })
+    .catch((err) => {
+        LogError(`Mongoose find error: ${err.message}`, {User: TokenUserData.User, Id: TokenUserData._id})
+        return res.status(401).send({Error: true, ErrorMsg: "Mongoose find error"})
+    })
 }
