@@ -44,7 +44,8 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     // Set App
     if (MyStartApp){
         MyApiServer = true
-        NanoXAddPageToBuild("initpage.html", MyAppPath, BuildFunction = require('./N_App/App').BuildInitialHtml)
+        const App = require('./N_App/App')
+        NanoXAddPageToBuild("initpage.html", MyAppPath, MyAppName, App.GetCss(), App.GetJs())
     }
     // Set Debug mode
     if (Debug){SetDebugMode()}
@@ -88,9 +89,9 @@ function NanoXAddRoute(Path = null, Route = null ){
     }
 }
 
-function NanoXAddPageToBuild(PageName = null, PageRoute = null, BuildFunction = null){
-    if ((PageName != null) && (PageRoute != null) && (BuildFunction != null)){
-        let PageToBuild = {PageName: PageName, PageRoute:PageRoute, BuildFunction: BuildFunction}
+function NanoXAddPageToBuild(PageName = null, PageRoute = null, Titre = null, Css = null, Js= null, Body = null){
+    if ((PageName != null) && (PageRoute != null)){
+        let PageToBuild = {PageName:PageName, PageRoute:PageRoute, Titre:Titre, Css:Css, Js:Js, Body:Body}
         ListOfPageToBuild.push(PageToBuild)
     }
 }

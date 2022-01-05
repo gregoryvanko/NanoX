@@ -60,9 +60,9 @@ function TestAddRoute(){
 // Test Add Page Builder
 function TestAddPageBuilder(){
     let NanoXAddPageToBuild = require('../index').NanoXAddPageToBuild
-    NanoXAddPageToBuild("gg.html", "gg.html", TestBuildPage)
+    NanoXAddPageToBuild("gg.html", "gg.html", "TitreGG", "", "", TestBuildBodyPage())
 }
-function TestBuildPage(){
+function TestBuildBodyPage(){
     return "<div>page gg.html</div>"
 }
 
