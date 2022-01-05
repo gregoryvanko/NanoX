@@ -15,14 +15,13 @@ router.post("/", (req, res) => {
         ModelUsers.find({ User: req.body.User})
         .then(users => {
             if (users.length == 1){
-                let FoundUser = users[0]
-                if (FoundUser.Password == req.body.Pass){
+                if (users[0].Password == req.body.Pass){
                     // Create user data
-                    let UserData = {User: FoundUser.User, Id: FoundUser._id, FirstName: FoundUser.FirstName, LastName: FoundUser.LastName}
+                    let UserData = {_id: users[0]._id}
                     // Create token
                     let token = require("../N_Crypt/Crypt").EncryptDataToken(UserData)
                     res.send({Error: false, ErrorMsg: "no error",  Data:{Token: token}})
-                    LogStat(LogR.Stat_ConnectionValided, UserData)
+                    LogStat(LogR.Stat_ConnectionValided, users[0])
                 } else {
                     res.status(500).json({Error: true, ErrorMsg: "Auth error"})
                     LogStat(LogR.Stat_ConnectionError)

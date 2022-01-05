@@ -38,7 +38,6 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     MyAppPath = AppPath
     MyStartApp = StartApp
 
-    console.log("Start of Init NanoX")
     // Set MongoDb name
     MyMongoDbName = AppName
     // Set App
@@ -51,16 +50,12 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     if (Debug){SetDebugMode()}
     // Set ApiServer
     if (MyApiServer){
-        console.log("Route added: nanoxauth")
         NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
-        console.log("Route added: nanoxuser")
         NanoXAddRoute("/nanoxuser", require('./N_Express/Route_User'))
         if (MyAllowSignUp){
-            console.log("Route added: nanoxSignUp ")
             NanoXAddRoute("/nanoxSignUp", require('./N_Express/Route_SignUp'))
         }
     }
-    console.log("End of Init NanoX")
 }
 
 function NanoXStart(){

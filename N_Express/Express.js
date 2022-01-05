@@ -47,6 +47,7 @@ function StartExpressServer(Port = 3000, PagesToBuild = [], Routes = [], IconPat
             if (Routes.length != 0){
                 Routes.forEach(element => {
                     MyServer.use(element.Path, element.Route)
+                    console.log(`Route added: ${element.Path}`)
                 });
             }
             

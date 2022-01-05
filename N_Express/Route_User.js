@@ -1,6 +1,7 @@
 let LogInfo = require("../index").NanoXLogInfo
 let LogError = require("../index").NanoXLogError
 const AuthBasic = require("./Mid_AuthBasic")
+//const AuthAdmin = require("./Mid_AuthAdmin")
 
 
 const express = require("express")
@@ -12,7 +13,7 @@ let ModelUsers = require("../N_Mongoose/Model_User")
 router.get("/", AuthBasic, (req, res) => {
     LogInfo(`API nanoxuser : get user data`, req.user)
     // Get User info
-    ModelUsers.findById(req.user.Id)
+    ModelUsers.findById(req.user._id)
     .then(user => {
         if (user != null){
             let UserInfo = user
@@ -31,7 +32,7 @@ router.get("/", AuthBasic, (req, res) => {
 
 // Update user info
 router.patch("/", AuthBasic, (req, res) => {
-    ModelUsers.findById(req.user.Id)
+    ModelUsers.findById(req.user._id)
     .then(user => {
         if (user != null){
             if (req.body.FirstName != null){
@@ -45,11 +46,7 @@ router.patch("/", AuthBasic, (req, res) => {
             }
             user.save()
             .then(() => {
-                // Create user data
-                let UserData = {User: user.User, Id: user._id, FirstName: user.FirstName, LastName: user.LastName}
-                // Create token
-                let token = require("../N_Crypt/Crypt").EncryptDataToken(UserData)
-                res.send({Error: false, ErrorMsg: "no error",  Data:{Token: token}})
+                res.send({Error: false, ErrorMsg: "no error",  Data:"OK"})
                 LogInfo("User updated")
             })
             .catch((err) => {

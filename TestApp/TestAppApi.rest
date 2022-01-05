@@ -3,52 +3,21 @@
 @tokenAdmin = 69b43c79ecba14fa3747414313c0c01447b022c3987cd6595795be4a750ee7f3375031588362ae591b3d83c8a7757fc1cc3cd71bb9411f8f6a749b2ed475148a6dfe31efb74f1be96b346e93d143b29f51a0c5dda860bc27cd4ce00e6360b06f94b85ea6bfc4c0d2dd82abc24702e3870ff6465e8dc27114f98ce6fac82369a99a83d29ec0821871ed48328e2bf8b207dc323f38a86f0488a0c45cb433e969819959837e9b14a9ef9f8014ae1ed043d9c8897078603ec041f4404d446b67dbc739df0b1f358729832544749f534cfbc151f7585d5c0558eccfdac51219586b7f9321f45de852418ed97cb0625616b1d29a3980df14ecc0115dddd1f96e86fb4d17
 @tokenGreg = 44b8771e8f0625f589ed5c31746de1780e9152f1a52bc6b3ee065d23f2e12b89171cbf55da4b3c250bd10fc03d8d9e3aae1d2a9151fe905d70811b0a8d6f7a1a48dec9acd8c52e47c1deb1f55b0574868a37ddab052629ffd0444e9e505994430571f984f66126dc4b99689bb74dab1291271e72b0fd3f369537cff8e6389706e87bcd062fd83484d782311f5601359445483cb601abe5d6c4c1817b8cd0f42199c2218746c5e63b170bf66eebec6c60b88f479c3a6cbcbe6ca98826a5a30532dcbe54b3de26268b04ca76ff2f816a46490847931352fdd8150db3651ed58f22a0042302070f35f234161e67003cbc81091c77fec239cff619a9309896d34b0017
 
-### nanoxauth Admin
-POST https://{{hostname}}/nanoxauth
-content-type: {{contentType}}
 
-{
-    "User":"Admin",
-    "Pass":"Admin"
-}
+### AppTest get tokenGreg
+get https://{{hostname}}/test
+x-auth-token: {{tokenGreg}}
 
-### nanoxauth Greg
-POST https://{{hostname}}/nanoxauth
-content-type: {{contentType}}
-
-{
-    "User":"greg@greg.com",
-    "Pass":"gregory"
-}
-
-### nanoxSignUp
-POST https://{{hostname}}/nanoxSignUp
-content-type: {{contentType}}
-
-{
-    "User":"greg@greg.com",
-    "FirstName":"Gregory",
-    "LastName":"Van Ko",
-    "Password": "gregory"
-}
-
-
-### nanoxuser get user data with tokenAdmin
-get https://{{hostname}}/nanoxuser
+### AppTest get tokenAdmin
+get https://{{hostname}}/test
 x-auth-token: {{tokenAdmin}}
 
-### nanoxuser get user data with tokenGreg
-get https://{{hostname}}/nanoxuser
-x-auth-token: {{tokenGreg}}
 
-
-### nanoxuser Update user Greg with tokenGreg
-patch https://{{hostname}}/nanoxuser
+### AppTest post
+POST https://{{hostname}}/test
 content-type: {{contentType}}
-x-auth-token: {{tokenGreg}}
 
 {
-    "FirstName":"Gregory",
-    "LastName":"Van Ko",
-    "Password": "gregory"
+    "Livre":"Roman",
+    "Auteur":"Greg"
 }
