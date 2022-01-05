@@ -103,6 +103,10 @@ function GetAppColor(){
     return MyAppColor
 }
 
+function GetAllowSignUp(){
+    return MyAllowSignUp
+}
+
 module.exports.NanoXStart = NanoXStart
 module.exports.NanoXInitiation = NanoXInitiation
 module.exports.NanoXLogInfo = LogInfo
@@ -114,6 +118,7 @@ module.exports.Express = require("express")
 module.exports.NanoXGetAppSecret = GetAppSecret
 module.exports.NanoXGetAppName = GetAppName
 module.exports.NanoXGetAppColor = GetAppColor
+module.exports.NanoXGetAllowSignUp = GetAllowSignUp
 module.exports.AuthBasic = require("./N_Express/Mid_AuthBasic")
 module.exports.AuthAdmin = require("./N_Express/Mid_AuthAdmin")
 module.exports.NanoXAddPageToBuild = NanoXAddPageToBuild
