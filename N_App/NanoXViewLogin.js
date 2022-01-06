@@ -111,13 +111,9 @@ class NanoXViewLogin{
                 }
             })
             .then((response) => {
-                if (!response.data.Error){
-                    document.getElementById("LoginErrorMsg").innerHTML = "";
-                    document.getElementById('LoginButtonLogin').innerText = "Login"
-                    this._LogedIn(response.data.Data.Token)
-                } else {
-                    this.ShowErrorMessage(response.data.ErrorMsg)
-                }
+                document.getElementById("LoginErrorMsg").innerHTML = "";
+                document.getElementById('LoginButtonLogin').innerText = "Login"
+                this._LogedIn(response.data.Token)
             })
             .catch((error) => {
                 if (error.response) {

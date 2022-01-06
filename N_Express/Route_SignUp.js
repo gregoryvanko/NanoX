@@ -25,24 +25,24 @@ router.post("/", (req, res) => {
                 // save new user
                 NewUser.save()
                 .then(() => {
-                    res.send({Error: false, ErrorMsg: "no error"})
+                    res.send({ErrorMsg: "no error"})
                     LogInfo("New User Added from nanoxSignUp")
                 })
                 .catch((err) => {
-                    res.status(500).json({Error: true, ErrorMsg: "User creation error"})
+                    res.status(500).json({ErrorMsg: "User creation error"})
                     LogError(`Mongoose create user error: ${err.message}`)
                 })
             } else {
-                res.status(500).send({Error: true, ErrorMsg: "SignUp error: user already exist"})
+                res.status(500).send({ErrorMsg: "SignUp error: user already exist"})
                 LogError(`SignUp error: user already exist`)
             }
         })
         .catch((err) => {
             LogError(`Mongoose find error: ${err.message}`)
-            res.status(500).send({Error: true, ErrorMsg: "Mongoose find error"})
+            res.status(500).send({ErrorMsg: "Mongoose find error"})
         })
     } else {
-        res.status(500).json({Error: true, ErrorMsg: "Missing data in request"})
+        res.status(500).json({ErrorMsg: "Missing data in request"})
         LogError("Missing data in request")
     }
 })

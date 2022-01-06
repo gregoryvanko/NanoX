@@ -20,26 +20,26 @@ router.post("/", (req, res) => {
                     let UserData = {_id: users[0]._id}
                     // Create token
                     let token = require("../N_Crypt/Crypt").EncryptDataToken(UserData)
-                    res.send({Error: false, ErrorMsg: "no error",  Data:{Token: token}})
+                    res.send({Token: token})
                     LogStat(LogR.Stat_ConnectionValided, users[0])
                 } else {
-                    res.status(500).json({Error: true, ErrorMsg: "Authentication error"})
+                    res.status(500).json({ErrorMsg: "Authentication error"})
                     LogStat(LogR.Stat_ConnectionError)
                     LogError("Invalid Pass")
                 }
             } else {
-                res.status(500).json({Error: true, ErrorMsg: "Authentication error"})
+                res.status(500).json({ErrorMsg: "Authentication error"})
                 LogStat(LogR.Stat_ConnectionError)
                 LogError("Number of User found not equal to 1")
             }
         })
         .catch((err) => {
-            res.status(500).json({Error: true, ErrorMsg: "Auth error"})
+            res.status(500).json({ErrorMsg: "Auth error"})
             LogStat(LogR.Stat_ConnectionError)
             LogError(`Mongoose find error: ${err.message}`)
         })
     } else{
-        res.status(500).json({Error: true, ErrorMsg: "Missing User or Pass"})
+        res.status(500).json({ErrorMsg: "Missing User or Pass"})
         LogStat(LogR.Stat_ConnectionError)
         LogError("Missing User or Pass")
     }

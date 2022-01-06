@@ -18,15 +18,15 @@ router.get("/", AuthBasic, (req, res) => {
         if (user != null){
             let UserInfo = user
             UserInfo.Password = null
-            res.send({Error: false, ErrorMsg: "no error",  Data:UserInfo})
+            res.send({UserData:UserInfo})
         } else {
-            res.status(500).send({Error: true, ErrorMsg: "User not found"})
+            res.status(500).send({ErrorMsg: "User not found"})
             LogError(`User not found`, req.user)
         }
     })
     .catch((err) => {
         LogError(`Mongoose find error: ${err.message}`, req.user)
-        res.status(500).send({Error: true, ErrorMsg: "Mongoose find user error"})
+        res.status(500).send({ErrorMsg: "Mongoose find user error"})
     })
 })
 
@@ -46,22 +46,22 @@ router.patch("/", AuthBasic, (req, res) => {
             }
             user.save()
             .then(() => {
-                res.send({Error: false, ErrorMsg: "no error",  Data:"OK"})
+                res.send({Data:"OK"})
                 LogInfo("User updated")
             })
             .catch((err) => {
-                res.status(500).json({Error: true, ErrorMsg: "User update error"})
+                res.status(500).json({ErrorMsg: "User update error"})
                 LogError(`Mongoose update user error: ${err.message}`)
             })
 
         } else {
-            res.status(500).send({Error: true, ErrorMsg: "User not found"})
+            res.status(500).send({ErrorMsg: "User not found"})
             LogError(`User not found`, req.user)
         }
     })
     .catch((err) => {
         LogError(`Mongoose find error: ${err.message}`, req.user)
-        res.status(500).send({Error: true, ErrorMsg: "Mongoose find user error"})
+        res.status(500).send({ErrorMsg: "Mongoose find user error"})
     })
 })
 
