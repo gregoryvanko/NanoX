@@ -39,6 +39,7 @@ class NanoXLoader {
     }
 
     LoadView(){
+        document.body.innerHTML = ""
         let ViewLogin = new NanoXViewLogin(this.LogedIn.bind(this))
         document.body.appendChild(ViewLogin.GetView())
 
@@ -80,8 +81,10 @@ class NanoXLoader {
         this.Start()
     }
 
-    SignedUp(){
-        alert("Signed Up ToDo")
+    SignedUp(Token){
+        this._Token = Token
+        localStorage.setItem(this._DbKeyToken, this._Token)
+        this.Start()
     }
 
     GetWaintingScreen(){

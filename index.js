@@ -40,14 +40,14 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
 
     // Set MongoDb name
     MyMongoDbName = AppName
+    // Set Debug mode
+    if (Debug){SetDebugMode()}
     // Set App
     if (MyStartApp){
         MyApiServer = true
-        const App = require('./N_App/App')
-        NanoXAddPageToBuild("initpage.html", MyAppPath, MyAppName, App.GetCss(), App.GetJs())
+        const BuildPageInit = require('./N_App/BuildPageInit')
+        NanoXAddPageToBuild("initpage.html", MyAppPath, MyAppName, BuildPageInit.GetCss(), BuildPageInit.GetJs())
     }
-    // Set Debug mode
-    if (Debug){SetDebugMode()}
     // Set ApiServer
     if (MyApiServer){
         NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
@@ -69,6 +69,14 @@ function NanoXStart(){
         // Initiation of User Collection and Admin user
         await Mongoose.InitiationUserCollection()
 
+        // Create Output folder
+        require("./N_PageBuilder/PageBuilder").CreateOutputFolder()
+
+        // Creation des fichiers de l'App
+        if (MyStartApp){
+            BuildApp()
+        }
+
         // Initiation of express
         await Express.StartExpressServer(MyNAppPort, ListOfPageToBuild, ListOfRoute, MyIconPath)
 
@@ -76,6 +84,34 @@ function NanoXStart(){
         console.log(`Nonox application Started`)
         resolve()
     })
+}
+
+function BuildApp(){
+    // Get Output path
+    const OutputPath = require("./N_PageBuilder/PageBuilder").GetOutputPath()
+    // Get Js and CSS
+    const BuildPageApp = require('./N_App/BuildPageApp')
+    const AppOutput = {Version: GetAppVersion(), CodeAppJS: BuildPageApp.GetJs(), CodeAppCSS: BuildPageApp.GetCss()}
+    // Create file
+    let fs = require('fs')
+    fs.writeFileSync(`${OutputPath}/app.json`,JSON.stringify(AppOutput))
+    // Create Route
+    NanoXAddRoute("/loadapp", require('./N_Express/Route_LoadApp'))
+    console.log(`User App builded`)
+}
+
+function GetAppVersion(){
+    let version = ""
+    // Si on est en debug on fait un random de la version
+    if(MyDebug){
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        version = "Debug" + characters.charAt(Math.floor(Math.random() * characters.length))
+    } else {
+        let packagepath = process.cwd() + "/package.json"
+        let packagejson = require(packagepath)
+        version = packagejson.version
+    }
+    return version
 }
 
 function NanoXAddRoute(Path = null, Route = null ){
@@ -122,3 +158,4 @@ module.exports.NanoXGetAllowSignUp = GetAllowSignUp
 module.exports.AuthBasic = require("./N_Express/Mid_AuthBasic")
 module.exports.AuthAdmin = require("./N_Express/Mid_AuthAdmin")
 module.exports.NanoXAddPageToBuild = NanoXAddPageToBuild
+module.exports.NanoXGetAppVersion = GetAppVersion

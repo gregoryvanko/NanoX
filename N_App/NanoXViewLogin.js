@@ -21,7 +21,7 @@ class NanoXViewLogin{
         // Box
         let divbox = document.createElement("div")
         divcontent.appendChild(divbox)
-        divbox.classList.add("NanoxLoginBox")
+        divbox.classList.add("NanoxBoxShadow")
         divbox.classList.add("NanoXFlexColCenter")
         // empty space
         divbox.appendChild(this.BuildEmptySpace("0.5rem"))
@@ -117,7 +117,11 @@ class NanoXViewLogin{
             })
             .catch((error) => {
                 if (error.response) {
-                    this.ShowErrorMessage(error.response.data.ErrorMsg)
+                    if (error.response.status == 500){
+                        this.ShowErrorMessage(error.response.data.ErrorMsg)
+                    } else {
+                        this.ShowErrorMessage(error.response.data)
+                    }
                 } else if (error.request) {
                     this.ShowErrorMessage(error.request)
                 } else {

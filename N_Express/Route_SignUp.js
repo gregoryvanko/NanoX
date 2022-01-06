@@ -24,8 +24,12 @@ router.post("/", (req, res) => {
                 })
                 // save new user
                 NewUser.save()
-                .then(() => {
-                    res.send({ErrorMsg: "no error"})
+                .then((User) => {
+                    // Create user data
+                    let UserData = {_id: User._id}
+                    // Create token
+                    let token = require("../N_Crypt/Crypt").EncryptDataToken(UserData)
+                    res.send({Token: token})
                     LogInfo("New User Added from nanoxSignUp")
                 })
                 .catch((err) => {

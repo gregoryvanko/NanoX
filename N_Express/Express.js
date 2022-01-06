@@ -23,19 +23,13 @@ function StartExpressServer(Port = 3000, PagesToBuild = [], Routes = [], IconPat
 
             // Ajouter les pages a builder
             if (PagesToBuild.length != 0){
-                // Create Output folder
-                require("../N_PageBuilder/PageBuilder").CreateOutputFolder()
                 // Get Output path
                 const OutputPath = require("../N_PageBuilder/PageBuilder").GetOutputPath()
                 PagesToBuild.forEach(element => {
                     require("../N_PageBuilder/PageBuilder").BuildPages(element)
                     MyServer.get(`/${element.PageRoute}`, (req, res) => {
                         res.sendFile(`${OutputPath}/${element.PageName}`)
-                        if (req.user){
-                            LogStat(`Page:/${element.PageRoute}`, req.user)
-                        } else {
-                            LogStat(`Page:/${element.PageRoute}`)
-                        }
+                        LogStat(`Page:/${element.PageRoute}`)
                     })
                     console.log(`Page build and added in the server: (PageName:${element.PageName}, PageRoute:/${element.PageRoute})`)
                 });

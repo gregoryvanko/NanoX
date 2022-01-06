@@ -42,11 +42,12 @@ body{
     font-size: 4rem;
 }
 
-.NanoxLoginBox{
+.NanoxBoxShadow{
     background-color: white; 
     width:30rem; 
     max-width: 90%;
     box-shadow: 0 10px 20px rgba(0, 0, 0, .2); 
+    box-sizing: border-box;
 }
 
 .NanoxLoginInput {
@@ -59,12 +60,17 @@ body{
 .NanoxLoginInput:focus,
 .NanoxLoginInput.focus {
     outline: none;
-    border-color: var(--NanoX-appcolor)
+    border-color: var(--NanoX-appcolor);
+}
+@media (hover: hover) {
+    .NanoxLoginInput:hover{
+        border-color: var(--NanoX-appcolor);
+    }
 }
 
 .NanoxErrorText{
     color: red;
-    height: 1rem;
+    min-height: 1rem;
 }
 
 .NanoxText{

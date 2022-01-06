@@ -52,3 +52,12 @@ x-auth-token: {{tokenGreg}}
     "LastName":"Van Ko",
     "Password": "gregory"
 }
+
+### nanoxuser get load app tokenAdmin
+post https://{{hostname}}/loadapp
+content-type: {{contentType}}
+x-auth-token: {{tokenAdmin}}
+
+{
+    "Version":"TestVersion"
+}
