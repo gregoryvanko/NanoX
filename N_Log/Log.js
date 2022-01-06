@@ -1,6 +1,6 @@
 let DebugMode = false
 
-let MyUserServer = {User: "Server", Id: "ServerId"}
+let MyUserServer = {User: "Server", _id: "ServerId"}
 
 function SetDebugMode(){
     DebugMode = true
@@ -31,7 +31,7 @@ function GetDateString(DateString){
 function SaveLog(Type, Message, User){
     let now = new Date()
     var ModelLog = require("./Model_Log")
-    const NewLog = new ModelLog({Date: now, Type: Type, Valeur: Message, User: User.User, UserId: User.Id})
+    const NewLog = new ModelLog({Date: now, Type: Type, Valeur: Message, UserId: User._id})
     NewLog.save().catch(err => console.error(err))
     ConsoleLog(now,Type, Message, User)
 }

@@ -23,12 +23,12 @@ router.post("/", (req, res) => {
                     res.send({Error: false, ErrorMsg: "no error",  Data:{Token: token}})
                     LogStat(LogR.Stat_ConnectionValided, users[0])
                 } else {
-                    res.status(500).json({Error: true, ErrorMsg: "Auth error"})
+                    res.status(500).json({Error: true, ErrorMsg: "Authentication error"})
                     LogStat(LogR.Stat_ConnectionError)
                     LogError("Invalid Pass")
                 }
             } else {
-                res.status(500).json({Error: true, ErrorMsg: "Auth error"})
+                res.status(500).json({Error: true, ErrorMsg: "Authentication error"})
                 LogStat(LogR.Stat_ConnectionError)
                 LogError("Number of User found not equal to 1")
             }

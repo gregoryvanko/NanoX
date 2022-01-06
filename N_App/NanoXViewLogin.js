@@ -30,6 +30,7 @@ class NanoXViewLogin{
         divbox.appendChild(InputMail)
         InputMail.id = "LoginLoginValue"
         InputMail.classList.add("NanoxLoginInput")
+        InputMail.classList.add("NanoxText")
         InputMail.setAttribute("type", "text")
         InputMail.setAttribute("tabindex", "1")
         InputMail.placeholder = "Email"
@@ -41,6 +42,7 @@ class NanoXViewLogin{
         divbox.appendChild(InputPass)
         InputPass.id = "LoginPswValue"
         InputPass.classList.add("NanoxLoginInput")
+        InputPass.classList.add("NanoxText")
         InputPass.setAttribute("type", "password")
         InputPass.setAttribute("tabindex", "2")
         InputPass.placeholder = "Pass"
@@ -50,7 +52,8 @@ class NanoXViewLogin{
         let diverror = document.createElement("div")
         divbox.appendChild(diverror)
         diverror.id= "LoginErrorMsg"
-        diverror.classList.add("NanoxLoginError")
+        diverror.classList.add("NanoxErrorText")
+        diverror.classList.add("NanoxText")
         diverror.innerText = ""
         // empty space
         divbox.appendChild(this.BuildEmptySpace("2rem"))
@@ -58,6 +61,7 @@ class NanoXViewLogin{
         let buttonLogin = document.createElement("button")
         divbox.appendChild(buttonLogin)
         buttonLogin.classList.add("NanoxButton")
+        buttonLogin.classList.add("NanoxText")
         buttonLogin.setAttribute("tabindex", "3")
         buttonLogin.innerText = "Login"
         buttonLogin.style.width = "30%"
@@ -89,18 +93,47 @@ class NanoXViewLogin{
             IsValide = false;
         } 
         if(!IsValide){
-            document.getElementById("LoginErrorMsg").innerHTML = ErrorMessage;
+            this.ShowErrorMessage(ErrorMessage)
         }
         return IsValide;
     }
 
-
     ClickLogin(){
         if(this.IsInputLoginValide()){
             document.getElementById('LoginButtonLogin').innerText = "Waiting..."
-            // ToDo
-            this._LogedIn()
+            // Get Token
+            axios({
+                method: 'post',
+                url: '/nanoxauth',
+                data: {
+                    User: document.getElementById('LoginLoginValue').value,
+                    Pass: document.getElementById('LoginPswValue').value
+                }
+            })
+            .then((response) => {
+                if (!response.data.Error){
+                    document.getElementById("LoginErrorMsg").innerHTML = "";
+                    document.getElementById('LoginButtonLogin').innerText = "Login"
+                    this._LogedIn(response.data.Data.Token)
+                } else {
+                    this.ShowErrorMessage(response.data.ErrorMsg)
+                }
+            })
+            .catch((error) => {
+                if (error.response) {
+                    this.ShowErrorMessage(error.response.data.ErrorMsg)
+                } else if (error.request) {
+                    this.ShowErrorMessage(error.request)
+                } else {
+                    this.ShowErrorMessage(error.message)
+                }
+            })
         }
+    }
+
+    ShowErrorMessage(Error){
+        document.getElementById("LoginErrorMsg").innerHTML = Error;
+        document.getElementById('LoginButtonLogin').innerText = "Login"
     }
 
     InputKeyUpLogin(event){

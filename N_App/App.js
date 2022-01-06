@@ -23,6 +23,7 @@ function GetJs(){
     let output = fs.readFileSync(__dirname + "/NanoXViewLogin.js", 'utf8')+ osEOL + osEOL
     output += fs.readFileSync(__dirname + "/NanoXViewSignUp.js", 'utf8')+ osEOL + osEOL
     output += fs.readFileSync(__dirname + "/NanoXLoader.js", 'utf8')+ osEOL + osEOL
+    output += fs.readFileSync(__dirname + "/Helper/axios.min.js", 'utf8')+ osEOL + osEOL
 
     output += 
 `
