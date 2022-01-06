@@ -13,7 +13,7 @@ router.post("/", AuthBasic, (req, res) => {
         const OutputPath = require("../N_PageBuilder/PageBuilder").GetOutputPath()
         if (fs.existsSync(`${OutputPath}/app.json`)){
             if (req.body.Version == require("../index").NanoXGetAppVersion()){
-                res.json({Version: req.body.Version, CodeAppJS: "", CodeAppCSS: ""})
+                res.json({Version: req.body.Version, CodeAppJS: null, CodeAppCSS: null})
             } else {
                 res.json(require("../N_PageBuilder/Output/app.json"))
             }
