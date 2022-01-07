@@ -72,7 +72,82 @@ class NanoXLoader {
     LoadApp(){
         document.body.innerHTML = ""
         document.body.appendChild(this.GetWaintingScreen() )
-        // ToDo
+        axios({
+            method: 'post',
+            url: '/loadapp',
+            headers: {
+                'x-auth-token': `${this.GetToken()}`,
+                'Content-Type': 'application/json'
+            },
+            data: {
+                Version: `${this.GetVersion()}`
+            },
+            onDownloadProgress : progressEvent => {
+                const percentage = Math.round(
+                    (progressEvent.loaded * 100) / progressEvent.total
+                );
+                if(document.getElementById("ProgressBar")){document.getElementById("ProgressBar").value = percentage}
+                if(document.getElementById("ProgressText")){document.getElementById("ProgressText").innerText = percentage + "%"}
+            }
+        })
+        .then((response) => {
+            const myreponse = response.data
+            let CSS = document.createElement('style')
+            CSS.type = 'text/css'
+            CSS.id = 'CodeCSS'
+            let JS = document.createElement('script')
+            JS.type = 'text/javascript'
+            JS.id = 'CodeJs'
+
+            if (myreponse.Version != this.GetVersion()){
+                console.log("From server")
+                localStorage.setItem(this._DBKeyVersion, myreponse.Version)
+                // Load de l'application CSS
+                CSS.innerHTML = myreponse.CodeAppCSS
+                localStorage.setItem(this._DBKeyCodeAppCSS, myreponse.CodeAppCSS)
+                // Load de l'application JS
+                JS.innerHTML = myreponse.CodeAppJS
+                localStorage.setItem(this._DBKeyCodeAppJS, myreponse.CodeAppJS)
+            } else {
+                console.log("From Browser")
+                // Load de l'application CSS
+                CSS.innerHTML = localStorage.getItem(this._DBKeyCodeAppCSS)
+                // Load de l'application JS
+                JS.innerHTML = localStorage.getItem(this._DBKeyCodeAppJS)
+            }
+            // Add Css
+            document.getElementsByTagName('head')[0].appendChild(CSS)
+            let Time = 100
+            if (this._SplashScreen != null){
+                let TacTimeSplashScreen = new Date().getTime()
+                let TicTacDelta = this._SplashDuration - (TacTimeSplashScreen - this._TicTimeSplashScreen)
+                Time = (TicTacDelta < 0) ? 1 : TicTacDelta
+            }
+            let SplashScreenBackgroundColor = this._SplashScreenBackgroundColor
+            setTimeout(function() {
+                // Set background white
+                if (SplashScreenBackgroundColor != null){
+                    document.body.style.backgroundColor = "white"
+                }
+                // effacer le contenu du body
+                document.body.innerHTML = ""
+                // Lancement du javascript de l'application
+                document.getElementsByTagName('head')[0].appendChild(JS)
+            }, Time)
+        })
+        .catch((error) => {
+            if (error.response) {
+                if ((error.response.status == 500) || (error.response.status == 401)){
+                    this.SetErrorMessage(error.response.data.ErrorMsg)
+                } else {
+                    this.SetErrorMessage(error.response.data)
+                }
+            } else if (error.request) {
+                this.SetErrorMessage(error.request)
+            } else {
+                this.SetErrorMessage(error.message)
+            }
+        })
     }
 
     LogedIn(Token){
@@ -94,14 +169,7 @@ class NanoXLoader {
                 document.body.style.backgroundColor = this._SplashScreenBackgroundColor
             }
             this._TicTimeSplashScreen = new Date().getTime()
-
-            let div = document.createElement("div")
-            div.classList.add("NanoXFlexColCenter")
-            div.style.width = "100vw"
-            div.style.height = "100vh"
-            div.innerHTML = this._SplashScreen
-
-            reponse = div
+            reponse = this.GetSplashScreen()
         } else {
             reponse = this.GetLoadingView()
         }
@@ -154,6 +222,16 @@ class NanoXLoader {
         buttonreload.addEventListener("click", ()=>{window.location.reload(true)})
 
         return divcontent
+    }
+
+    GetSplashScreen(){
+        let div = document.createElement("div")
+        div.classList.add("NanoXFlexColCenter")
+        div.style.width = "100vw"
+        div.style.height = "100vh"
+        div.innerHTML = this._SplashScreen
+
+        return div
     }
 
     SetErrorMessage(Error){

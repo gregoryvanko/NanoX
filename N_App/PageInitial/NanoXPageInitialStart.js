@@ -1,12 +1,11 @@
 const AllowSingUp = require("../../index").NanoXGetAllowSignUp()
-const SplashScreen = null
-const SplashScreenBackgroundColor = null
 const AppColor = require("../../index").NanoXGetAppColor()
+const SplashScreenData = require("../../index").NanoXGetSplashScreenData()
 
 function GetJs(){
     let output = 
 `
-let MyNanoXLoader = new NanoXLoader({AllowSignUp:${AllowSingUp}, SplashScreen: ${SplashScreen}, SplashScreenBackgroundColor: ${SplashScreenBackgroundColor}})
+let MyNanoXLoader = new NanoXLoader({AllowSignUp:${AllowSingUp}, SplashScreen: '${SplashScreenData.SplashScreen}', SplashScreenBackgroundColor: '${SplashScreenData.SplashScreenBackgroundColor}'})
 function NxLogout(){MyNanoXLoader.LogOut()}
 function NxGetToken(){return MyNanoXLoader.GetToken()}
 

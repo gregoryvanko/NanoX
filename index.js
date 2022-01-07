@@ -10,6 +10,8 @@ let MyApiServer = false
 let MyAllowSignUp = false
 let MyAppPath = ""
 let MyStartApp = false
+let MySplashScreen = null
+let MySplashScreenBackgroundColor = 'white'
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -24,8 +26,7 @@ let LogStat = LogR.LogStat
 let ListOfRoute = []
 let ListOfPageToBuild = []
 
-
-function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", StartApp = false}) {
+function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", StartApp = false, SplashScreen = null, SplashScreenBackgroundColor = 'white'}) {
     MyAppName = AppName
     MyAppColor = AppColor
     MyNAppPort = AppPort
@@ -37,6 +38,8 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     MyAllowSignUp = AllowSignUp
     MyAppPath = AppPath
     MyStartApp = StartApp
+    MySplashScreen = SplashScreen
+    MySplashScreenBackgroundColor = SplashScreenBackgroundColor
 
     // Set MongoDb name
     MyMongoDbName = AppName
@@ -151,6 +154,10 @@ function GetAllowSignUp(){
     return MyAllowSignUp
 }
 
+function GetSplashScreenData(){
+    return {SplashScreen: MySplashScreen, SplashScreenBackgroundColor: MySplashScreenBackgroundColor}
+}
+
 module.exports.NanoXStart = NanoXStart
 module.exports.NanoXInitiation = NanoXInitiation
 module.exports.NanoXLogInfo = LogInfo
@@ -167,3 +174,4 @@ module.exports.AuthBasic = require("./N_Express/Mid_AuthBasic")
 module.exports.AuthAdmin = require("./N_Express/Mid_AuthAdmin")
 module.exports.NanoXAddPageToBuild = NanoXAddPageToBuild
 module.exports.NanoXGetAppVersion = GetAppVersion
+module.exports.NanoXGetSplashScreenData = GetSplashScreenData

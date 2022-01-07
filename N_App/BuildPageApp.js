@@ -12,10 +12,6 @@ function GetJs(AdminApp = false){
     let Output = ""
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCore.js", 'utf8')+ osEOL + osEOL
 
-    if(AdminApp){
-        Output += `console.log("admin page"); `
-    }
-
     Output += require("./PageApp/NanoXPageAppStart").GetJs()
 
     if (Output == ""){Output = null}
