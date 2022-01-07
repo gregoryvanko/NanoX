@@ -25,8 +25,9 @@ class NonoXBuild{
     static DivFlexColumn(Id = null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
-        element.setAttribute("style","display: -webkit-flex; display: flex; flex-direction: column; justify-content:space-around; align-content:center; align-items: center; flex-wrap: wrap;")
-        if (Style){element.setAttribute("Style", Style)}
+        let StyleAdd = ""
+        if (Style){StyleAdd = Style}
+        element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: column; justify-content:space-around; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
         return element
     }
 
@@ -39,8 +40,9 @@ class NonoXBuild{
     static DivFlexRowSpaceAround(Id = null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
-        element.setAttribute("style","display: -webkit-flex; display: flex; flex-direction: row; justify-content:space-around; align-content:center; align-items: center; flex-wrap: wrap;")
-        if (Style){element.setAttribute("Style", Style)}
+        let StyleAdd = ""
+        if (Style){StyleAdd = Style}
+        element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:space-around; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
         return element
     }
 
@@ -53,8 +55,9 @@ class NonoXBuild{
     static DivFlexRowSpaceBetween(Id = null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
-        element.setAttribute("style","display: -webkit-flex; display: flex; flex-direction: row; justify-content:space-between; align-content:center; align-items: center; flex-wrap: wrap;")
-        if (Style){element.setAttribute("Style", Style)}
+        let StyleAdd = ""
+        if (Style){StyleAdd = Style}
+        element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:space-between; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
         return element
     }
 
@@ -67,8 +70,9 @@ class NonoXBuild{
     static DivFlexRowStart(Id= null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
-        element.setAttribute("style","width: 100%; display: -webkit-flex; display: flex; flex-direction: row; justify-content:start; align-content:center; align-items: center; flex-wrap: wrap;")
-        if (Style){element.setAttribute("Style", Style)}
+        let StyleAdd = ""
+        if (Style){StyleAdd = Style}
+        element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:start; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
         return element
     }
 
@@ -81,8 +85,9 @@ class NonoXBuild{
     static DivFlexRowEnd(Id= null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
-        element.setAttribute("style","width: 100%; display: -webkit-flex; display: flex; flex-direction: row; justify-content:end; align-content:center; align-items: center; flex-wrap: wrap;")
-        if (Style){element.setAttribute("Style", Style)}
+        let StyleAdd = ""
+        if (Style){StyleAdd = Style}
+        element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:end; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
         return element
     }
 

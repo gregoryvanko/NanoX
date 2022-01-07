@@ -1,10 +1,23 @@
 .NanoXActionBar{
     position: fixed;
-    top:0;
-    left:0;
+    top:0px;
 }
 .NanoXActionBarDim{
     width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid lightgray;
+    background-color: white;
+}
+
+.NanoXActionButton{
+    border: none;
+    width: 2.5rem;
     height: 2.5rem;
-    background-color: transparent;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+    padding: 0.2rem;
+    cursor: pointer;
+    text-align: center;
+    outline: none;
+    background-color: white;
 }
