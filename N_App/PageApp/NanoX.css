@@ -1,0 +1,10 @@
+.NanoXActionBar{
+    position: fixed;
+    top:0;
+    left:0;
+}
+.NanoXActionBarDim{
+    width: 100%;
+    height: 2.5rem;
+    background-color: transparent;
+}

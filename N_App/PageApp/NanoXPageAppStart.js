@@ -3,6 +3,9 @@ function GetJs(){
     let output = 
 `
 let MyNanoXCore = new NanoXCore()
+
+function NanoXGetDivApp(){return MyNanoXCore.GetDivApp()}
+
 MyNanoXCore.Start()
 `
     return output
