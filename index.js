@@ -87,17 +87,25 @@ function NanoXStart(){
 }
 
 function BuildApp(){
+    const fs = require('fs')
+    const BuildPageApp = require('./N_App/BuildPageApp')
+
     // Get Output path
     const OutputPath = require("./N_PageBuilder/PageBuilder").GetOutputPath()
-    // Get Js and CSS
-    const BuildPageApp = require('./N_App/BuildPageApp')
+    // Get Js and CSS of App
     const AppOutput = {Version: GetAppVersion(), CodeAppJS: BuildPageApp.GetJs(), CodeAppCSS: BuildPageApp.GetCss()}
     // Create file
-    let fs = require('fs')
     fs.writeFileSync(`${OutputPath}/app.json`,JSON.stringify(AppOutput))
+    console.log(`User App builded`)
+
+    // Get Js and CSS of AppAdmin
+    const AppAdminOutput = {Version: GetAppVersion(), CodeAppJS: BuildPageApp.GetJs(true), CodeAppCSS: BuildPageApp.GetCss(true)}
+    // Create file
+    fs.writeFileSync(`${OutputPath}/appadmin.json`,JSON.stringify(AppAdminOutput))
+    console.log(`User AppAdmin builded`)
+
     // Create Route
     NanoXAddRoute("/loadapp", require('./N_Express/Route_LoadApp'))
-    console.log(`User App builded`)
 }
 
 function GetAppVersion(){

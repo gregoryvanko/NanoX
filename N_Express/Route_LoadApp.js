@@ -7,19 +7,38 @@ const express = require("express")
 const router = express.Router()
 
 router.post("/", AuthBasic, (req, res) => {
-    LogInfo(`API loadapp : get user data`, req.user)
+    LogInfo(`API loadapp`, req.user)
     if (req.body.Version){
         // Get Output path
         const OutputPath = require("../N_PageBuilder/PageBuilder").GetOutputPath()
-        if (fs.existsSync(`${OutputPath}/app.json`)){
-            if (req.body.Version == require("../index").NanoXGetAppVersion()){
-                res.json({Version: req.body.Version, CodeAppJS: null, CodeAppCSS: null})
+
+        if(req.user.Admin){
+            // Send appAdmin
+            if (fs.existsSync(`${OutputPath}/appadmin.json`)){
+                if (req.body.Version == require("../index").NanoXGetAppVersion()){
+                    res.json({Version: req.body.Version, CodeAppJS: null, CodeAppCSS: null})
+                    LogInfo(`Admin App from browser`, req.user)
+                } else {
+                    res.json(require("../N_PageBuilder/Output/appadmin.json"))
+                    LogInfo(`Admin App from server`, req.user)
+                }
             } else {
-                res.json(require("../N_PageBuilder/Output/app.json"))
+                res.status(500).json({ErrorMsg: "Missing file appadmin.json"})
+                LogError("Missing file appadmin.json")
             }
         } else {
-            res.status(500).json({ErrorMsg: "Missing file app.json"})
-        LogError("Missing file app.json")
+            if (fs.existsSync(`${OutputPath}/app.json`)){
+                if (req.body.Version == require("../index").NanoXGetAppVersion()){
+                    res.json({Version: req.body.Version, CodeAppJS: null, CodeAppCSS: null})
+                    LogInfo(`App from browser`, req.user)
+                } else {
+                    res.json(require("../N_PageBuilder/Output/app.json"))
+                    LogInfo(`App from server`, req.user)
+                }
+            } else {
+                res.status(500).json({ErrorMsg: "Missing file app.json"})
+                LogError("Missing file app.json")
+            }
         }
     } else {
         res.status(500).json({ErrorMsg: "Missing Version"})

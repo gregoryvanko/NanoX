@@ -61,3 +61,12 @@ x-auth-token: {{tokenAdmin}}
 {
     "Version":"TestVersion"
 }
+
+### nanoxuser get load app tokenGreg
+post https://{{hostname}}/loadapp
+content-type: {{contentType}}
+x-auth-token: {{tokenGreg}}
+
+{
+    "Version":"TestVersion"
+}
