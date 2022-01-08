@@ -14,7 +14,9 @@ function GetJs(AdminApp = false){
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXBuild.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCore.js", 'utf8')+ osEOL + osEOL
 
-    Output += require("./PageApp/NanoXPageAppStart").GetJs()
+    Output += require("./PageApp/NanoXPageAppStart").GetJsStart()
+    
+    Output += require("./PageApp/NanoXPageAppStart").GetJsEnd()
 
     if (Output == ""){Output = null}
     return Output

@@ -12,7 +12,7 @@ let MyAppPath = ""
 let MyStartApp = false
 let MySplashScreen = null
 let MySplashScreenBackgroundColor = 'white'
-let MyNanoXAppOption = {ShowNameInMenuBar: true}
+let MyNanoXAppOption = {ShowNameInMenuBar: true, ColorIconMenuBar: "black"}
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -41,7 +41,10 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     MyStartApp = StartApp
     MySplashScreen = SplashScreen
     MySplashScreenBackgroundColor = SplashScreenBackgroundColor
-    if (NanoXAppOption){MyNanoXAppOption = NanoXAppOption}
+    if (NanoXAppOption){
+        if(NanoXAppOption.ShowNameInMenuBar){MyNanoXAppOption.ShowNameInMenuBar = NanoXAppOption.ShowNameInMenuBar}
+        if(NanoXAppOption.ColorIconMenuBar){MyNanoXAppOption.ColorIconMenuBar = NanoXAppOption.ColorIconMenuBar}
+    }
 
     // Set MongoDb name
     MyMongoDbName = AppName

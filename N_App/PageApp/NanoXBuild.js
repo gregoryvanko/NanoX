@@ -22,9 +22,10 @@ class NonoXBuild{
      * @param {String} Style style du div
      * @returns HTMLElement div flex column
      */
-    static DivFlexColumn(Id = null, Style= null){
+    static DivFlexColumn(Id = null, Class = null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
+        if (Class){element.setAttribute("Class", Class)}
         let StyleAdd = ""
         if (Style){StyleAdd = Style}
         element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: column; justify-content:space-around; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
@@ -37,9 +38,10 @@ class NonoXBuild{
      * @param {String} Style style du div
      * @returns HTMLElement div flex row space-around
      */
-    static DivFlexRowSpaceAround(Id = null, Style= null){
+    static DivFlexRowSpaceAround(Id = null, Class = null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
+        if (Class){element.setAttribute("Class", Class)}
         let StyleAdd = ""
         if (Style){StyleAdd = Style}
         element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:space-around; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
@@ -52,9 +54,10 @@ class NonoXBuild{
      * @param {String} Style style du div
      * @returns HTMLElement div flex row space-between
      */
-    static DivFlexRowSpaceBetween(Id = null, Style= null){
+    static DivFlexRowSpaceBetween(Id = null, Class = null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
+        if (Class){element.setAttribute("Class", Class)}
         let StyleAdd = ""
         if (Style){StyleAdd = Style}
         element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:space-between; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
@@ -67,9 +70,10 @@ class NonoXBuild{
      * @param {String} Style style du div
      * @returns HTMLElement div flex row start
      */
-    static DivFlexRowStart(Id= null, Style= null){
+    static DivFlexRowStart(Id= null, Class = null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
+        if (Class){element.setAttribute("Class", Class)}
         let StyleAdd = ""
         if (Style){StyleAdd = Style}
         element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:start; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
@@ -82,9 +86,10 @@ class NonoXBuild{
      * @param {String} Style style du div
      * @returns HTMLElement div flex row end
      */
-    static DivFlexRowEnd(Id= null, Style= null){
+    static DivFlexRowEnd(Id= null, Class = null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
+        if (Class){element.setAttribute("Class", Class)}
         let StyleAdd = ""
         if (Style){StyleAdd = Style}
         element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:end; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
@@ -107,6 +112,40 @@ class NonoXBuild{
         element.innerText = Texte
         return element
     }
+
+    /**
+     * Creation d'un bouton html
+     * @param {String} Titre Titre du bouton
+     * @param {Function} OnClick Fonction executée par le bouton
+     * @param {String} Id Id du bouton
+     * @param {String} Class Class value
+     * @param {String} Style Style value
+     * @returns Html element button
+     */
+    static Button (Titre="No Titre", OnClick= null, Id=null, Class= null, Style= null){
+        let element = document.createElement("button")
+        if (Class){element.setAttribute("Class", Class)}
+        if (Id){element.setAttribute("id", Id)}
+        if (Style){element.setAttribute("Style", Style)}
+        element.innerHTML = Titre
+        element.onclick = OnClick
+        return element
+    }
+
+    /**
+     * Creation d'une ligne
+     * @param {String} Width largeur de la ligne
+     * @param {String} height epaisseur de la ligne
+     * @param {String} color couleur de la ligne
+     * @returns Html element Hr
+     */
+    static Line (Width = "100%", height= "1px", color= "var(--NanoX-appcolor)"){
+        let element = document.createElement("hr")
+        element.setAttribute("Style", `width: ${Width}; border: ${height} solid ${color}; margin:0;`)
+        return element
+    }
+
+
 
     /**
      * Converti une date en un string Date Time yyyy-mm-dd h:m:s
