@@ -1,8 +1,8 @@
-
 function GetJs(){
+    let NanoXAppOption = require("../../index").NanoXGetNanoXAppOption()
     let output = 
 `
-let MyNanoXCore = new NanoXCore()
+let MyNanoXCore = new NanoXCore(${JSON.stringify(NanoXAppOption)})
 
 function NanoXGetDivApp(){return MyNanoXCore.GetDivApp()}
 

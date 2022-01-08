@@ -12,6 +12,7 @@ let MyAppPath = ""
 let MyStartApp = false
 let MySplashScreen = null
 let MySplashScreenBackgroundColor = 'white'
+let MyNanoXAppOption = {ShowNameInMenuBar: true}
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -26,7 +27,7 @@ let LogStat = LogR.LogStat
 let ListOfRoute = []
 let ListOfPageToBuild = []
 
-function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", StartApp = false, SplashScreen = null, SplashScreenBackgroundColor = 'white'}) {
+function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", StartApp = false, SplashScreen = null, SplashScreenBackgroundColor = 'white', NanoXAppOption = null}) {
     MyAppName = AppName
     MyAppColor = AppColor
     MyNAppPort = AppPort
@@ -40,6 +41,7 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     MyStartApp = StartApp
     MySplashScreen = SplashScreen
     MySplashScreenBackgroundColor = SplashScreenBackgroundColor
+    if (NanoXAppOption){MyNanoXAppOption = NanoXAppOption}
 
     // Set MongoDb name
     MyMongoDbName = AppName
@@ -158,6 +160,11 @@ function GetSplashScreenData(){
     return {SplashScreen: MySplashScreen, SplashScreenBackgroundColor: MySplashScreenBackgroundColor}
 }
 
+function GetNanoXAppOption(){
+    MyNanoXAppOption.AppName = MyAppName
+    return MyNanoXAppOption
+}
+
 module.exports.NanoXStart = NanoXStart
 module.exports.NanoXInitiation = NanoXInitiation
 module.exports.NanoXLogInfo = LogInfo
@@ -175,3 +182,4 @@ module.exports.AuthAdmin = require("./N_Express/Mid_AuthAdmin")
 module.exports.NanoXAddPageToBuild = NanoXAddPageToBuild
 module.exports.NanoXGetAppVersion = GetAppVersion
 module.exports.NanoXGetSplashScreenData = GetSplashScreenData
+module.exports.NanoXGetNanoXAppOption = GetNanoXAppOption

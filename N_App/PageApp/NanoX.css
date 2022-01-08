@@ -8,7 +8,6 @@
     border-bottom: 1px solid lightgray;
     background-color: white;
 }
-
 .NanoXActionButton{
     border: none;
     width: 2.5rem;
@@ -20,4 +19,11 @@
     text-align: center;
     outline: none;
     background-color: white;
+}
+.NanoXActionBarTitre{
+    font-weight: bold;
+    font-size: 2rem;
+    font-family: 'poppins' , sans-serif;
+    font-style: italic;
+    margin-right: 1rem;
 }

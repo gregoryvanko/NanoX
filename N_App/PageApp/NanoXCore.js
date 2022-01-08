@@ -1,5 +1,6 @@
 class NanoXCore {
-    constructor(){
+    constructor(NanoXAppOption){
+        this._NanoXAppOption = NanoXAppOption
         this._IdDivApp = "IdDivApp"
         this._IdBarActionButton = "IdBarActionButton"
         this._IdBarActionButtonLeft = "IdBarActionButtonLeft"
@@ -18,6 +19,7 @@ class NanoXCore {
 
         let divapp = this.GetDivApp()
         divapp.appendChild(NonoXBuild.Div(null, null, "height: 150vh; background-color: red;"))
+        
     }
 
     BuildActionButtonBar(){
@@ -30,7 +32,7 @@ class NanoXCore {
         // Bar Button Left
         let divBarButtonLeft = NonoXBuild.DivFlexRowStart(null, "padding-left: 0.8rem;")
         divBarButtonContent.appendChild(divBarButtonLeft)
-        // ToDo Add Titre
+        if(this._NanoXAppOption.ShowNameInMenuBar){divBarButtonLeft.appendChild(NonoXBuild.DivTexte(this._NanoXAppOption.AppName, null, "NanoXAppColor NanoXActionBarTitre", null))}
         divBarButtonLeft.appendChild(NonoXBuild.DivFlexRowStart(this._IdBarActionButtonLeft))
         // Bar button right
         let divBarButtonRight = NonoXBuild.DivFlexRowEnd(null, "padding-right: 0.8rem;")
