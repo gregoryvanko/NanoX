@@ -22,6 +22,14 @@ class NanoXCore {
         
     }
 
+    GetDivApp(){
+        return document.getElementById(this._IdDivApp)
+    }
+
+    BuildDivApplication(){
+        document.body.appendChild(NonoXBuild.DivFlexColumn(this._IdDivApp, "width: 100%;"))
+    }
+
     BuildActionButtonBar(){
         let divBarButton = NonoXBuild.Div(this._IdBarActionButton, "NanoXActionBar NanoXActionBarDim", "display: -webkit-flex; display: flex; flex-direction: row; justify-content:center; align-content:center; align-items: center;")
         document.body.appendChild(divBarButton)
@@ -83,13 +91,5 @@ class NanoXCore {
 
     ClickHambergerIcon(){
         document.getElementById("hamburger-icon").classList.toggle('open');
-    }
-
-    BuildDivApplication(){
-        document.body.appendChild(NonoXBuild.DivFlexColumn(this._IdDivApp, "width: 100%;"))
-    }
-
-    GetDivApp(){
-        return document.getElementById(this._IdDivApp)
     }
 }
