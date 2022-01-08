@@ -33,28 +33,36 @@ class NanoXCore {
         let divBarButtonLeft = NonoXBuild.DivFlexRowStart(null, "padding-left: 0.8rem;")
         divBarButtonContent.appendChild(divBarButtonLeft)
         if(this._NanoXAppOption.ShowNameInMenuBar){divBarButtonLeft.appendChild(NonoXBuild.DivTexte(this._NanoXAppOption.AppName, null, "NanoXAppColor NanoXActionBarTitre", null))}
-        divBarButtonLeft.appendChild(NonoXBuild.DivFlexRowStart(this._IdBarActionButtonLeft))
+        divBarButtonLeft.appendChild(NonoXBuild.Div(this._IdBarActionButtonLeft, "NanoXActionBarFlexStart"))
         // Bar button right
         let divBarButtonRight = NonoXBuild.DivFlexRowEnd(null, "padding-right: 0.8rem;")
         divBarButtonContent.appendChild(divBarButtonRight)
-        divBarButtonRight.appendChild(NonoXBuild.DivFlexRowEnd(this._IdBarActionButtonRight))
-        divBarButtonRight.appendChild(this.BuildActionButton(this.SvgUser(), this.ClickOnUser.bind(this)))
+        divBarButtonRight.appendChild(NonoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
+        divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgUser(), this.ClickOnUser.bind(this)))
+        // Add HamburgerIcon for mobile view
+        let hambergerIcon = NonoXBuild.Div("hamburger-icon")
+        divBarButtonRight.appendChild(hambergerIcon)
+        hambergerIcon.appendChild(NonoXBuild.Div(null, "bar1"))
+        hambergerIcon.appendChild(NonoXBuild.Div(null, "bar2"))
+        hambergerIcon.appendChild(NonoXBuild.Div(null, "bar3"))
+        hambergerIcon.onclick = this.ClickHambergerIcon.bind(this)
     }
 
-    AddActionButtonLeft(Svg= null, Action= null){
-        let button = this.BuildActionButton(Svg, Action)
+    AddActionButtonLeft(Id = null, Svg= null, Action= null){
+        let button = this.BuildActionButton(Id, Svg, Action)
         document.getElementById(this._IdBarActionButtonLeft).appendChild(button)
     }
 
-    AddActionButtonRight(Svg= null, Action= null){
-        let button = this.BuildActionButton(Svg, Action)
+    AddActionButtonRight(Id = null, Svg= null, Action= null){
+        let button = this.BuildActionButton(Id, Svg, Action)
         document.getElementById(this._IdBarActionButtonRight).appendChild(button)
     }
 
-    BuildActionButton(Svg = null, Action=null){
+    BuildActionButton(Id = null, Svg = null, Action=null){
         if (Svg == null){ Svg = this.SvgDefault()}
         if (Action == null) {Action = ()=>{alert("Action not define")}}
         let button = document.createElement("button")
+        if (Id){button.id = Id}
         button.classList.add("NanoXActionButton")
         button.innerHTML = Svg
         button.onclick = Action
@@ -73,6 +81,9 @@ class NanoXCore {
         alert("User")
     }
 
+    ClickHambergerIcon(){
+        document.getElementById("hamburger-icon").classList.toggle('open');
+    }
 
     BuildDivApplication(){
         document.body.appendChild(NonoXBuild.DivFlexColumn(this._IdDivApp, "width: 100%;"))

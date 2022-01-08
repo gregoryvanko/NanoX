@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
 .NanoXActionBar{
     position: fixed;
     top:0px;
@@ -27,3 +29,65 @@
     font-style: italic;
     margin-right: 1rem;
 }
+
+.NanoXActionBarFlexStart{
+    display: flex;
+    flex-direction: row;
+    justify-content:start;
+    align-content:center;
+    align-items: center;
+}
+
+.NanoXActionBarFlexEnd{
+    display: flex;
+    flex-direction: row;
+    justify-content:end;
+    align-content:center;
+    align-items: center;
+}
+
+
+
+#hamburger-icon {
+    margin: auto 0;
+    display: none;
+    cursor: pointer;
+}
+  
+#hamburger-icon div {
+    width: 25px;
+    height: 3px;
+    background-color: black;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+  
+.open .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-6px, 6px);
+    transform: rotate(-45deg) translate(-6px, 6px);
+}
+  
+.open .bar2 {
+    opacity: 0;
+}
+  
+.open .bar3 {
+    -webkit-transform: rotate(45deg) translate(-6px, -8px);
+    transform: rotate(45deg) translate(-6px, -8px);
+}
+
+
+@media only screen and (max-width: 600px) {
+    #NanoXUserButton{
+        display: none;
+    }
+    #IdBarActionButtonLeft{
+        display: none;
+    }
+    #IdBarActionButtonRight{
+        display: none;
+    }
+    #hamburger-icon {
+        display: block;
+    }
+  }
