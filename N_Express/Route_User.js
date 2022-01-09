@@ -18,7 +18,7 @@ router.get("/", AuthBasic, (req, res) => {
         if (user != null){
             let UserInfo = user
             UserInfo.Password = null
-            res.send({UserData:UserInfo})
+            res.send(UserInfo)
         } else {
             res.status(500).send({ErrorMsg: "User not found"})
             LogError(`User not found`, req.user)
@@ -35,6 +35,9 @@ router.patch("/", AuthBasic, (req, res) => {
     ModelUsers.findById(req.user._id)
     .then(user => {
         if (user != null){
+            if (req.body.User != null){
+                user.User = req.body.User
+            }
             if (req.body.FirstName != null){
                 user.FirstName = req.body.FirstName
             }

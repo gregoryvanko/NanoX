@@ -1,4 +1,4 @@
-class NonoXBuild{
+class NanoXBuild{
     constructor(){}
 
     /**
@@ -145,6 +145,81 @@ class NonoXBuild{
         return element
     }
 
+    static PopupCreate(HTMLElement = null, ListOfButton = [{Titre: "Cancel", Action: NanoXBuild.PopupDelete, Id: null}]){
+        let Div1 = document.createElement("div")
+        Div1.setAttribute("id", "NonoXPopup")
+        Div1.setAttribute("style", "display: block; position: fixed; top: 0px; left: 0px; background-color: rgb(230,230,230, 0.8); width: 100vw; height: 100vh; z-index: 1000;")
+        let Div2 = document.createElement("div")
+        Div2.setAttribute("id", "NonoXPopupScreen")
+        Div2.setAttribute("style","top: 10vh; max-height: 60vh; display: block; position: fixed; max-width: 90%; width: 45rem; margin-left: auto; margin-right: auto; z-index: 1000; background-color: white; padding: 1rem; border-radius: 10px; border: 2px solid var(--NanoX-appcolor); overflow-y: auto; left:0; right:0")
+        Div1.appendChild(Div2)
+        if(HTMLElement != null){
+            Div2.appendChild(HTMLElement)
+        }
+
+        let DivButton = document.createElement("div")
+        DivButton.setAttribute("style","display: -webkit-flex; display: flex; flex-direction: row; justify-content:space-around; align-content:center; align-items: center; flex-wrap: wrap;")
+
+        let WidthButton = "20"
+        if (ListOfButton.length > 1){
+            let calcwidth = 90 / ListOfButton.length
+            WidthButton = calcwidth.toString()
+        }
+        ListOfButton.forEach(element => {
+            let mybutton = NanoXBuild.Button(element.Titre, element.Action, element.Id, null, `margin: 1rem 1rem 0 1rem; padding: 0.4rem; cursor: pointer; border: 1px solid var(--NanoX-appcolor); border-radius: 1rem; text-align: center; display: inline-block; font-size: 1rem; box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7); color: rgb(44,1,21); outline: none; background-color:white; width: ${WidthButton}%; max-width : 30%;`)
+            DivButton.appendChild(mybutton)
+        });
+
+        Div2.appendChild(DivButton)
+
+        document.body.appendChild(Div1)
+    }
+
+    static PopupDelete(){
+        document.getElementById("NonoXPopup").parentNode.removeChild(document.getElementById("NonoXPopup"))
+    }
+
+    static Image64(Base64, Id, Class, Style){
+        let element = document.createElement("img")
+        element.setAttribute("src", Base64)
+        if (Id){element.setAttribute("id", Id)}
+        if (Class){element.setAttribute("Class", Class)}
+        if (Style){element.setAttribute("Style", Style)}
+        return element
+    }
+
+    static Input(Value, Type, Name, Placeholder, Id , Class, Style){
+        let element = document.createElement("input")
+        if (Id){element.setAttribute("id", Id)}
+        if (Class){element.setAttribute("Class", Class)}
+        if (Style){element.setAttribute("Style", Style)}
+        if (Value){element.setAttribute("value", Value)}
+        if (Type){element.setAttribute("type", Type)}
+        if (Name){element.setAttribute("name", Name)}
+        if (Placeholder){element.setAttribute("placeholder", Placeholder)}
+        return element
+    }
+
+    static InputWithLabel(BoxClass=null, Label=null, LabelClass=null, Id="Input", InputValue="", InputClass="", InputType="text", InputPlaceholder="", OnBlur=null, StopAutoComplete = false){
+        let element = document.createElement("div")
+        if ((BoxClass!=null)&&(BoxClass!="")){element.setAttribute("Class", BoxClass)}
+        if ((Label!=null)&&(Label!="")){
+            if ((LabelClass!=null)&&(LabelClass!="")){
+                element.appendChild(NanoXBuild.DivTexte(Label,"",LabelClass,"width: 100%;"))
+            } else {
+                element.appendChild(NanoXBuild.DivTexte(Label,"","","width: 100%;"))
+            }
+        }
+        let inputStyle="box-sizing: border-box; outline: none; margin: 0; -webkit-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); -moz-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #666;"
+        let InputProgramName = NanoXBuild.Input(InputValue, InputType, Id, InputPlaceholder, Id, InputClass,inputStyle)
+        InputProgramName.onfocus = function(){InputProgramName.placeholder = ""}
+        if (OnBlur!=null){
+            InputProgramName.onblur = OnBlur
+        }
+        if (StopAutoComplete){InputProgramName.setAttribute("autocomplete", "off")}
+        element.appendChild(InputProgramName)
+        return element
+    }
 
 
     /**

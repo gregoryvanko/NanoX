@@ -95,6 +95,21 @@
     background-color: white;
     font-size: 1rem;
 }
+.NanoXInputBox{
+    width: 90%;
+}
+.NanoXInputLabelText{
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+}
+.NanoXInput {
+    border: solid 1px #dcdcdc;
+    width: 90%;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
 
 @media only screen and (max-width: 600px) {
     #NanoXUserButton{

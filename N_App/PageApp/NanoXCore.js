@@ -21,36 +21,36 @@ class NanoXCore {
     }
 
     BuildDivApplication(){
-        document.body.appendChild(NonoXBuild.DivFlexColumn(this._IdDivApp, null, "width: 100%;"))
+        document.body.appendChild(NanoXBuild.DivFlexColumn(this._IdDivApp, null, "width: 100%;"))
     }
 
     BuildActionButtonBar(){
-        let divBarButton = NonoXBuild.Div(this._IdBarActionButton, "NanoXActionBar NanoXActionBarDim", "display: -webkit-flex; display: flex; flex-direction: row; justify-content:center; align-content:center; align-items: center;")
+        let divBarButton = NanoXBuild.Div(this._IdBarActionButton, "NanoXActionBar NanoXActionBarDim", "display: -webkit-flex; display: flex; flex-direction: row; justify-content:center; align-content:center; align-items: center;")
         document.body.appendChild(divBarButton)
-        document.body.appendChild(NonoXBuild.Div(null,"NanoXActionBarDim"))
+        document.body.appendChild(NanoXBuild.Div(null,"NanoXActionBarDim"))
 
-        let divBarButtonContent = NonoXBuild.DivFlexRowSpaceBetween(null, null, "width:100%;")
+        let divBarButtonContent = NanoXBuild.DivFlexRowSpaceBetween(null, null, "width:100%;")
         divBarButton.appendChild(divBarButtonContent)
         // Bar Button Left
-        let divBarButtonLeft = NonoXBuild.DivFlexRowStart(null, null, "padding-left: 0.8rem;")
+        let divBarButtonLeft = NanoXBuild.DivFlexRowStart(null, null, "padding-left: 0.8rem;")
         divBarButtonContent.appendChild(divBarButtonLeft)
-        if(this._NanoXAppOption.ShowNameInMenuBar){divBarButtonLeft.appendChild(NonoXBuild.DivTexte(this._NanoXAppOption.AppName, null, "NanoXAppColor NanoXActionBarTitre", null))}
-        divBarButtonLeft.appendChild(NonoXBuild.Div(this._IdBarActionButtonLeft, "NanoXActionBarFlexStart"))
+        if(this._NanoXAppOption.ShowNameInMenuBar){divBarButtonLeft.appendChild(NanoXBuild.DivTexte(this._NanoXAppOption.AppName, null, "NanoXAppColor NanoXActionBarTitre", null))}
+        divBarButtonLeft.appendChild(NanoXBuild.Div(this._IdBarActionButtonLeft, "NanoXActionBarFlexStart"))
         // Bar button right
-        let divBarButtonRight = NonoXBuild.DivFlexRowEnd(null, null, "padding-right: 0.8rem;")
+        let divBarButtonRight = NanoXBuild.DivFlexRowEnd(null, null, "padding-right: 0.8rem;")
         divBarButtonContent.appendChild(divBarButtonRight)
-        divBarButtonRight.appendChild(NonoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
+        divBarButtonRight.appendChild(NanoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
         divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgUser(this._NanoXAppOption.ColorIconMenuBar), this.ClickOnUser.bind(this)))
         // Add HamburgerIcon for mobile view
-        let hambergerIcon = NonoXBuild.Div("Nxhamburger-icon")
+        let hambergerIcon = NanoXBuild.Div("Nxhamburger-icon")
         divBarButtonRight.appendChild(hambergerIcon)
-        let bar1 = NonoXBuild.Div(null, "bar1")
+        let bar1 = NanoXBuild.Div(null, "bar1")
         bar1.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
         hambergerIcon.appendChild(bar1)
-        let bar2 = NonoXBuild.Div(null, "bar1")
+        let bar2 = NanoXBuild.Div(null, "bar2")
         bar2.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
         hambergerIcon.appendChild(bar2)
-        let bar3 = NonoXBuild.Div(null, "bar1")
+        let bar3 = NanoXBuild.Div(null, "bar3")
         bar3.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
         hambergerIcon.appendChild(bar3)
         hambergerIcon.onclick = this.ClickHambergerIcon.bind(this)
@@ -96,12 +96,12 @@ class NanoXCore {
         if (document.getElementById(this._IdNanoXUserMenu)){
             this.RemoveViewUserMenu()
         } else {
-            let divcontent = NonoXBuild.DivFlexColumn(this._IdNanoXUserMenu, "NanoXUserMenu")
+            let divcontent = NanoXBuild.DivFlexColumn(this._IdNanoXUserMenu, "NanoXUserMenu")
             // Button Mon compte
-            let buttonMe = NonoXBuild.Button("Mon Compte", ()=>{this.RemoveViewUserMenu(); this.ClickOnGetMyData()}, "NxGetMyData", "NanoXMobileMenuButton NanoXAppColor")
+            let buttonMe = NanoXBuild.Button("Mon Compte", ()=>{this.RemoveViewUserMenu(); this.ClickOnGetMyData()}, "NxGetMyData", "NanoXMobileMenuButton NanoXAppColor")
             divcontent.appendChild(buttonMe)
             // Button LogOut
-            let buttonLogOut = NonoXBuild.Button("Logout", this.ClickOnLogOut.bind(this), "NxLogOut", "NanoXMobileMenuButton NanoXAppColor")
+            let buttonLogOut = NanoXBuild.Button("Logout", this.ClickOnLogOut.bind(this), "NxLogOut", "NanoXMobileMenuButton NanoXAppColor")
             divcontent.appendChild(buttonLogOut)
 
             document.body.appendChild(divcontent)
@@ -123,36 +123,36 @@ class NanoXCore {
     }
 
     BuildViewMobileMenu(){
-        let divcontent = NonoXBuild.DivFlexColumn(this._IdNanoXMobileMenu, "NanoXMobileMenu")
+        let divcontent = NanoXBuild.DivFlexColumn(this._IdNanoXMobileMenu, "NanoXMobileMenu")
         // Left action
         let ActionLeftExist = false
         this._ListOfActionButtonBar.forEach(element => {
             if (element.Type == "Left"){
                 let action = element.Action
-                let button = NonoXBuild.Button(element.Titre, ()=>{this.ClickHambergerIcon(); action()}, element.Id, "NanoXMobileMenuButton NanoXAppColor")
+                let button = NanoXBuild.Button(element.Titre, ()=>{this.ClickHambergerIcon(); action()}, element.Id, "NanoXMobileMenuButton NanoXAppColor")
                 divcontent.appendChild(button)
                 ActionLeftExist = true
             }
         });
         // Line
-        if (ActionLeftExist){divcontent.appendChild(NonoXBuild.Line("100%", "1px", "balck"))}
+        if (ActionLeftExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))}
         // Right action
         let ActionRightExist = false
         this._ListOfActionButtonBar.forEach(element => {
             if (element.Type == "Right"){
                 let action = element.Action
-                let button = NonoXBuild.Button(element.Titre, ()=>{this.ClickHambergerIcon(); action()}, element.Id, "NanoXMobileMenuButton NanoXAppColor")
+                let button = NanoXBuild.Button(element.Titre, ()=>{this.ClickHambergerIcon(); action()}, element.Id, "NanoXMobileMenuButton NanoXAppColor")
                 divcontent.appendChild(button)
                 ActionRightExist = true
             }
         });
         // Line
-        if (ActionRightExist){divcontent.appendChild(NonoXBuild.Line("100%", "1px", "balck"))}
+        if (ActionRightExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))}
         // Button Mon compte
-        let buttonMe = NonoXBuild.Button("Mon Compte", ()=>{this.ClickHambergerIcon(); this.ClickOnGetMyData()}, "NxGetMyData", "NanoXMobileMenuButton NanoXAppColor")
+        let buttonMe = NanoXBuild.Button("Mon Compte", ()=>{this.ClickHambergerIcon(); this.ClickOnGetMyData()}, "NxGetMyData", "NanoXMobileMenuButton NanoXAppColor")
         divcontent.appendChild(buttonMe)
         // Button LogOut
-        let buttonLogOut = NonoXBuild.Button("Logout", this.ClickOnLogOut.bind(this), "NxLogOut", "NanoXMobileMenuButton NanoXAppColor")
+        let buttonLogOut = NanoXBuild.Button("Logout", this.ClickOnLogOut.bind(this), "NxLogOut", "NanoXMobileMenuButton NanoXAppColor")
         divcontent.appendChild(buttonLogOut)
 
         document.body.appendChild(divcontent)
@@ -163,7 +163,143 @@ class NanoXCore {
     }
 
     ClickOnGetMyData(){
-        alert("ToDo")
+        this.BuildViewWaitingUserInfo()
+        axios({
+            method: 'get',
+            url: '/nanoxuser',
+            headers: {
+                'x-auth-token': `${NxGetToken()}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => {
+            NanoXBuild.PopupDelete()
+            this.BuildViewUserInfo(response.data)
+        })
+        .catch((error) => {
+            let DivError = document.getElementById("DivWaitingUserInfo")
+            DivError.style.color = "red"
+            if (error.response) {
+                if ((error.response.status == 500) || (error.response.status == 401)){
+                    DivError.innerText = error.response.data.ErrorMsg
+                } else {
+                    DivError.innerText = error.response.data
+                }
+            } else if (error.request) {
+                DivError.innerText = error.request
+            } else {
+                DivError.innerText = error.message
+            }
+        })
+    }
+
+    BuildViewWaitingUserInfo(){
+        // Div waiting
+        let divwaiting = NanoXBuild.DivTexte("Waiting user data...", "DivWaitingUserInfo", null, "text-align: center;")
+        NanoXBuild.PopupCreate(divwaiting)
+    }
+
+    BuildViewUserInfo(Data){
+        let divcontent = NanoXBuild.Div(null, null, "width:100%;")
+        // User
+        divcontent.appendChild(NanoXBuild.InputWithLabel("NanoXInputBox", "User", "NanoXInputLabelText", "InputUser", Data.User, "NanoXInput", "text", "", null, true))
+        // FirstName
+        divcontent.appendChild(NanoXBuild.InputWithLabel("NanoXInputBox", "First Name", "NanoXInputLabelText", "InputFirst-Name", Data.FirstName, "NanoXInput", "text", "", null, true))
+        // LastName
+        divcontent.appendChild(NanoXBuild.InputWithLabel("NanoXInputBox", "Last Name", "NanoXInputLabelText", "InputLast-Name", Data.LastName, "NanoXInput", "text", "", null, true))
+        // Password
+        divcontent.appendChild(NanoXBuild.InputWithLabel("NanoXInputBox", "Password", "NanoXInputLabelText", "InputPassword", "", "NanoXInput", "password", "", null, true))
+        // Error
+        divcontent.appendChild(NanoXBuild.DivTexte("", "UserInfoErrorMsg", null, " color: red; text-align: center; margin-top: 1rem;"))
+        // Empty Space
+        divcontent.appendChild(NanoXBuild.Div(null, null, "height:1rem;"))
+
+        NanoXBuild.PopupCreate(divcontent, [{Titre: "Save", Action: this.SaveUserInfo.bind(this), Id: "SaveUser"}, {Titre: "Cancel", Action: NanoXBuild.PopupDelete, Id: "CancelUser"}])
+    }
+
+    SaveUserInfo(){
+        if (this.IsInputUserinfoValide()){
+            document.getElementById('SaveUser').innerText = "Waiting..."
+            document.getElementById('SaveUser').disabled = true
+            document.getElementById('CancelUser').style.display = "none"
+
+            let Pass = document.getElementById('InputPassword').value
+            let SendData = null
+            if (Pass == ""){
+                SendData = {
+                    User: document.getElementById('InputUser').value,
+                    FirstName: document.getElementById('InputFirst-Name').value,
+                    LastName: document.getElementById('InputLast-Name').value,
+                }
+            } else {
+                SendData = {
+                    User: document.getElementById('InputUser').value,
+                    FirstName: document.getElementById('InputFirst-Name').value,
+                    LastName: document.getElementById('InputLast-Name').value,
+                    Password: document.getElementById('InputPassword').value
+                }
+            }
+            // Get Token
+            axios({
+                method: 'patch',
+                url: '/nanoxuser',
+                headers: {
+                    'x-auth-token': `${NxGetToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                data: SendData
+            })
+            .then((response) => {
+                NanoXBuild.PopupDelete()
+            })
+            .catch((error) => {
+                if (error.response) {
+                    if ((error.response.status == 500) || (error.response.status == 401)){
+                        document.getElementById("UserInfoErrorMsg").innerText = error.response.data.ErrorMsg
+                    } else {
+                        document.getElementById("UserInfoErrorMsg").innerText = error.response.data
+                    }
+                } else if (error.request) {
+                    document.getElementById("UserInfoErrorMsg").innerText = error.request
+                } else {
+                    document.getElementById("UserInfoErrorMsg").innerText = error.message
+                }
+            })
+        }
+    }
+
+    IsInputUserinfoValide(){
+        document.getElementById("UserInfoErrorMsg").innerHTML =""
+        let ErrorMessage = ""
+        let IsValide = true
+        if (document.getElementById('InputUser').value.length > 1){
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(! re.test(String(document.getElementById('InputUser').value).toLowerCase())){
+                ErrorMessage += "Enter a valid User<br>";
+                IsValide = false;
+            }
+        } else {
+            ErrorMessage += "Enter User<br>";
+            IsValide = false;
+        }
+        if (document.getElementById('InputFirst-Name').value.length < 3){
+            ErrorMessage += "Enter a longer First Name<br>";
+            IsValide = false;
+        }
+        if (document.getElementById('InputLast-Name').value.length < 3){
+            ErrorMessage += "Enter a longer Last Name<br>";
+            IsValide = false;
+        }
+        if (document.getElementById('InputPassword').value.length != ""){
+            if (document.getElementById('InputPassword').value.length < 7){
+                ErrorMessage += "Enter a longer Password<br>";
+                IsValide = false;
+            }
+        }
+        if(!IsValide){
+            document.getElementById("UserInfoErrorMsg").innerHTML = ErrorMessage
+        }
+        return IsValide
     }
 
     ClickOnLogOut(){
