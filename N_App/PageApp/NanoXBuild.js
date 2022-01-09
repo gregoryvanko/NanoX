@@ -221,6 +221,49 @@ class NanoXBuild{
         return element
     }
 
+    static Textarea(Placeholder, Id, Class, Style){
+        let element = document.createElement("textarea")
+        element.setAttribute("wrap", "off")
+        if (Id){element.setAttribute("id", Id)}
+        if (Placeholder){element.setAttribute("placeholder", Placeholder)}
+        if (Class){element.setAttribute("Class", Class)}
+        if (Style){element.setAttribute("Style", Style)}
+        return element
+    }
+
+    static Video (Src,Id, Class,Style){
+        let element = document.createElement("div")
+        element.setAttribute("style","display: -webkit-flex; display: flex; flex-direction: column; justify-content:space-around; align-content:center; align-items: center; flex-wrap: wrap;")
+        if (Style){element.setAttribute("Style", Style)}
+        if (Class){element.setAttribute("Class", Class)}
+        let video = document.createElement("video")
+        if (Id){video.setAttribute("id", Id)}
+        video.style.width = "100%"
+        video.controls = true
+        video.setAttribute("playsinline", "")
+        var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
+        if (!isChrome){
+            video.setAttribute("autoplay", "false")
+        }
+        video.onerror = ()=>{element.innerHTML = `Video Error: ErrorCode= ${video.error.code} details= ${video.error.message}`}
+        video.src = Src
+        element.appendChild(video)
+        return element
+    }
+
+    static ProgressRing({Id="", StrokeColor= "#51c5cf", Fill = "black", TextColor = "#51c5cf",Progress = 0, Radius = 80, RadiusMobile = null, ScaleRing = 1, ScaleText = 1 }={}){
+        if(RadiusMobile == null){RadiusMobile = Radius}
+        if(window.innerWidth < 700){
+            // Mobile device
+            Radius = RadiusMobile
+        }
+        const Stroke = (Radius / 10) * ScaleRing
+        let TextFontSize = (Radius / 1.5) * ScaleText
+        TextFontSize = TextFontSize.toString() + "px"
+        let element = document.createElement("div")
+        element.innerHTML = `<progress-ring id="${Id}" stroke="${Stroke}" strokeColor="${StrokeColor}" fill="${Fill}" radius="${Radius}" progress="${Progress}" textcolor="${TextColor}" textfontsize="${TextFontSize}"></progress-ring>`
+        return element
+    }
 
     /**
      * Converti une date en un string Date Time yyyy-mm-dd h:m:s
@@ -258,3 +301,66 @@ class NanoXBuild{
         return yyyy + "-" + mm + "-" + dd
     } 
 }
+
+/**Custome element build by CoreXBuild*/
+class ProgressRing extends HTMLElement {
+    constructor() {
+        super();
+      
+        // get config from attributes
+        const textcolor = this.getAttribute('textcolor');
+        const textfontsize = this.getAttribute('textfontsize');
+        const strokeColor = this.getAttribute('strokeColor');
+        const fill = this.getAttribute('fill');
+        const stroke = this.getAttribute('stroke');
+        const radius = this.getAttribute('radius');
+        const normalizedRadius = radius - stroke * 2;
+        this._circumference = normalizedRadius * 2 * Math.PI;
+        // create shadow dom root
+        this._root = this.attachShadow({mode: 'open'});
+        this._root.innerHTML = `
+          <svg
+            height="${radius * 2}"
+            width="${radius * 2}"
+           >
+             <circle
+               stroke="${strokeColor}"
+               stroke-dasharray="${this._circumference} ${this._circumference}"
+               style="stroke-dashoffset:${this._circumference}"
+               stroke-width="${stroke}"
+               fill="${fill}"
+               r="${normalizedRadius}"
+               cx="${radius}"
+               cy="${radius}"
+            />
+            <text text-anchor="middle" dominant-baseline="middle" x="52%" y="50%" fill="${textcolor}" font-size="${textfontsize}">
+                <tspan id="number">99</tspan><tspan dy="-0.25em" font-size="0.6em">%</tspan>
+            </text>
+          </svg>
+      
+          <style>
+            circle {
+              transition: stroke-dashoffset 0.35s;
+              transform: rotate(-90deg);
+              transform-origin: 50% 50%;
+            }
+          </style>
+        `;
+    }
+    setProgress(percent) {
+        const offset = this._circumference - (percent / 100 * this._circumference);
+        const circle = this._root.querySelector('circle');
+        circle.style.strokeDashoffset = offset; 
+        const Txt = this._root.getElementById('number');
+        Txt.innerHTML = percent
+    }
+    static get observedAttributes() {
+        return [ 'progress' ];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'progress') {
+          this.setProgress(newValue);
+        }
+    }
+}
+window.customElements.define('progress-ring', ProgressRing);
