@@ -14,6 +14,7 @@ class NanoXCore {
     Start(){
         this.BuildActionButtonBar()
         this.BuildDivApplication()
+        // ToDo
     }
 
     GetDivApp(){
