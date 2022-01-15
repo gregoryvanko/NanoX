@@ -3,8 +3,11 @@ class NanoXCore {
         this._NanoXAppOption = NanoXAppOption
         this._IdDivApp = "IdDivApp"
         this._IdBarActionButton = "IdBarActionButton"
+        this._IdBarActionButtonDim = "IdBarActionButtonDim"
+        this._IdBarButtonLeft = "IdBarButtonLeft"
         this._IdBarActionButtonLeft = "IdBarActionButtonLeft"
         this._IdBarActionButtonRight = "IdBarActionButtonRight"
+        this._IdBarTitreName = "IdBarTitreName"
         this._IdNanoXMobileMenu = "IdNanoXMobileMenu"
         this._IdNanoXUserMenu = "IdNanoXUserMenu"
 
@@ -12,9 +15,54 @@ class NanoXCore {
     }
 
     Start(){
-        this.BuildActionButtonBar()
+        this.ShowMenuBar(this._NanoXAppOption.ShowMenuBar)
         this.BuildDivApplication()
+
+        let App = this.GetDivApp()
+        App.appendChild(NanoXBuild.DivTexte("Coucou les gas", null, null, "background-color: red; width: 100%; height: 10vh;"))
         // ToDo
+    }
+
+    ShowMenuBar(Show = true){
+        if (Show){
+            this.BuildActionButtonBar()
+            this.SetMenuBarTransparent(this._NanoXAppOption.MenuBarIstransparent)
+            this.ShowNameInMenuBar(this._NanoXAppOption.ShowNameInMenuBar)
+        } else {
+            this.RemoveActionButtonBar()
+            this.RemoveActionButtonBarDim()
+        }
+    }
+
+    ShowNameInMenuBar(Show = true){
+        if(Show){
+            if (! document.getElementById(this._IdBarTitreName)){
+                let divName = NanoXBuild.DivTexte(this._NanoXAppOption.AppName, this._IdBarTitreName, "NanoXAppColor NanoXActionBarTitre", null)
+                document.getElementById(this._IdBarButtonLeft).insertBefore(divName, document.getElementById(this._IdBarButtonLeft).firstChild)
+            }
+        } else {
+            if (document.getElementById(this._IdBarTitreName)){
+                document.getElementById(this._IdBarButtonLeft).removeChild(document.getElementById(this._IdBarTitreName))
+            }
+        }
+    }
+
+    SetMenuBarTransparent(Transparent = false){
+        if (Transparent){
+            // Set ActionBar transparent
+            if (document.getElementById(this._IdBarActionButton)){
+                document.getElementById(this._IdBarActionButton).classList.add("NanoXActionBarTransparent")
+            }
+            // Remove ActionButtonDim
+            this.RemoveActionButtonBarDim()
+        } else {
+            // Remove ActionBar transparent
+            if (document.getElementById(this._IdBarActionButton)){
+                document.getElementById(this._IdBarActionButton).classList.remove("NanoXActionBarTransparent")
+            }
+            // Add ActionButtonDim
+            this.BuildActionButtonBarDim()
+        }
     }
 
     GetDivApp(){
@@ -26,49 +74,75 @@ class NanoXCore {
     }
 
     BuildActionButtonBar(){
-        let divBarButton = NanoXBuild.Div(this._IdBarActionButton, "NanoXActionBar NanoXActionBarDim", "display: -webkit-flex; display: flex; flex-direction: row; justify-content:center; align-content:center; align-items: center;")
-        document.body.appendChild(divBarButton)
-        document.body.appendChild(NanoXBuild.Div(null,"NanoXActionBarDim"))
-
-        let divBarButtonContent = NanoXBuild.DivFlexRowSpaceBetween(null, null, "width:100%;")
-        divBarButton.appendChild(divBarButtonContent)
-        // Bar Button Left
-        let divBarButtonLeft = NanoXBuild.DivFlexRowStart(null, null, "padding-left: 0.8rem;")
-        divBarButtonContent.appendChild(divBarButtonLeft)
-        if(this._NanoXAppOption.ShowNameInMenuBar){divBarButtonLeft.appendChild(NanoXBuild.DivTexte(this._NanoXAppOption.AppName, null, "NanoXAppColor NanoXActionBarTitre", null))}
-        divBarButtonLeft.appendChild(NanoXBuild.Div(this._IdBarActionButtonLeft, "NanoXActionBarFlexStart"))
-        // Bar button right
-        let divBarButtonRight = NanoXBuild.DivFlexRowEnd(null, null, "padding-right: 0.8rem;")
-        divBarButtonContent.appendChild(divBarButtonRight)
-        divBarButtonRight.appendChild(NanoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
-        divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgUser(this._NanoXAppOption.ColorIconMenuBar), this.ClickOnUser.bind(this)))
-        // Add HamburgerIcon for mobile view
-        let hambergerIcon = NanoXBuild.Div("Nxhamburger-icon")
-        divBarButtonRight.appendChild(hambergerIcon)
-        let bar1 = NanoXBuild.Div(null, "bar1")
-        bar1.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
-        hambergerIcon.appendChild(bar1)
-        let bar2 = NanoXBuild.Div(null, "bar2")
-        bar2.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
-        hambergerIcon.appendChild(bar2)
-        let bar3 = NanoXBuild.Div(null, "bar3")
-        bar3.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
-        hambergerIcon.appendChild(bar3)
-        hambergerIcon.onclick = this.ClickHambergerIcon.bind(this)
+        if (!document.getElementById(this._IdBarActionButton)){
+            let divBarButton = NanoXBuild.Div(this._IdBarActionButton, "NanoXActionBar NanoXActionBarDim", "display: -webkit-flex; display: flex; flex-direction: row; justify-content:center; align-content:center; align-items: center;")
+            divBarButton.style.backgroundColor = this._NanoXAppOption.ColorMenuBar
+            document.body.insertBefore(divBarButton, document.body.firstChild)
+            this.BuildActionButtonBarDim()
+    
+            let divBarButtonContent = NanoXBuild.DivFlexRowSpaceBetween(null, null, "width:100%;")
+            divBarButton.appendChild(divBarButtonContent)
+            // Bar Button Left
+            let divBarButtonLeft = NanoXBuild.DivFlexRowStart(this._IdBarButtonLeft, null, "padding-left: 0.8rem;")
+            divBarButtonContent.appendChild(divBarButtonLeft)
+            divBarButtonLeft.appendChild(NanoXBuild.Div(this._IdBarActionButtonLeft, "NanoXActionBarFlexStart"))
+            // Bar button right
+            let divBarButtonRight = NanoXBuild.DivFlexRowEnd(null, null, "padding-right: 0.8rem;")
+            divBarButtonContent.appendChild(divBarButtonRight)
+            divBarButtonRight.appendChild(NanoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
+            divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgUser(this._NanoXAppOption.ColorIconMenuBar), this.ClickOnUser.bind(this)))
+            // Add HamburgerIcon for mobile view
+            let hambergerIcon = NanoXBuild.Div("Nxhamburger-icon")
+            divBarButtonRight.appendChild(hambergerIcon)
+            let bar1 = NanoXBuild.Div(null, "bar1")
+            bar1.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
+            hambergerIcon.appendChild(bar1)
+            let bar2 = NanoXBuild.Div(null, "bar2")
+            bar2.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
+            hambergerIcon.appendChild(bar2)
+            let bar3 = NanoXBuild.Div(null, "bar3")
+            bar3.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
+            hambergerIcon.appendChild(bar3)
+            hambergerIcon.onclick = this.ClickHambergerIcon.bind(this)
+        }
     }
 
-    AddActionButtonLeft(Id = null, Titre= null, Svg= null, Action= null){
+    BuildActionButtonBarDim(){
+        if (!document.getElementById(this._IdBarActionButtonDim)){
+            let divdim = NanoXBuild.Div(this._IdBarActionButtonDim,"NanoXActionBarDim")
+            let divBarButton = document.getElementById(this._IdBarActionButton)
+            divBarButton.parentNode.insertBefore(divdim, divBarButton.nextSibling)
+        }
+    }
+
+    RemoveActionButtonBar(){
+        if (document.getElementById(this._IdBarActionButton)){document.body.removeChild(document.getElementById(this._IdBarActionButton))}
+    }
+
+    RemoveActionButtonBarDim(){
+        if (document.getElementById(this._IdBarActionButtonDim)){document.body.removeChild(document.getElementById(this._IdBarActionButtonDim))}
+    }
+
+    AddMenuButtonLeft(Id = null, Titre= null, Svg= null, Action= null){
         if (Action == null) {Action = ()=>{alert("Action not define")}}
         this._ListOfActionButtonBar.push({Type: "Left", Id: Id, Titre: Titre, Action: Action})
         let button = this.BuildActionButton(Id, Svg, Action)
         document.getElementById(this._IdBarActionButtonLeft).appendChild(button)
     }
 
-    AddActionButtonRight(Id = null, Titre= null, Svg= null, Action= null){
+    ClearMenuButtonLeft(){
+        document.getElementById(this._IdBarActionButtonLeft).innerHTML = ""
+    }
+
+    AddMenuButtonRight(Id = null, Titre= null, Svg= null, Action= null){
         if (Action == null) {Action = ()=>{alert("Action not define")}}
         this._ListOfActionButtonBar.push({Type: "Right", Id: Id, Titre: Titre, Action: Action})
         let button = this.BuildActionButton(Id, Svg, Action)
         document.getElementById(this._IdBarActionButtonRight).appendChild(button)
+    }
+
+    ClearMenuButtonRight(){
+        document.getElementById(this._IdBarActionButtonRight).innerHTML = ""
     }
 
     BuildActionButton(Id = null, Svg = null, Action=null){

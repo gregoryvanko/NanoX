@@ -98,7 +98,6 @@ class NanoXLoader {
             let JS = document.createElement('script')
             JS.type = 'text/javascript'
             JS.id = 'CodeJs'
-
             if (myreponse.Version != this.GetVersion()){
                 console.log("From server")
                 localStorage.setItem(this._DBKeyVersion, myreponse.Version)

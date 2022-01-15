@@ -6,12 +6,32 @@ let MyNanoXCore = new NanoXCore(${JSON.stringify(NanoXAppOption)})
 
 function NanoXGetDivApp(){return MyNanoXCore.GetDivApp()}
 
-function NanoXAddActionButtonLeft(Id = null, Titre= null, Svg= null, Action= null){
-    MyNanoXCore.AddActionButtonLeft(Id, Titre, Svg, Action)
+function NanoXShowMenuBar(Show = true){
+    MyNanoXCore.ShowMenuBar(Show)
 }
 
-function NanoXAddActionButtonRight(Id = null, Titre= null, Svg= null, Action= null){
-    MyNanoXCore.AddActionButtonRight(Id, Titre, Svg, Action)
+function NanoXSetMenuBarTransparent(Transparent = fase){
+    MyNanoXCore.SetMenuBarTransparent(Transparent)
+}
+
+function NanoXShowNameInMenuBar(Show = true){
+    MyNanoXCore.ShowNameInMenuBar(Show)
+}
+
+function NanoXAddMenuButtonLeft(Id = null, Titre= null, Svg= null, Action= null){
+    MyNanoXCore.AddMenuButtonLeft(Id, Titre, Svg, Action)
+}
+
+function NanoXClearMenuButtonLeft(){
+    MyNanoXCore.ClearMenuButtonLeft()
+}
+
+function NanoXAddMenuButtonRight(Id = null, Titre= null, Svg= null, Action= null){
+    MyNanoXCore.AddMenuButtonRight(Id, Titre, Svg, Action)
+}
+
+function NanoXClearMenuButtonRight(){
+    MyNanoXCore.ClearMenuButtonRight()
 }
 `
     return output

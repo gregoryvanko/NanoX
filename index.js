@@ -12,7 +12,7 @@ let MyAppPath = ""
 let MyStartApp = false
 let MySplashScreen = null
 let MySplashScreenBackgroundColor = 'white'
-let MyNanoXAppOption = {ShowNameInMenuBar: true, ColorIconMenuBar: "black"}
+let MyNanoXAppOption = {ShowMenuBar: true, MenuBarIstransparent: false, ShowNameInMenuBar: true, ColorMenuBar: "white", ColorIconMenuBar: "black"}
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -42,8 +42,11 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     MySplashScreen = SplashScreen
     MySplashScreenBackgroundColor = SplashScreenBackgroundColor
     if (NanoXAppOption){
-        if(NanoXAppOption.ShowNameInMenuBar){MyNanoXAppOption.ShowNameInMenuBar = NanoXAppOption.ShowNameInMenuBar}
-        if(NanoXAppOption.ColorIconMenuBar){MyNanoXAppOption.ColorIconMenuBar = NanoXAppOption.ColorIconMenuBar}
+        if(NanoXAppOption.ShowMenuBar != undefined){MyNanoXAppOption.ShowMenuBar = NanoXAppOption.ShowMenuBar}
+        if(NanoXAppOption.MenuBarIstransparent != undefined){MyNanoXAppOption.MenuBarIstransparent = NanoXAppOption.MenuBarIstransparent}
+        if(NanoXAppOption.ShowNameInMenuBar != undefined){MyNanoXAppOption.ShowNameInMenuBar = NanoXAppOption.ShowNameInMenuBar}
+        if(NanoXAppOption.ColorMenuBar != undefined){MyNanoXAppOption.ColorMenuBar = NanoXAppOption.ColorMenuBar}
+        if(NanoXAppOption.ColorIconMenuBar != undefined){MyNanoXAppOption.ColorIconMenuBar = NanoXAppOption.ColorIconMenuBar}
     }
 
     // Set MongoDb name
