@@ -12,7 +12,7 @@ let MyAppPath = ""
 let MyStartApp = false
 let MySplashScreen = null
 let MySplashScreenBackgroundColor = 'white'
-let MyNanoXAppOption = {ShowMenuBar: true, MenuBarIstransparent: false, ShowNameInMenuBar: true, ColorMenuBar: "white", ColorIconMenuBar: "black"}
+let MyNanoXAppOption = {ShowMenuBar: true, MenuBarIstransparent: false, ShowNameInMenuBar: true, ColorMenuBar: "white", ColorIconMenuBar: "black", HeightMenuBar: "3rem"}
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -47,6 +47,7 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
         if(NanoXAppOption.ShowNameInMenuBar != undefined){MyNanoXAppOption.ShowNameInMenuBar = NanoXAppOption.ShowNameInMenuBar}
         if(NanoXAppOption.ColorMenuBar != undefined){MyNanoXAppOption.ColorMenuBar = NanoXAppOption.ColorMenuBar}
         if(NanoXAppOption.ColorIconMenuBar != undefined){MyNanoXAppOption.ColorIconMenuBar = NanoXAppOption.ColorIconMenuBar}
+        if(NanoXAppOption.HeightMenuBar != undefined){MyNanoXAppOption.HeightMenuBar = NanoXAppOption.HeightMenuBar}
     }
 
     // Set MongoDb name

@@ -15,19 +15,38 @@ class NanoXCore {
     }
 
     Start(){
-        this.ShowMenuBar(this._NanoXAppOption.ShowMenuBar)
+        this.ShowMenuBar(this._NanoXAppOption.ShowMenuBar, this._NanoXAppOption.MenuBarIstransparent)
         this.BuildDivApplication()
 
-        let App = this.GetDivApp()
-        App.appendChild(NanoXBuild.DivTexte("Coucou les gas", null, null, "background-color: red; width: 100%; height: 10vh;"))
+        //let App = this.GetDivApp()
+        //App.appendChild(NanoXBuild.DivTexte("Coucou les gas", null, null, "background-color: red; width: 100%; height: 10vh;"))
         // ToDo
     }
 
-    ShowMenuBar(Show = true){
+    ShowMenuBar(Show = true, Istransparent = false){
         if (Show){
-            this.BuildActionButtonBar()
-            this.SetMenuBarTransparent(this._NanoXAppOption.MenuBarIstransparent)
+            // si la menu bar existe, on l'enlève
+            if (document.getElementById(this._IdBarActionButton)){
+                this.RemoveActionButtonBar()
+                this.RemoveActionButtonBarDim()
+            }
+            let Colormenubar = this._NanoXAppOption.ColorMenuBar
+            let Colormenubaricon = this._NanoXAppOption.ColorIconMenuBar
+            // si la couleur de la barre = la couleur dans l'icone, alors l'icone est noir (ou blache si la colour de la bar est noir)
+            if (this._NanoXAppOption.ColorIconMenuBar == this._NanoXAppOption.ColorMenuBar){
+                if (this._NanoXAppOption.ColorMenuBar == "black"){
+                    Colormenubaricon = "white"
+                } else {
+                    Colormenubaricon = "black"
+                }
+            }
+            if (Istransparent){
+                Colormenubar = "transparent"
+                if(Colormenubaricon == "white"){Colormenubaricon = "black"}
+            }
+            this.BuildActionButtonBar(Colormenubar, Colormenubaricon)
             this.ShowNameInMenuBar(this._NanoXAppOption.ShowNameInMenuBar)
+            this.BuildMenuButton()
         } else {
             this.RemoveActionButtonBar()
             this.RemoveActionButtonBarDim()
@@ -49,17 +68,13 @@ class NanoXCore {
 
     SetMenuBarTransparent(Transparent = false){
         if (Transparent){
-            // Set ActionBar transparent
-            if (document.getElementById(this._IdBarActionButton)){
-                document.getElementById(this._IdBarActionButton).classList.add("NanoXActionBarTransparent")
-            }
+            this._NanoXAppOption.MenuBarIstransparent = true
+            this.ShowMenuBar(true, this._NanoXAppOption.MenuBarIstransparent)
             // Remove ActionButtonDim
             this.RemoveActionButtonBarDim()
         } else {
-            // Remove ActionBar transparent
-            if (document.getElementById(this._IdBarActionButton)){
-                document.getElementById(this._IdBarActionButton).classList.remove("NanoXActionBarTransparent")
-            }
+            this._NanoXAppOption.MenuBarIstransparent = false
+            this.ShowMenuBar(true, this._NanoXAppOption.MenuBarIstransparent)
             // Add ActionButtonDim
             this.BuildActionButtonBarDim()
         }
@@ -73,10 +88,16 @@ class NanoXCore {
         document.body.appendChild(NanoXBuild.DivFlexColumn(this._IdDivApp, null, "width: 100%;"))
     }
 
-    BuildActionButtonBar(){
+    BuildActionButtonBar(ColorMenuBar, ColorMenuBarIcon){
         if (!document.getElementById(this._IdBarActionButton)){
-            let divBarButton = NanoXBuild.Div(this._IdBarActionButton, "NanoXActionBar NanoXActionBarDim", "display: -webkit-flex; display: flex; flex-direction: row; justify-content:center; align-content:center; align-items: center;")
-            divBarButton.style.backgroundColor = this._NanoXAppOption.ColorMenuBar
+            let divBarButton = NanoXBuild.Div(this._IdBarActionButton, "NanoXActionBar", "display: -webkit-flex; display: flex; flex-direction: row; justify-content:center; align-content:center; align-items: center; width: 100%;")
+            divBarButton.style.backgroundColor = ColorMenuBar
+            divBarButton.style.height = this._NanoXAppOption.HeightMenuBar
+            if (ColorMenuBar == "transparent"){
+                divBarButton.style.borderBottomWidth = "0px"
+            } else {
+                divBarButton.style.borderBottomWidth = "1px"
+            }
             document.body.insertBefore(divBarButton, document.body.firstChild)
             this.BuildActionButtonBarDim()
     
@@ -90,18 +111,18 @@ class NanoXCore {
             let divBarButtonRight = NanoXBuild.DivFlexRowEnd(null, null, "padding-right: 0.8rem;")
             divBarButtonContent.appendChild(divBarButtonRight)
             divBarButtonRight.appendChild(NanoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
-            divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgUser(this._NanoXAppOption.ColorIconMenuBar), this.ClickOnUser.bind(this)))
+            divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgUser(ColorMenuBarIcon), this.ClickOnUser.bind(this)))
             // Add HamburgerIcon for mobile view
             let hambergerIcon = NanoXBuild.Div("Nxhamburger-icon")
             divBarButtonRight.appendChild(hambergerIcon)
             let bar1 = NanoXBuild.Div(null, "bar1")
-            bar1.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
+            bar1.style.backgroundColor = ColorMenuBarIcon
             hambergerIcon.appendChild(bar1)
             let bar2 = NanoXBuild.Div(null, "bar2")
-            bar2.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
+            bar2.style.backgroundColor = ColorMenuBarIcon
             hambergerIcon.appendChild(bar2)
             let bar3 = NanoXBuild.Div(null, "bar3")
-            bar3.style.backgroundColor = this._NanoXAppOption.ColorIconMenuBar
+            bar3.style.backgroundColor = ColorMenuBarIcon
             hambergerIcon.appendChild(bar3)
             hambergerIcon.onclick = this.ClickHambergerIcon.bind(this)
         }
@@ -109,7 +130,8 @@ class NanoXCore {
 
     BuildActionButtonBarDim(){
         if (!document.getElementById(this._IdBarActionButtonDim)){
-            let divdim = NanoXBuild.Div(this._IdBarActionButtonDim,"NanoXActionBarDim")
+            let divdim = NanoXBuild.Div(this._IdBarActionButtonDim, null ,"width: 100%;")
+            divdim.style.height = this._NanoXAppOption.HeightMenuBar
             let divBarButton = document.getElementById(this._IdBarActionButton)
             divBarButton.parentNode.insertBefore(divdim, divBarButton.nextSibling)
         }
@@ -123,18 +145,40 @@ class NanoXCore {
         if (document.getElementById(this._IdBarActionButtonDim)){document.body.removeChild(document.getElementById(this._IdBarActionButtonDim))}
     }
 
+    BuildMenuButton(){
+        this._ListOfActionButtonBar.forEach(element => {
+            let button = this.BuildActionButton(element.Id, element.Svg, element.Action)
+            if (element.Type == "Left"){
+                document.getElementById(this._IdBarActionButtonLeft).appendChild(button)
+            }
+            if (element.Type == "Right"){
+                document.getElementById(this._IdBarActionButtonRight).appendChild(button)
+            }
+        });
+    }
+
     AddMenuButtonLeft(Id = null, Titre= null, Svg= null, Action= null){
+        if(Titre == null){Titre = "No Titre"}
         if (Action == null) {Action = ()=>{alert("Action not define")}}
-        this._ListOfActionButtonBar.push({Type: "Left", Id: Id, Titre: Titre, Action: Action})
+        this._ListOfActionButtonBar.push({Type: "Left", Id: Id, Svg:Svg, Titre: Titre, Action: Action})
         let button = this.BuildActionButton(Id, Svg, Action)
         document.getElementById(this._IdBarActionButtonLeft).appendChild(button)
     }
 
     ClearMenuButtonLeft(){
         document.getElementById(this._IdBarActionButtonLeft).innerHTML = ""
+        let newlist =[]
+        this._ListOfActionButtonBar.forEach(element => {
+            if (element.Type == "Right"){
+                newlist.push(element)
+            }
+        });
+        this._ListOfActionButtonBar = newlist
+        console.log(this._ListOfActionButtonBar)
     }
 
     AddMenuButtonRight(Id = null, Titre= null, Svg= null, Action= null){
+        if(Titre == null){Titre = "No Titre"}
         if (Action == null) {Action = ()=>{alert("Action not define")}}
         this._ListOfActionButtonBar.push({Type: "Right", Id: Id, Titre: Titre, Action: Action})
         let button = this.BuildActionButton(Id, Svg, Action)
@@ -143,10 +187,25 @@ class NanoXCore {
 
     ClearMenuButtonRight(){
         document.getElementById(this._IdBarActionButtonRight).innerHTML = ""
+        let newlist =[]
+        this._ListOfActionButtonBar.forEach(element => {
+            if (element.Type == "Left"){
+                newlist.push(element)
+            }
+        });
+        this._ListOfActionButtonBar = newlist
+        console.log(this._ListOfActionButtonBar)
     }
 
     BuildActionButton(Id = null, Svg = null, Action=null){
-        if (Svg == null){ Svg = this.SvgDefault(this._NanoXAppOption.ColorIconMenuBar)}
+        if (Svg == null){ 
+            let Colormenubaricon = this._NanoXAppOption.ColorIconMenuBar
+            if (this._NanoXAppOption.MenuBarIstransparent){
+                if(Colormenubaricon == "white"){Colormenubaricon = "black"}
+            }
+            Svg = this.SvgDefault(Colormenubaricon)
+        }
+        if (Action == null) {Action = ()=>{alert("Action not define")}}
         let button = document.createElement("button")
         if (Id){button.id = Id}
         button.classList.add("NanoXActionButton")
