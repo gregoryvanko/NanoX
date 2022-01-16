@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require("path")
 const osEOL = require('os').EOL
 
 function GetCss(AdminApp = false){
@@ -26,42 +27,78 @@ function GetJs(AdminApp = false){
 }
 
 function GetJsOfApp(AdminApp = false){
-    let NanoXAppOption = require("../../index").NanoXGetNanoXAppOption()
+    let NanoXAppOption = require("../index").NanoXGetNanoXAppOption()
 
     let Output = ""
     // Load du folder common
     if (NanoXAppOption.AppFolderCommon != null){
-        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderCommon, "Js")
+        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderCommon, ".js")
     }
     // Load du folder client
-    Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderClient, "Js")
-
+    if (NanoXAppOption.AppFolderClient != null){
+        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderClient, ".js")
+    }
     // Load du folderAdmin
     if (AdminApp){
-        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderAdmin, "Js")
+        if (NanoXAppOption.AppFolderAdmin != null){
+            Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderAdmin, ".js")
+        }
     }
     return Output
 }
 
 function GetCssOfApp(AdminApp = false){
+    let NanoXAppOption = require("../index").NanoXGetNanoXAppOption()
+
     let Output = ""
     // Load du folder common
     if (NanoXAppOption.AppFolderCommon != null){
-        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderCommon, "Css")
+        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderCommon, ".css")
     }
     // Load du folder client
-    Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderClient, "Css")
-
+    if (NanoXAppOption.AppFolderClient != null){
+        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderClient, ".css")
+    }
     // Load du folderAdmin
     if (AdminApp){
-        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderAdmin, "Css")
+        if (NanoXAppOption.AppFolderAdmin != null){
+            Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderAdmin, ".css")
+        }
     }
     return Output
 }
 
 function LoadAppFilesFromFolder(Folder, Type){
+    let LogError = require('../index').NanoXLogError
+
     let Output = ""
+    if(fs.existsSync(Folder)){
+        // Lister tous les fichier
+        let listeOfFiles = GetListeOfFiles(Folder)
+        listeOfFiles.forEach(element => {
+            if (path.extname(element) == Type){
+                Output += fs.readFileSync(element, 'utf8')+ osEOL + osEOL
+            }
+        });
+    } else {
+        LogError(`Folder ${Folder} not found`)
+    }
     return Output
+}
+
+function GetListeOfFiles(dirPath, arrayOfFiles){
+    files = fs.readdirSync(dirPath)
+
+    arrayOfFiles = arrayOfFiles || []
+  
+    files.forEach(function(file) {
+      if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+        arrayOfFiles = GetListeOfFiles(dirPath + "/" + file, arrayOfFiles)
+      } else {
+        arrayOfFiles.push(path.join(dirPath, "/", file))
+      }
+    })
+    return arrayOfFiles
 }
 
 module.exports.GetCss = GetCss

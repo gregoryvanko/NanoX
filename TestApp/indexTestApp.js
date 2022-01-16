@@ -20,7 +20,17 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
         StartApp: true,
         SplashScreen : `<div style="font-size: 3vh;">Splash Screen</div><div id="ProgressText" style="font-size: 3vh;">0%</div>`,
         //SplashScreenBackgroundColor : "red",
-        NanoXAppOption : {ShowMenuBar: true, MenuBarIstransparent:false, ShowNameInMenuBar: true, ColorMenuBar: "black", ColorIconMenuBar: "white", HeightMenuBar: "3rem"}
+        NanoXAppOption : {
+            ShowMenuBar: true,
+            MenuBarIstransparent:false,
+            ShowNameInMenuBar: true,
+            ColorMenuBar: "black",
+            ColorIconMenuBar: "white",
+            HeightMenuBar: "3rem",
+            AppFolderCommon: __dirname + "/Frontend/Common",
+            AppFolderClient: __dirname + "/Frontend/App",
+            AppFolderAdmin: __dirname + "/Frontend/Admin"
+        }
     }
 
     // Initiation de NanoX

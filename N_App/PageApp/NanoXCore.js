@@ -17,10 +17,8 @@ class NanoXCore {
     Start(){
         this.ShowMenuBar(this._NanoXAppOption.ShowMenuBar, this._NanoXAppOption.MenuBarIstransparent)
         this.BuildDivApplication()
-
-        //let App = this.GetDivApp()
-        //App.appendChild(NanoXBuild.DivTexte("Coucou les gas", null, null, "background-color: red; width: 100%; height: 10vh;"))
         // ToDo
+        console.log("start")
     }
 
     ShowMenuBar(Show = true, Istransparent = false){
