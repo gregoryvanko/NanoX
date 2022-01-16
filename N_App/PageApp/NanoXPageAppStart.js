@@ -4,7 +4,9 @@ function GetJsStart(){
 `
 let MyNanoXCore = new NanoXCore(${JSON.stringify(NanoXAppOption)})
 
-function NanoXGetDivApp(){return MyNanoXCore.GetDivApp()}
+function NanoXGetDivApp(){
+    return MyNanoXCore.GetDivApp()
+}
 
 function NanoXShowMenuBar(Show = true){
     MyNanoXCore.ShowMenuBar(Show)
@@ -41,13 +43,5 @@ function GetJsEnd(){
     return `MyNanoXCore.Start()`
 }
 
-function GetCss(){
-    let Output = 
-`
-`
-    return Output
-}
-
 module.exports.GetJsStart = GetJsStart
 module.exports.GetJsEnd = GetJsEnd
-module.exports.GetCss = GetCss

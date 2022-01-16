@@ -12,7 +12,7 @@ let MyAppPath = ""
 let MyStartApp = false
 let MySplashScreen = null
 let MySplashScreenBackgroundColor = 'white'
-let MyNanoXAppOption = {ShowMenuBar: true, MenuBarIstransparent: false, ShowNameInMenuBar: true, ColorMenuBar: "white", ColorIconMenuBar: "black", HeightMenuBar: "3rem"}
+let MyNanoXAppOption = {ShowMenuBar: true, MenuBarIstransparent: false, ShowNameInMenuBar: true, ColorMenuBar: "white", ColorIconMenuBar: "black", HeightMenuBar: "3rem", AppFolderCommon: null, AppFolderClient: null, AppFolderAdmin: null}
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -48,6 +48,9 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
         if(NanoXAppOption.ColorMenuBar != undefined){MyNanoXAppOption.ColorMenuBar = NanoXAppOption.ColorMenuBar}
         if(NanoXAppOption.ColorIconMenuBar != undefined){MyNanoXAppOption.ColorIconMenuBar = NanoXAppOption.ColorIconMenuBar}
         if(NanoXAppOption.HeightMenuBar != undefined){MyNanoXAppOption.HeightMenuBar = NanoXAppOption.HeightMenuBar}
+        if(NanoXAppOption.AppFolderCommon != undefined){MyNanoXAppOption.AppFolderCommon = NanoXAppOption.AppFolderCommon}
+        if(NanoXAppOption.AppFolderClient != undefined){MyNanoXAppOption.AppFolderClient = NanoXAppOption.AppFolderClient}
+        if(NanoXAppOption.AppFolderAdmin != undefined){MyNanoXAppOption.AppFolderAdmin = NanoXAppOption.AppFolderAdmin}
     }
 
     // Set MongoDb name
