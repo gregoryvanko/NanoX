@@ -13,38 +13,48 @@ function NanoXGetDivApp(){
 }
 
 function NanoXShowMenuBar(Show = true){
-    MyNanoXCore.ShowMenuBar(Show)
+    MyNanoXCore.MenuBar.ShowMenuBar(Show, false)
 }
 
 function NanoXSetMenuBarTransparent(Transparent = fase){
-    MyNanoXCore.SetMenuBarTransparent(Transparent)
+    MyNanoXCore.MenuBar.SetMenuBarTransparent(Transparent)
 }
 
 function NanoXShowNameInMenuBar(Show = true){
-    MyNanoXCore.ShowNameInMenuBar(Show)
+    MyNanoXCore.MenuBar.ShowNameInMenuBar(Show)
 }
 
 function NanoXAddMenuButtonLeft(Id = null, Titre= null, Svg= null, Action= null){
-    MyNanoXCore.AddMenuButtonLeft(Id, Titre, Svg, Action)
+    MyNanoXCore.MenuBar.AddMenuButtonLeft(Id, Titre, Svg, Action)
 }
 
 function NanoXClearMenuButtonLeft(){
-    MyNanoXCore.ClearMenuButtonLeft()
+    MyNanoXCore.MenuBar.ClearMenuButtonLeft()
 }
 
-function NanoXAddMenuButtonRight(Id = null, Titre= null, Svg= null, Action= null){
-    MyNanoXCore.AddMenuButtonRight(Id, Titre, Svg, Action)
+function NanoXAddMenuButtonRight(Id= null, Titre= null, Svg= null, Action= null){
+    MyNanoXCore.MenuBar.AddMenuButtonRight(Id, Titre, Svg, Action)
 }
 
 function NanoXClearMenuButtonRight(){
-    MyNanoXCore.ClearMenuButtonRight()
+    MyNanoXCore.MenuBar.ClearMenuButtonRight()
+}
+
+function NanoXAddModule(Titre= null, Svg= null, Start= null, StartWithThisModule= false){
+    if (MyNanoXCore.ModuleApp != null){
+        MyNanoXCore.ModuleApp.AddModule(Titre, Svg, Start, StartWithThisModule)
+    }
 }
 `
     return output
 }
 
 function GetJsEnd(){
-    return `NanoXStartApp()`
+    let output = 
+`
+NanoXStartApp()
+`
+    return output
 }
 
 module.exports.GetJsStart = GetJsStart

@@ -104,7 +104,7 @@ class NanoXBuild{
      * @param {String} Style style du div
      * @returns HTMLElement div
      */
-    static DivTexte(Texte= "", Id= null, Class= null, Style= null){
+    static DivText(Texte= "", Id= null, Class= null, Style= null){
         let element = document.createElement("div")
         if (Id){element.setAttribute("id", Id)}
         if (Class){element.setAttribute("Class", Class)}
@@ -205,9 +205,9 @@ class NanoXBuild{
         if ((BoxClass!=null)&&(BoxClass!="")){element.setAttribute("Class", BoxClass)}
         if ((Label!=null)&&(Label!="")){
             if ((LabelClass!=null)&&(LabelClass!="")){
-                element.appendChild(NanoXBuild.DivTexte(Label,"",LabelClass,"width: 100%;"))
+                element.appendChild(NanoXBuild.DivText(Label,"",LabelClass,"width: 100%;"))
             } else {
-                element.appendChild(NanoXBuild.DivTexte(Label,"","","width: 100%;"))
+                element.appendChild(NanoXBuild.DivText(Label,"","","width: 100%;"))
             }
         }
         let inputStyle="box-sizing: border-box; outline: none; margin: 0; -webkit-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); -moz-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #666;"

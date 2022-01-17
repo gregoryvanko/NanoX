@@ -1,1 +1,3 @@
-console.log("Test Admin")
+class TestAdmin{
+    constructor(){}
+}

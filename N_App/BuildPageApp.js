@@ -12,15 +12,28 @@ function GetCss(AdminApp = false){
 }
 
 function GetJs(AdminApp = false){
+    let NanoXAppOption = require("../index").NanoXGetNanoXAppOption()
+
     let Output = ""
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXBuild.js", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/PageApp/NanoXCoreUserData.js", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/PageApp/NanoXCoreMenuBar.js", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/PageApp/NanoXCoreModuleApp.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCore.js", 'utf8')+ osEOL + osEOL
 
     Output += require("./PageApp/NanoXPageAppStart").GetJsStart()
 
+    // Si on n'utilise pas le mode module, on execute les start app avant d'avoir loadé les fichiers client
+    if (!NanoXAppOption.UseAppModule){
+        Output += require("./PageApp/NanoXPageAppStart").GetJsEnd()
+    }
+
     Output += GetJsOfApp(AdminApp)
     
-    Output += require("./PageApp/NanoXPageAppStart").GetJsEnd()
+    // Si on utilise le mode module, on execute les start app après avoir loadé les fichiers client
+    if (NanoXAppOption.UseAppModule){
+        Output += require("./PageApp/NanoXPageAppStart").GetJsEnd()
+    }
 
     if (Output == ""){Output = null}
     return Output
