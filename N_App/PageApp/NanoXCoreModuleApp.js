@@ -18,7 +18,7 @@ class NanoXModuleApp{
 
         this._ListOfModules.push({Titre: Titre, Svg: Svg, Start: Start})
         if (StartWithThisModule){
-            this._StartWithOneModule = Start
+            if (this._StartWithOneModule == null){this._StartWithOneModule = Start}
         }
     }
 
