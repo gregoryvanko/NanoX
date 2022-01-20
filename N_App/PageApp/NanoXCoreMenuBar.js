@@ -47,7 +47,11 @@ class NanoXMenuBar {
     ShowNameInMenuBar(Show = true){
         if(Show){
             if (! document.getElementById(this._IdBarTitreName)){
-                let divName = NanoXBuild.DivText(this._NanoXAppOption.AppName, this._IdBarTitreName, "NanoXAppColor NanoXActionBarTitre", null)
+                let ClassName = "NanoXActionBarTitre"
+                if (this._NanoXAppOption.CssClassForName != null){
+                    ClassName = this._NanoXAppOption.CssClassForName
+                }
+                let divName = NanoXBuild.DivText(this._NanoXAppOption.AppName, this._IdBarTitreName, "NanoXAppColor " +  ClassName, null)
                 document.getElementById(this._IdBarButtonLeft).insertBefore(divName, document.getElementById(this._IdBarButtonLeft).firstChild)
             }
         } else {
@@ -213,6 +217,12 @@ class NanoXMenuBar {
             this.RemoveViewUserMenu()
         } else {
             let divcontent = NanoXBuild.DivFlexColumn(this._IdNanoXUserMenu, "NanoXUserMenu")
+            // Home button
+            if (this._NanoXAppOption.UseAppModule){
+                let buttonHome = NanoXBuild.Button("Home", ()=>{this.RemoveViewUserMenu(); this.ClickOnHome()}, "NxLogOut", "NanoXMobileMenuButton NanoXAppColor")
+                divcontent.appendChild(buttonHome)
+                divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))
+            }
             // Button Mon compte
             let buttonMe = NanoXBuild.Button("Mon Compte", ()=>{this.RemoveViewUserMenu(); this.ClickOnGetMyData()}, "NxGetMyData", "NanoXMobileMenuButton NanoXAppColor")
             divcontent.appendChild(buttonMe)
@@ -264,6 +274,13 @@ class NanoXMenuBar {
         });
         // Line
         if (ActionRightExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))}
+        // Home button
+        if (this._NanoXAppOption.UseAppModule){
+            let buttonHome = NanoXBuild.Button("Home", ()=>{this.ClickHambergerIcon(); this.ClickOnHome()}, "NxLogOut", "NanoXMobileMenuButton NanoXAppColor")
+            divcontent.appendChild(buttonHome)
+            // Line
+            divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))
+        }
         // Button Mon compte
         let buttonMe = NanoXBuild.Button("Mon Compte", ()=>{this.ClickHambergerIcon(); this.ClickOnGetMyData()}, "NxGetMyData", "NanoXMobileMenuButton NanoXAppColor")
         divcontent.appendChild(buttonMe)
@@ -281,6 +298,10 @@ class NanoXMenuBar {
     ClickOnGetMyData(){
         let MyNanoXUserData = new NanoXUserData()
         MyNanoXUserData.GetUserData()
+    }
+
+    ClickOnHome(){
+        NanoXStartHomeModule()
     }
 
     ClickOnLogOut(){

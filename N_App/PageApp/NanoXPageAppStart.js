@@ -45,6 +45,10 @@ function NanoXAddModule(Titre= null, Svg= null, Start= null, StartWithThisModule
         MyNanoXCore.ModuleApp.AddModule(Titre, Svg, Start, StartWithThisModule)
     }
 }
+
+function NanoXStartHomeModule(){
+    MyNanoXCore.ModuleApp.Start()
+}
 `
     return output
 }

@@ -24,6 +24,7 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
             ShowMenuBar: true,
             MenuBarIstransparent:false,
             ShowNameInMenuBar: true,
+            //CssClassForName: "TestClassName",
             ColorMenuBar: "black",
             ColorIconMenuBar: "white",
             HeightMenuBar: "3rem",

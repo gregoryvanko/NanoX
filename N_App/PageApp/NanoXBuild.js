@@ -65,6 +65,22 @@ class NanoXBuild{
     }
 
     /**
+     * Creation d'un element HTML div flex row space-evenly
+     * @param {String} Id id du div
+     * @param {String} Style style du div
+     * @returns HTMLElement div flex row space-between
+     */
+    static DivFlexRowSpaceEvenly(Id = null, Class = null, Style= null){
+        let element = document.createElement("div")
+        if (Id){element.setAttribute("id", Id)}
+        if (Class){element.setAttribute("Class", Class)}
+        let StyleAdd = ""
+        if (Style){StyleAdd = Style}
+        element.setAttribute("style",`display: -webkit-flex; display: flex; flex-direction: row; justify-content:space-evenly; align-content:center; align-items: center; flex-wrap: wrap; ${StyleAdd}`)
+        return element
+    }
+
+    /**
      * Creation d'un element HTML div flex row start
      * @param {String} Id id du div
      * @param {String} Style style du div
