@@ -156,10 +156,6 @@ function GetAppSecret(){
     return MyAppSecret
 }
 
-function GetAppName(){
-    return MyAppName
-}
-
 function GetAppColor(){
     return MyAppColor
 }
@@ -186,11 +182,10 @@ module.exports.Mongoose = require("mongoose")
 module.exports.NanoXAddRoute = NanoXAddRoute
 module.exports.Express = require("express")
 module.exports.NanoXGetAppSecret = GetAppSecret
-module.exports.NanoXGetAppName = GetAppName
 module.exports.NanoXGetAppColor = GetAppColor
 module.exports.NanoXGetAllowSignUp = GetAllowSignUp
-module.exports.AuthBasic = require("./N_Express/Mid_AuthBasic")
-module.exports.AuthAdmin = require("./N_Express/Mid_AuthAdmin")
+module.exports.NanoXAuthBasic = require("./N_Express/Mid_AuthBasic")
+module.exports.NanoXAuthAdmin = require("./N_Express/Mid_AuthAdmin")
 module.exports.NanoXAddPageToBuild = NanoXAddPageToBuild
 module.exports.NanoXGetAppVersion = GetAppVersion
 module.exports.NanoXGetSplashScreenData = GetSplashScreenData

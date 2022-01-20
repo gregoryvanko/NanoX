@@ -1,7 +1,7 @@
 const express = require('../../../index').Express
 
-const AuthBasic = require('../../../index').AuthBasic
-const AuthAdmin = require('../../../index').AuthAdmin
+const AuthBasic = require('../../../index').NanoXAuthBasic
+const AuthAdmin = require('../../../index').NanoXAuthAdmin
 
 const router = express.Router()
 
