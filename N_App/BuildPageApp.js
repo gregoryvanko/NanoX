@@ -43,10 +43,6 @@ function GetJsOfApp(AdminApp = false){
     let NanoXAppOption = require("../index").NanoXGetNanoXAppOption()
 
     let Output = ""
-    // Load du folder common
-    if (NanoXAppOption.AppFolderCommon != null){
-        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderCommon, ".js")
-    }
     // Load du folder client
     if (NanoXAppOption.AppFolderClient != null){
         Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderClient, ".js")
@@ -64,10 +60,6 @@ function GetCssOfApp(AdminApp = false){
     let NanoXAppOption = require("../index").NanoXGetNanoXAppOption()
 
     let Output = ""
-    // Load du folder common
-    if (NanoXAppOption.AppFolderCommon != null){
-        Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderCommon, ".css")
-    }
     // Load du folder client
     if (NanoXAppOption.AppFolderClient != null){
         Output += LoadAppFilesFromFolder(NanoXAppOption.AppFolderClient, ".css")

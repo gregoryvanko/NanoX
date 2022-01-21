@@ -117,7 +117,7 @@ class NanoXLoader {
             // Add Css
             document.getElementsByTagName('head')[0].appendChild(CSS)
             let Time = 100
-            if (this._SplashScreen != null){
+            if (this._SplashScreen != "null"){
                 let TacTimeSplashScreen = new Date().getTime()
                 let TicTacDelta = this._SplashDuration - (TacTimeSplashScreen - this._TicTimeSplashScreen)
                 Time = (TicTacDelta < 0) ? 1 : TicTacDelta
@@ -163,8 +163,8 @@ class NanoXLoader {
 
     GetWaintingScreen(){
         let reponse = ""
-        if(this._SplashScreen != null){
-            if (this._SplashScreenBackgroundColor != null){
+        if(this._SplashScreen != "null"){
+            if (this._SplashScreenBackgroundColor != "null"){
                 document.body.style.backgroundColor = this._SplashScreenBackgroundColor
             }
             this._TicTimeSplashScreen = new Date().getTime()
@@ -234,11 +234,11 @@ class NanoXLoader {
     }
 
     SetErrorMessage(Error){
-        if(this._SplashScreen != null){
+        if(this._SplashScreen != "null"){
             document.body.innerHTML = this.GetLoadingView()
         }
         // Set background white
-        if (this._SplashScreenBackgroundColor != null){
+        if (this._SplashScreenBackgroundColor != "null"){
             document.body.style.backgroundColor = "white"
         }
         document.getElementById("ErrorMsg").innerText = Error;

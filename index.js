@@ -8,11 +8,10 @@ let MyDebug = false
 let MyIconPath = null
 let MyApiServer = false
 let MyAllowSignUp = false
-let MyAppPath = ""
-let MyStartApp = false
+let MyAppPath = null
 let MySplashScreen = null
 let MySplashScreenBackgroundColor = 'white'
-let MyNanoXAppOption = {ShowMenuBar: true, MenuBarIstransparent: false, ShowNameInMenuBar: true, CssClassForName: null, ColorMenuBar: "white", ColorIconMenuBar: "black", HeightMenuBar: "3rem", AppFolderCommon: null, AppFolderClient: null, AppFolderAdmin: null, UseAppModule: true}
+let MyNanoXAppOption = {ShowMenuBar: true, MenuBarIstransparent: false, ShowNameInMenuBar: true, CssClassForName: null, ColorMenuBar: "white", ColorIconMenuBar: "black", HeightMenuBar: "3rem", AppFolderClient: null, AppFolderAdmin: null, UseAppModule: true}
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -27,7 +26,7 @@ let LogStat = LogR.LogStat
 let ListOfRoute = []
 let ListOfPageToBuild = []
 
-function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", StartApp = false, SplashScreen = null, SplashScreenBackgroundColor = 'white', NanoXAppOption = null}) {
+function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", NanoXAppOption = null}) {
     MyAppName = AppName
     MyAppColor = AppColor
     MyNAppPort = AppPort
@@ -38,10 +37,9 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     MyApiServer = ApiServer
     MyAllowSignUp = AllowSignUp
     MyAppPath = AppPath
-    MyStartApp = StartApp
-    MySplashScreen = SplashScreen
-    MySplashScreenBackgroundColor = SplashScreenBackgroundColor
     if (NanoXAppOption){
+        if(NanoXAppOption.SplashScreen != undefined){MySplashScreen = NanoXAppOption.SplashScreen}
+        if(NanoXAppOption.SplashScreenBackgroundColor != undefined){MySplashScreenBackgroundColor = NanoXAppOption.SplashScreenBackgroundColor}
         if(NanoXAppOption.ShowMenuBar != undefined){MyNanoXAppOption.ShowMenuBar = NanoXAppOption.ShowMenuBar}
         if(NanoXAppOption.MenuBarIstransparent != undefined){MyNanoXAppOption.MenuBarIstransparent = NanoXAppOption.MenuBarIstransparent}
         if(NanoXAppOption.ShowNameInMenuBar != undefined){MyNanoXAppOption.ShowNameInMenuBar = NanoXAppOption.ShowNameInMenuBar}
@@ -49,7 +47,6 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
         if(NanoXAppOption.ColorMenuBar != undefined){MyNanoXAppOption.ColorMenuBar = NanoXAppOption.ColorMenuBar}
         if(NanoXAppOption.ColorIconMenuBar != undefined){MyNanoXAppOption.ColorIconMenuBar = NanoXAppOption.ColorIconMenuBar}
         if(NanoXAppOption.HeightMenuBar != undefined){MyNanoXAppOption.HeightMenuBar = NanoXAppOption.HeightMenuBar}
-        if(NanoXAppOption.AppFolderCommon != undefined){MyNanoXAppOption.AppFolderCommon = NanoXAppOption.AppFolderCommon}
         if(NanoXAppOption.AppFolderClient != undefined){MyNanoXAppOption.AppFolderClient = NanoXAppOption.AppFolderClient}
         if(NanoXAppOption.AppFolderAdmin != undefined){MyNanoXAppOption.AppFolderAdmin = NanoXAppOption.AppFolderAdmin}
         if(NanoXAppOption.UseAppModule != undefined){MyNanoXAppOption.UseAppModule = NanoXAppOption.UseAppModule}
@@ -60,7 +57,7 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     // Set Debug mode
     if (Debug){SetDebugMode()}
     // Set App
-    if (MyStartApp){
+    if (MyAppPath != null){
         MyApiServer = true
         const BuildPageInit = require('./N_App/BuildPageInit')
         NanoXAddPageToBuild("initpage.html", MyAppPath, MyAppName, BuildPageInit.GetCss(), BuildPageInit.GetJs())
@@ -78,7 +75,7 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
 function NanoXStart(){
     return new Promise(async(resolve) => {
         // Log start appliation
-        console.log(`Start of Nonox application: ${MyAppName}`)
+        console.log(`Start of NanoX application: ${MyAppName}`)
 
         // Connect Mongoose
         await Mongoose.Connect(MyMongoDbName, MyMongoUrl)
@@ -90,7 +87,7 @@ function NanoXStart(){
         require("./N_PageBuilder/PageBuilder").CreateOutputFolder()
 
         // Creation des fichiers de l'App
-        if (MyStartApp){
+        if (MyAppPath != null){
             BuildApp()
         }
 
