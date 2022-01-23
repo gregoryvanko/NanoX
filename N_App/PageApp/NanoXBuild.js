@@ -267,17 +267,37 @@ class NanoXBuild{
         return element
     }
 
-    static ProgressRing({Id="", StrokeColor= "#51c5cf", Fill = "black", TextColor = "#51c5cf",Progress = 0, Radius = 80, RadiusMobile = null, ScaleRing = 1, ScaleText = 1 }={}){
+    static ProgressRing({Id=null, ProgressColor= "#51c5cf", FillColor = "black", TextColor = "#51c5cf", TextFontSize = "1rem", Progress = 0, Progressheight = 8, ProgressheightMobile = null, Radius = 80, RadiusMobile = null}={}){
         if(RadiusMobile == null){RadiusMobile = Radius}
+        if(ProgressheightMobile == null){ProgressheightMobile = Progressheight}
         if(window.innerWidth < 700){
             // Mobile device
             Radius = RadiusMobile
+            Progressheight = ProgressheightMobile
         }
-        const Stroke = (Radius / 10) * ScaleRing
-        let TextFontSize = (Radius / 1.5) * ScaleText
-        TextFontSize = TextFontSize.toString() + "px"
-        let element = document.createElement("div")
-        element.innerHTML = `<progress-ring id="${Id}" stroke="${Stroke}" strokeColor="${StrokeColor}" fill="${Fill}" radius="${Radius}" progress="${Progress}" textcolor="${TextColor}" textfontsize="${TextFontSize}"></progress-ring>`
+
+        let element = document.createElement("progress-ring")
+        if (Id){element.setAttribute("id", Id)}
+        element.setAttribute("stroke", Progressheight)
+        element.setAttribute("progressColor", ProgressColor)
+        element.setAttribute("fillColor", FillColor)
+        element.setAttribute("radius", Radius)
+        element.setAttribute("progress", Progress)
+        element.setAttribute("textcolor", TextColor)
+        element.setAttribute("textfontsize", TextFontSize)
+
+        //element.innerHTML = `<progress-ring ${IdText} stroke="${Progressheight}" progressColor="${ProgressColor}" fillColor="${FillColor}" radius="${Radius}" progress="${Progress}" textcolor="${TextColor}" textfontsize="${TextFontSize}"></progress-ring>`
+        return element
+    }
+
+    static ToggleSwitch({Id = null, Checked = false, OnChange=null, HeightRem = 1}={}){
+        let element = document.createElement("toggle-switch")
+        if (Id){element.setAttribute("id", Id)}
+        if(Checked){element.setAttribute("checked", "")}
+        element.setAttribute("heightRem", HeightRem)
+        if (OnChange){
+            element.onchange = OnChange
+        }
         return element
     }
 
@@ -322,35 +342,37 @@ class NanoXBuild{
 class ProgressRing extends HTMLElement {
     constructor() {
         super();
-      
+        this._IsConnected = false
+        // create shadow dom root
+        this._root = this.attachShadow({mode: 'open'})
+    }
+    connectedCallback() {
         // get config from attributes
         const textcolor = this.getAttribute('textcolor');
         const textfontsize = this.getAttribute('textfontsize');
-        const strokeColor = this.getAttribute('strokeColor');
-        const fill = this.getAttribute('fill');
-        const stroke = this.getAttribute('stroke');
-        const radius = this.getAttribute('radius');
-        const normalizedRadius = radius - stroke * 2;
-        this._circumference = normalizedRadius * 2 * Math.PI;
+        const progressColor = this.getAttribute('progressColor');
+        const fillColor = this.getAttribute('fillColor');
+        const stroke = parseInt(this.getAttribute('stroke'), 10);
+        const radius = parseInt(this.getAttribute('radius'), 10);
+        this._circumference = radius * 2 * Math.PI;
         // create shadow dom root
-        this._root = this.attachShadow({mode: 'open'});
         this._root.innerHTML = `
           <svg
-            height="${radius * 2}"
-            width="${radius * 2}"
+            height="${(radius * 2) + (stroke)}"
+            width="${(radius * 2) + (stroke)}"
            >
              <circle
-               stroke="${strokeColor}"
+               stroke="${progressColor}"
                stroke-dasharray="${this._circumference} ${this._circumference}"
                style="stroke-dashoffset:${this._circumference}"
                stroke-width="${stroke}"
-               fill="${fill}"
-               r="${normalizedRadius}"
-               cx="${radius}"
-               cy="${radius}"
+               fill="${fillColor}"
+               r="${radius}"
+               cx="${radius + (stroke / 2)}"
+               cy="${radius + (stroke / 2)}"
             />
             <text text-anchor="middle" dominant-baseline="middle" x="52%" y="50%" fill="${textcolor}" font-size="${textfontsize}">
-                <tspan id="number">99</tspan><tspan dy="-0.25em" font-size="0.6em">%</tspan>
+                <tspan id="number">0</tspan><tspan dy="-0.25em" font-size="0.6em">%</tspan>
             </text>
           </svg>
       
@@ -362,13 +384,17 @@ class ProgressRing extends HTMLElement {
             }
           </style>
         `;
+        this._IsConnected = true
+        this.setProgress(parseInt(this.getAttribute('progress'), 10))
     }
     setProgress(percent) {
-        const offset = this._circumference - (percent / 100 * this._circumference);
-        const circle = this._root.querySelector('circle');
-        circle.style.strokeDashoffset = offset; 
-        const Txt = this._root.getElementById('number');
-        Txt.innerHTML = percent
+        if(this._IsConnected){
+            const offset = this._circumference - (percent / 100 * this._circumference);
+            const circle = this._root.querySelector('circle');
+            circle.style.strokeDashoffset = offset; 
+            const Txt = this._root.getElementById('number');
+            Txt.innerHTML = percent
+        }
     }
     static get observedAttributes() {
         return [ 'progress' ];
@@ -380,3 +406,82 @@ class ProgressRing extends HTMLElement {
     }
 }
 window.customElements.define('progress-ring', ProgressRing);
+
+class ToggleSwitch extends HTMLElement{
+    constructor() {
+        super();
+        this._IsConnected = false
+        // create shadow dom root
+        this._root = this.attachShadow({mode: 'open'})
+    }
+
+    get checked() {
+        return this._root.getElementById("CustomInput").checked
+    }
+
+    connectedCallback() {
+        const checked = this.getAttribute('checked')
+        let HeightLable = this.getAttribute('heightRem')
+        let Border = 0.1
+        let HeigtSlider = HeightLable - (2 * Border)
+        let WidthLable = (1.5 * HeightLable)  + Border
+        let translate = (HeightLable / 2)  + Border
+        let CheckedData = ""
+        if(checked == "") {CheckedData = "checked"}
+        this._root.innerHTML = `
+        <style>
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: .4s;
+                transition: .4s;
+                border-radius: `+HeightLable+`rem;
+            }
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: `+HeigtSlider+`rem;
+                width: `+HeigtSlider+`rem;
+                left: `+Border+`rem;
+                bottom: `+Border+`rem;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+                border-radius: 50%;
+            }
+            input:checked + .slider {
+                background-color: #2196F3;
+            }
+            input:checked + .slider:before {
+                -webkit-transform: translateX(`+translate+`rem);
+                -ms-transform: translateX(`+translate+`rem);
+                transform: translateX(`+translate+`rem);
+            }
+        </style>
+        <label style="position: relative; display: inline-block; width: `+WidthLable+`rem; height: `+HeightLable+`rem;">
+            <input id= "CustomInput" type="checkbox" `+CheckedData+` style="opacity: 0; width: 0; height: 0;">
+            <span class="slider"></span>
+        </label>
+        `;
+        this._root.getElementById("CustomInput").addEventListener('change', (event) => {
+            if (event.target.checked) {
+                this.setAttribute('checked', '')
+            } else {
+                this.removeAttribute('checked')
+            }
+            this.dispatchEvent(new CustomEvent('change', {
+                target:{
+                    checked: event.target.checked,
+                },
+                bubbles: true,
+            }));
+        })
+        this._IsConnected = true
+    }
+}
+window.customElements.define('toggle-switch', ToggleSwitch);

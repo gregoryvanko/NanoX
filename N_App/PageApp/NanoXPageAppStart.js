@@ -4,12 +4,8 @@ function GetJsStart(){
 `
 let MyNanoXCore = new NanoXCore(${JSON.stringify(NanoXAppOption)})
 
-function NanoXStartApp(){
-    MyNanoXCore.Start()
-}
-
 function NanoXGetDivApp(){
-    return MyNanoXCore.GetDivApp()
+    return MyNanoXCore.DivApp
 }
 
 function NanoXShowMenuBar(Show = true){
@@ -49,17 +45,19 @@ function NanoXAddModule(Titre= null, Svg= null, Start= null, StartWithThisModule
 function NanoXStartHomeModule(){
     MyNanoXCore.ModuleApp.Start()
 }
+
+MyNanoXCore.Start()
 `
     return output
 }
 
-function GetJsEnd(){
+function GetJsStartModuleApp(){
     let output = 
 `
-NanoXStartApp()
+MyNanoXCore.StartModuleApp()
 `
     return output
 }
 
 module.exports.GetJsStart = GetJsStart
-module.exports.GetJsEnd = GetJsEnd
+module.exports.GetJsStartModuleApp = GetJsStartModuleApp

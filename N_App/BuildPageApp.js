@@ -23,16 +23,11 @@ function GetJs(AdminApp = false){
 
     Output += require("./PageApp/NanoXPageAppStart").GetJsStart()
 
-    // Si on n'utilise pas le mode module, on execute les start app avant d'avoir loadé les fichiers client
-    if (!NanoXAppOption.UseAppModule){
-        Output += require("./PageApp/NanoXPageAppStart").GetJsEnd()
-    }
-
     Output += GetJsOfApp(AdminApp)
     
     // Si on utilise le mode module, on execute les start app après avoir loadé les fichiers client
     if (NanoXAppOption.UseAppModule){
-        Output += require("./PageApp/NanoXPageAppStart").GetJsEnd()
+        Output += require("./PageApp/NanoXPageAppStart").GetJsStartModuleApp()
     }
 
     if (Output == ""){Output = null}

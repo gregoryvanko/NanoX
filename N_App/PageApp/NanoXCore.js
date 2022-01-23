@@ -12,20 +12,20 @@ class NanoXCore {
 
     get MenuBar(){return this._MenuBar}
     get ModuleApp(){return this._ModuleApp}
+    get DivApp(){return document.getElementById(this._IdDivApp)}
 
     Start(){
         this._MenuBar.ShowMenuBar()
         this.BuildDivApplication()
-        if (this._NanoXAppOption.UseAppModule){
-            this._ModuleApp.Start()
-        }
-    }
-
-    GetDivApp(){
-        return document.getElementById(this._IdDivApp)
     }
 
     BuildDivApplication(){
         document.body.appendChild(NanoXBuild.DivFlexColumn(this._IdDivApp, null, "width: 100%;"))
+    }
+
+    StartModuleApp(){
+        if (this._NanoXAppOption.UseAppModule){
+            this._ModuleApp.Start()
+        }
     }
 }
