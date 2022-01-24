@@ -235,6 +235,7 @@ class NanoXLoader {
 
     SetErrorMessage(Error){
         if(this._SplashScreen != "null"){
+            document.body.innerHTML = ""
             document.body.appendChild(this.GetLoadingView())
         }
         // Set background white
