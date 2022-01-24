@@ -52,10 +52,7 @@ class NanoXLoader {
     LogOut(){
         document.body.innerHTML = ""
         this._Token = null
-        localStorage.removeItem(this._DbKeyToken)
-        localStorage.removeItem(this._DBKeyVersion)
-        localStorage.removeItem(this._DBKeyCodeAppCSS)
-        localStorage.removeItem(this._DBKeyCodeAppJS)
+        this.RemoveLocalStorage()
         // Effacer l'anienne application partie JS
         if (document.getElementById("CodeJs")) {
             var CodeJs = document.getElementById("CodeJs")
@@ -67,6 +64,13 @@ class NanoXLoader {
             CodeCSS.parentNode.removeChild(CodeCSS)
         }
         location.reload()
+    }
+
+    RemoveLocalStorage(){
+        localStorage.removeItem(this._DbKeyToken)
+        localStorage.removeItem(this._DBKeyVersion)
+        localStorage.removeItem(this._DBKeyCodeAppCSS)
+        localStorage.removeItem(this._DBKeyCodeAppJS)
     }
 
     LoadApp(){
@@ -135,6 +139,7 @@ class NanoXLoader {
             }, Time)
         })
         .catch((error) => {
+            this.RemoveLocalStorage()
             if (error.response) {
                 if ((error.response.status == 500) || (error.response.status == 401)){
                     this.SetErrorMessage(error.response.data.ErrorMsg)
