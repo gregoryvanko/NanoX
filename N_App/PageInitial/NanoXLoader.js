@@ -233,6 +233,7 @@ class NanoXLoader {
         div.classList.add("NanoXFlexColCenter")
         div.style.width = "100vw"
         div.style.height = "100vh"
+        div.style.justifyContent = "flex-start"
         div.innerHTML = this._SplashScreen
 
         return div
