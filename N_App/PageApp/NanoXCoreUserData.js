@@ -7,7 +7,7 @@ class NanoXUserData{
             method: 'get',
             url: '/nanoxuser',
             headers: {
-                'x-auth-token': `${NxGetToken()}`,
+                'x-auth-token': `${NanoXGetToken()}`,
                 'Content-Type': 'application/json'
             }
         })
@@ -83,7 +83,7 @@ class NanoXUserData{
                 method: 'patch',
                 url: '/nanoxuser',
                 headers: {
-                    'x-auth-token': `${NxGetToken()}`,
+                    'x-auth-token': `${NanoXGetToken()}`,
                     'Content-Type': 'application/json'
                 },
                 data: SendData

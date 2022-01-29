@@ -46,6 +46,120 @@ function NanoXStartHomeModule(){
     MyNanoXCore.ModuleApp.Start()
 }
 
+function NanoXApiGet(Url = "/"){
+    return new Promise((resolve, reject)=>{
+        axios({
+            method: 'get',
+            url: Url,
+            headers: {
+                'x-auth-token': NanoXGetToken(),
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            if (error.response) {
+                reject(error.response.data)
+            } else if (error.request) {
+                reject(error.request)
+            } else {
+                reject(error.message)
+            }
+        })
+    })
+}
+
+function NanoXApiDelete(Url = "/"){
+    return new Promise((resolve, reject)=>{
+        axios({
+            method: 'delete',
+            url: Url,
+            headers: {
+                'x-auth-token': NanoXGetToken(),
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            if (error.response) {
+                reject(error.response.data)
+            } else if (error.request) {
+                reject(error.request)
+            } else {
+                reject(error.message)
+            }
+        })
+    })
+}
+
+function NanoXApiPatch(Url = "/", SendData = null){
+    return new Promise((resolve, reject)=>{
+        axios({
+            method: 'patch',
+            url: Url,
+            headers: {
+                'x-auth-token': NanoXGetToken(),
+                'Content-Type': 'application/json'
+            },
+            data: SendData
+        })
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            if (error.response) {
+                reject(error.response.data)
+            } else if (error.request) {
+                reject(error.request)
+            } else {
+                reject(error.message)
+            }
+        })
+    })
+}
+
+function NanoXApiPost(Url = "/", SendData = null, OnDownloadProgress = null, OnUploadProgress){
+    return new Promise((resolve, reject)=>{
+        axios({
+            method: 'post',
+            url: Url,
+            headers: {
+                'x-auth-token': NanoXGetToken(),
+                'Content-Type': 'application/json'
+            },
+            data: SendData,
+            onDownloadProgress : progressEvent => {
+                if (OnDownloadProgress != null){
+                    const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    OnDownloadProgress(percentage)
+                }
+            },
+            onUploadProgress : progressEvent => {
+                if (OnUploadProgress != null){
+                    const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    OnUploadProgress(percentage)
+                }
+            }
+        })
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            if (error.response) {
+                reject(error.response.data)
+            } else if (error.request) {
+                reject(error.request)
+            } else {
+                reject(error.message)
+            }
+        })
+    })
+}
+
 MyNanoXCore.Start()
 `
     return output

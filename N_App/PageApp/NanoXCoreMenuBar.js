@@ -219,7 +219,7 @@ class NanoXMenuBar {
             let divcontent = NanoXBuild.DivFlexColumn(this._IdNanoXUserMenu, "NanoXUserMenu")
             // Home button
             if (this._NanoXAppOption.UseAppModule){
-                let buttonHome = NanoXBuild.Button("Home", ()=>{this.RemoveViewUserMenu(); this.ClickOnHome()}, "NxLogOut", "NanoXMobileMenuButton NanoXAppColor")
+                let buttonHome = NanoXBuild.Button("Home", ()=>{this.RemoveViewUserMenu(); this.ClickOnHome()}, "Home", "NanoXMobileMenuButton NanoXAppColor")
                 divcontent.appendChild(buttonHome)
                 divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))
             }
@@ -276,7 +276,7 @@ class NanoXMenuBar {
         if (ActionRightExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))}
         // Home button
         if (this._NanoXAppOption.UseAppModule){
-            let buttonHome = NanoXBuild.Button("Home", ()=>{this.ClickHambergerIcon(); this.ClickOnHome()}, "NxLogOut", "NanoXMobileMenuButton NanoXAppColor")
+            let buttonHome = NanoXBuild.Button("Home", ()=>{this.ClickHambergerIcon(); this.ClickOnHome()}, "Home", "NanoXMobileMenuButton NanoXAppColor")
             divcontent.appendChild(buttonHome)
             // Line
             divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))
@@ -305,6 +305,6 @@ class NanoXMenuBar {
     }
 
     ClickOnLogOut(){
-        NxLogout()
+        NanoXLogout()
     }
 }

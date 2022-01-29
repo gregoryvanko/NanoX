@@ -6,8 +6,8 @@ function GetJs(){
     let output = 
 `
 let MyNanoXLoader = new NanoXLoader({AllowSignUp:${AllowSingUp}, SplashScreen: '${SplashScreenData.SplashScreen}', SplashScreenBackgroundColor: '${SplashScreenData.SplashScreenBackgroundColor}'})
-function NxLogout(){MyNanoXLoader.LogOut()}
-function NxGetToken(){return MyNanoXLoader.GetToken()}
+function NanoXLogout(){MyNanoXLoader.LogOut()}
+function NanoXGetToken(){return MyNanoXLoader.GetToken()}
 
 onload = function() {
     MyNanoXLoader.Start()
