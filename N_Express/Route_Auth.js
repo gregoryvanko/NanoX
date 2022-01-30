@@ -23,23 +23,23 @@ router.post("/", (req, res) => {
                     res.send({Token: token})
                     LogStat(LogR.Stat_ConnectionValided, users[0])
                 } else {
-                    res.status(500).json({ErrorMsg: "Authentication error"})
+                    res.status(401).send("Authentication error")
                     LogStat(LogR.Stat_ConnectionError)
                     LogError("Invalid Pass")
                 }
             } else {
-                res.status(500).json({ErrorMsg: "Authentication error"})
+                res.status(401).send("Authentication error")
                 LogStat(LogR.Stat_ConnectionError)
                 LogError("Number of User found not equal to 1")
             }
         })
         .catch((err) => {
-            res.status(500).json({ErrorMsg: "Auth error"})
+            res.status(401).send("Auth error")
             LogStat(LogR.Stat_ConnectionError)
             LogError(`Mongoose find error: ${err.message}`)
         })
     } else{
-        res.status(500).json({ErrorMsg: "Missing User or Pass"})
+        res.status(401).send("Missing User or Pass")
         LogStat(LogR.Stat_ConnectionError)
         LogError("Missing User or Pass")
     }

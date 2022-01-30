@@ -20,7 +20,7 @@ class NanoXUserData{
             DivError.style.color = "red"
             if (error.response) {
                 if ((error.response.status == 500) || (error.response.status == 401)){
-                    DivError.innerText = error.response.data.ErrorMsg
+                    DivError.innerText = error.response.data
                 } else {
                     DivError.innerText = error.response.data
                 }
@@ -94,7 +94,7 @@ class NanoXUserData{
             .catch((error) => {
                 if (error.response) {
                     if ((error.response.status == 500) || (error.response.status == 401)){
-                        document.getElementById("UserInfoErrorMsg").innerText = error.response.data.ErrorMsg
+                        document.getElementById("UserInfoErrorMsg").innerText = error.response.data
                     } else {
                         document.getElementById("UserInfoErrorMsg").innerText = error.response.data
                     }

@@ -23,7 +23,7 @@ router.post("/", AuthBasic, (req, res) => {
                     LogInfo(`Admin App from server`, req.user)
                 }
             } else {
-                res.status(500).json({ErrorMsg: "Missing file appadmin.json"})
+                res.status(404).send("Missing file appadmin.json")
                 LogError("Missing file appadmin.json")
             }
         } else {
@@ -36,12 +36,12 @@ router.post("/", AuthBasic, (req, res) => {
                     LogInfo(`App from server`, req.user)
                 }
             } else {
-                res.status(500).json({ErrorMsg: "Missing file app.json"})
+                res.status(404).send("Missing file app.json")
                 LogError("Missing file app.json")
             }
         }
     } else {
-        res.status(500).json({ErrorMsg: "Missing Version"})
+        res.status(404).send("Missing Version")
         LogError("Missing Version")
     }
 })

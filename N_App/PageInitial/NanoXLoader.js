@@ -142,7 +142,7 @@ class NanoXLoader {
             this.RemoveLocalStorage()
             if (error.response) {
                 if ((error.response.status == 500) || (error.response.status == 401)){
-                    this.SetErrorMessage(error.response.data.ErrorMsg)
+                    this.SetErrorMessage(error.response.data)
                 } else {
                     this.SetErrorMessage(error.response.data)
                 }

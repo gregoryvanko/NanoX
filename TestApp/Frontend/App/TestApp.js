@@ -10,9 +10,18 @@ class TestApp{
         let div = NanoXBuild.DivFlexRowStart()
         this._DivApp.appendChild(div)
         div.appendChild(NanoXBuild.DivText('coucou'))
+
+        // Test TestToggleSwitch
         let TestToggleSwitch = NanoXBuild.ToggleSwitch({Id:"test1", Checked: true, OnChange: this.TestToggleSwitchOnChange.bind(this),HeightRem: 1.5})
         //TestToggleSwitch.onchange = this.TestToggleSwitchOnChange.bind(this)
         div.appendChild(TestToggleSwitch)
+
+        // Test Axios
+        NanoXApiGet("/test").then( reponse => {
+            console.log(reponse)
+        }, Err => {
+            console.log(Err)
+        })
 
     }
 

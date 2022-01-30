@@ -124,7 +124,7 @@ class NanoXViewSignUp {
             .catch((error) => {
                 if (error.response) {
                     if (error.response.status == 500){
-                        this.ShowErrorMessage(error.response.data.ErrorMsg)
+                        this.ShowErrorMessage(error.response.data)
                     } else {
                         this.ShowErrorMessage(error.response.data)
                     }

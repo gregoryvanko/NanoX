@@ -4,19 +4,19 @@ module.exports = (req, res, next) => {
     const token = req.header("x-auth-token")
     if (!token){
         LogError("Token is missing in AuthBasic middleware")
-        return res.status(401).send({ErrorMsg: "Token is missing in AuthBasic middleware"})
+        return res.status(401).send("Token is missing in AuthBasic middleware")
     }
 
     const TokenDecript = require("../N_Crypt/Crypt").DecryptDataToken(token)
     if(!TokenDecript.TokenValide){
         LogError(`Token not decripted: ${TokenDecript.ErrorMsg}`)
-        return res.status(401).send({ErrorMsg: "Token not decrypted"})
+        return res.status(401).send("Token not decrypted")
     }
 
     const _id = TokenDecript.TokenData.data._id
     if (!_id){
         LogError(`_id not found in token: ${JSON.stringify(TokenDecript.TokenData.data)}`)
-        return res.status(401).send({ErrorMsg: "_id not found in token"})
+        return res.status(401).send("_id not found in token")
     }
 
     // Get User
@@ -29,15 +29,15 @@ module.exports = (req, res, next) => {
                 next()
             } else {
                 LogError(`User not Admin`, user)
-                return res.status(401).send({ErrorMsg: "User not Admin"})
+                return res.status(401).send("User not Admin")
             }
         } else {
             LogError(`User not found by id in Auth Admin`)
-            return res.status(401).send({ErrorMsg: "User not found by id in Admin Auth"})
+            return res.status(401).send("User not found by id in Admin Auth")
         }
     })
     .catch((err) => {
         LogError(`Mongoose find error in Auth Admin: ${err.message}`)
-        return res.status(401).send({ErrorMsg: "Mongoose find error in Admin Auth"})
+        return res.status(401).send("Mongoose find error in Admin Auth")
     })
 }

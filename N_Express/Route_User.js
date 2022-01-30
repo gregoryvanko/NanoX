@@ -20,13 +20,13 @@ router.get("/", AuthBasic, (req, res) => {
             UserInfo.Password = null
             res.send(UserInfo)
         } else {
-            res.status(500).send({ErrorMsg: "User not found"})
+            res.status(500).send("User not found")
             LogError(`User not found`, req.user)
         }
     })
     .catch((err) => {
         LogError(`Mongoose find error: ${err.message}`, req.user)
-        res.status(500).send({ErrorMsg: "Mongoose find user error"})
+        res.status(500).send("Mongoose find user error")
     })
 })
 
@@ -53,18 +53,18 @@ router.patch("/", AuthBasic, (req, res) => {
                 LogInfo("User updated")
             })
             .catch((err) => {
-                res.status(500).json({ErrorMsg: "User update error"})
+                res.status(500).send("User update error")
                 LogError(`Mongoose update user error: ${err.message}`)
             })
 
         } else {
-            res.status(500).send({ErrorMsg: "User not found"})
+            res.status(500).send("User not found")
             LogError(`User not found`, req.user)
         }
     })
     .catch((err) => {
         LogError(`Mongoose find error: ${err.message}`, req.user)
-        res.status(500).send({ErrorMsg: "Mongoose find user error"})
+        res.status(500).send("Mongoose find user error")
     })
 })
 

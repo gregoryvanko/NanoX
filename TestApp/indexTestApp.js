@@ -37,7 +37,7 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
     require('../index').NanoXInitiation(OptionNanoX)
 
     // Test add route
-    //TestAddRoute()
+    TestAddRoute()
 
     // Test add page builder
     //TestAddPageBuilder()
