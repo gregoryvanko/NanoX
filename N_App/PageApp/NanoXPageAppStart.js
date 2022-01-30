@@ -46,7 +46,7 @@ function NanoXStartHomeModule(){
     MyNanoXCore.ModuleApp.Start()
 }
 
-function NanoXApiGet(Url = "/"){
+function NanoXApiGet(Url = "/", Params = {}){
     return new Promise((resolve, reject)=>{
         axios({
             method: 'get',
@@ -54,7 +54,8 @@ function NanoXApiGet(Url = "/"){
             headers: {
                 'x-auth-token': NanoXGetToken(),
                 'Content-Type': 'application/json'
-            }
+            },
+            params: Params,
         })
         .then((response) => {
             resolve(response.data)
