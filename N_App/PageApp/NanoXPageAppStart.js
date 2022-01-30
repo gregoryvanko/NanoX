@@ -122,7 +122,7 @@ function NanoXApiPatch(Url = "/", SendData = null){
     })
 }
 
-function NanoXApiPost(Url = "/", SendData = null, OnDownloadProgress = null, OnUploadProgress){
+function NanoXApiPost(Url = "/", SendData = null, OnDownloadProgress = null, OnUploadProgress = null){
     return new Promise((resolve, reject)=>{
         axios({
             method: 'post',
