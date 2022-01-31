@@ -82,7 +82,6 @@ function LoadAppFilesFromFolder(Folder, Type){
         let listeOfFiles = GetFirstFiel(Folder)
         listeOfFiles.forEach(element => {
             if (path.extname(element) == Type){
-                console.log(element) 
                 Output += fs.readFileSync(element, 'utf8')+ osEOL + osEOL
             }
         });
