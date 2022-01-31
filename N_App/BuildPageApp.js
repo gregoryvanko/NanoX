@@ -4,6 +4,7 @@ const osEOL = require('os').EOL
 
 function GetCss(AdminApp = false){
     let Output = fs.readFileSync(__dirname + "/PageApp/NanoX.css", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/Helper/Autocomplete.css", 'utf8')+ osEOL + osEOL
 
     Output += GetCssOfApp(AdminApp)
 
@@ -22,7 +23,6 @@ function GetJs(AdminApp = false){
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCoreModuleApp.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCore.js", 'utf8')+ osEOL + osEOL
     // Helper
-    Output += fs.readFileSync(__dirname + "/Helper/Autocomplete.css", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/Helper/Autocomplete.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/Helper/Chart.js", 'utf8')+ osEOL + osEOL
 
@@ -79,7 +79,7 @@ function LoadAppFilesFromFolder(Folder, Type){
     let Output = ""
     if(fs.existsSync(Folder)){
         // Lister tous les fichier
-        let listeOfFiles = GetListeOfFiles(Folder)
+        let listeOfFiles = GetFirstFiel(Folder)
         listeOfFiles.forEach(element => {
             if (path.extname(element) == Type){
                 console.log(element) 
@@ -90,6 +90,30 @@ function LoadAppFilesFromFolder(Folder, Type){
         LogError(`Folder ${Folder} not found`)
     }
     return Output
+}
+
+function GetFirstFiel(dirPath){
+    files = fs.readdirSync(dirPath)
+    let list = []
+    let arrayOfFiles = []
+    let arrayOfFirstFiles = []
+
+    files.forEach(function(file) {
+        if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+            arrayOfFiles = GetListeOfFiles(dirPath + "/" + file, arrayOfFiles)
+        } else {
+            arrayOfFirstFiles.push(path.join(dirPath, "/", file))
+        }
+    })
+
+    arrayOfFiles.forEach(element => {
+        list.push(element)
+    });
+
+    arrayOfFirstFiles.forEach(element => {
+        list.push(element)
+    });
+    return list
 }
 
 function GetListeOfFiles(dirPath, arrayOfFiles){
