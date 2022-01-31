@@ -15,11 +15,16 @@ function GetJs(AdminApp = false){
     let NanoXAppOption = require("../index").NanoXGetNanoXAppOption()
 
     let Output = ""
+    // Nonox App
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXBuild.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCoreUserData.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCoreMenuBar.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCoreModuleApp.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCore.js", 'utf8')+ osEOL + osEOL
+    // Helper
+    Output += fs.readFileSync(__dirname + "/Helper/Autocomplete.css", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/Helper/Autocomplete.js", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/Helper/Chart.js", 'utf8')+ osEOL + osEOL
 
     Output += require("./PageApp/NanoXPageAppStart").GetJsStart()
 
@@ -77,6 +82,7 @@ function LoadAppFilesFromFolder(Folder, Type){
         let listeOfFiles = GetListeOfFiles(Folder)
         listeOfFiles.forEach(element => {
             if (path.extname(element) == Type){
+                console.log(element) 
                 Output += fs.readFileSync(element, 'utf8')+ osEOL + osEOL
             }
         });
@@ -88,7 +94,6 @@ function LoadAppFilesFromFolder(Folder, Type){
 
 function GetListeOfFiles(dirPath, arrayOfFiles){
     files = fs.readdirSync(dirPath)
-
     arrayOfFiles = arrayOfFiles || []
   
     files.forEach(function(file) {
