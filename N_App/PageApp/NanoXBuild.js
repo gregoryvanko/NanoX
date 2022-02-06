@@ -161,7 +161,7 @@ class NanoXBuild{
         return element
     }
 
-    static PopupCreate(HTMLElement = null, ListOfButton = [{Titre: "Cancel", Action: NanoXBuild.PopupDelete, Id: null}]){
+    static PopupCreate(HTMLElement = null, ListOfButton = [{Titre: "Close", Action: NanoXBuild.PopupDelete, Id: null}]){
         let Div1 = document.createElement("div")
         Div1.setAttribute("id", "NonoXPopup")
         Div1.setAttribute("style", "display: block; position: fixed; top: 0px; left: 0px; background-color: rgb(230,230,230, 0.8); width: 100vw; height: 100vh; z-index: 1000;")
