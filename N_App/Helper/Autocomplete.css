@@ -22,6 +22,6 @@
 .autocomplete > div:hover:not(.group),
 .autocomplete > div.selected {
     /*background: #81ca91;*/
-    background: var(--CoreX-color);
+    background: var(--NanoX-appcolor);
     cursor: pointer;
 }

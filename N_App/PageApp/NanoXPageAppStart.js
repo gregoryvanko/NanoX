@@ -97,7 +97,7 @@ function NanoXApiDelete(Url = "/"){
     })
 }
 
-function NanoXApiPatch(Url = "/", SendData = null){
+function NanoXApiPatch(Url = "/", SendData = {}){
     return new Promise((resolve, reject)=>{
         axios({
             method: 'patch',
@@ -123,7 +123,7 @@ function NanoXApiPatch(Url = "/", SendData = null){
     })
 }
 
-function NanoXApiPost(Url = "/", SendData = null, OnDownloadProgress = null, OnUploadProgress = null){
+function NanoXApiPost(Url = "/", SendData = {}, OnDownloadProgress = null, OnUploadProgress = null){
     return new Promise((resolve, reject)=>{
         axios({
             method: 'post',
