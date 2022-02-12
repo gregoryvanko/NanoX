@@ -129,12 +129,14 @@ class NanoXMenuBar {
     
             let divBarButtonContent = NanoXBuild.DivFlexRowSpaceBetween(null, null, "width:100%;")
             divBarButton.appendChild(divBarButtonContent)
+            // Blur en dessous des bar button left et right lorsque le menu est transparent
+            let blur = (ColorMenuBar == "transparent")? " backdrop-filter: blur(4px);" : ""
             // Bar Button Left
-            let divBarButtonLeft = NanoXBuild.DivFlexRowStart(this._IdBarButtonLeft, null, "padding-left: 0.8rem;")
+            let divBarButtonLeft = NanoXBuild.DivFlexRowStart(this._IdBarButtonLeft, null, "margin-left: 0.8rem;" + blur)
             divBarButtonContent.appendChild(divBarButtonLeft)
             divBarButtonLeft.appendChild(NanoXBuild.Div(this._IdBarActionButtonLeft, "NanoXActionBarFlexStart"))
             // Bar button right
-            let divBarButtonRight = NanoXBuild.DivFlexRowEnd(null, null, "padding-right: 0.8rem;")
+            let divBarButtonRight = NanoXBuild.DivFlexRowEnd(null, null, "margin-right: 0.8rem;" + blur)
             divBarButtonContent.appendChild(divBarButtonRight)
             divBarButtonRight.appendChild(NanoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
             divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgUser(ColorMenuBarIcon), this.ClickOnUser.bind(this)))
