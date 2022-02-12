@@ -3,6 +3,7 @@
     top:0px;
     border-bottom-color: lightgray;
     border-bottom-style: solid;
+    z-index: 999;
 }
 .NanoXActionButton{
     border: none;
@@ -64,8 +65,7 @@
     right: 0;
     width: 10rem;
     background-color: white;
-    border-left: 1px solid #dfdfe8;
-    border-bottom: 1px solid #dfdfe8;
+    border: 1px solid #dfdfe8;
 }
 .NanoXMobileMenu{
     position: fixed;
