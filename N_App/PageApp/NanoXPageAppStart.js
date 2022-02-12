@@ -8,6 +8,10 @@ function NanoXGetDivApp(){
     return MyNanoXCore.DivApp
 }
 
+function NanoXGetColorIconMenuBar(){
+    return "${NanoXAppOption.ColorIconMenuBar}"
+}
+
 function NanoXShowMenuBar(Show = true){
     MyNanoXCore.MenuBar.ShowMenuBar(Show, false)
 }
