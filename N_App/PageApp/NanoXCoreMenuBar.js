@@ -97,7 +97,7 @@ class NanoXMenuBar {
     AddMenuButtonRight(Id = null, Titre= null, Svg= null, Action= null){
         if(Titre == null){Titre = "No Titre"}
         if (Action == null) {Action = ()=>{alert("Action not define")}}
-        this._ListOfActionButtonBar.push({Type: "Right", Id: Id, Titre: Titre, Action: Action})
+        this._ListOfActionButtonBar.push({Type: "Right", Id: Id, Svg:Svg, Titre: Titre, Action: Action})
         let button = this.BuildActionButton(Id, Svg, Action)
         document.getElementById(this._IdBarActionButtonRight).appendChild(button)
     }
