@@ -39,7 +39,7 @@ class NanoXUserData{
     }
 
     BuildViewUserInfo(Data){
-        let divcontent = NanoXBuild.Div(null, null, "width:100%;")
+        let divcontent = NanoXBuild.DivFlexColumn(null, null, "width:100%;")
         // User
         divcontent.appendChild(NanoXBuild.InputWithLabel("NanoXInputBox", "User", "NanoXInputLabelText", "InputUser", Data.User, "NanoXInput", "text", "", null, true))
         // FirstName

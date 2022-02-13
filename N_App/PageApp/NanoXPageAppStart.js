@@ -12,12 +12,16 @@ function NanoXGetColorIconMenuBar(){
     return "${NanoXAppOption.ColorIconMenuBar}"
 }
 
-function NanoXShowMenuBar(Show = true){
-    MyNanoXCore.MenuBar.ShowMenuBar(Show, false)
+function NanoXShowMenuBar(Show= true, OnTop= true, Istranslucide= false){
+    MyNanoXCore.MenuBar.ShowMenuBar(Show, OnTop, Istranslucide)
 }
 
-function NanoXSetMenuBarTransparent(Transparent = fase){
-    MyNanoXCore.MenuBar.SetMenuBarTransparent(Transparent)
+function NanoXSetMenuBarOnTop(OnTop = true){
+    MyNanoXCore.MenuBar.SetMenuBarOnTop(OnTop)
+}
+
+function NanoXSetMenuBarTranslucide(Translucide = true){
+    MyNanoXCore.MenuBar.SetMenuBarTranslucide(Translucide)
 }
 
 function NanoXShowNameInMenuBar(Show = true){

@@ -11,7 +11,7 @@ let MyAllowSignUp = false
 let MyAppPath = null
 let MySplashScreen = null
 let MySplashScreenBackgroundColor = 'white'
-let MyNanoXAppOption = {ShowMenuBar: true, MenuBarIstransparent: false, ShowNameInMenuBar: true, CssClassForName: null, ColorMenuBar: "white", ColorIconMenuBar: "black", HeightMenuBar: "3rem", AppFolderClient: null, AppFolderAdmin: null, UseAppModule: true}
+let MyNanoXAppOption = {ShowMenuBar: true, MenuBarOnTop: true, MenuBarIsTranslucide: false, ShowNameInMenuBar: true, CssClassForName: null, ColorMenuBar: "white", ColorIconMenuBar: "black", HeightMenuBar: "3rem", AppFolderClient: null, AppFolderAdmin: null, UseAppModule: true}
 
 let Mongoose = require("./N_Mongoose/Mongoose")
 
@@ -41,7 +41,8 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
         if(NanoXAppOption.SplashScreen != undefined){MySplashScreen = NanoXAppOption.SplashScreen}
         if(NanoXAppOption.SplashScreenBackgroundColor != undefined){MySplashScreenBackgroundColor = NanoXAppOption.SplashScreenBackgroundColor}
         if(NanoXAppOption.ShowMenuBar != undefined){MyNanoXAppOption.ShowMenuBar = NanoXAppOption.ShowMenuBar}
-        if(NanoXAppOption.MenuBarIstransparent != undefined){MyNanoXAppOption.MenuBarIstransparent = NanoXAppOption.MenuBarIstransparent}
+        if(NanoXAppOption.MenuBarOnTop != undefined){MyNanoXAppOption.MenuBarOnTop = NanoXAppOption.MenuBarOnTop}
+        if(NanoXAppOption.MenuBarIsTranslucide != undefined){MyNanoXAppOption.MenuBarIsTranslucide = NanoXAppOption.MenuBarIsTranslucide}
         if(NanoXAppOption.ShowNameInMenuBar != undefined){MyNanoXAppOption.ShowNameInMenuBar = NanoXAppOption.ShowNameInMenuBar}
         if(NanoXAppOption.CssClassForName != undefined){MyNanoXAppOption.CssClassForName = NanoXAppOption.CssClassForName}
         if(NanoXAppOption.ColorMenuBar != undefined){MyNanoXAppOption.ColorMenuBar = NanoXAppOption.ColorMenuBar}
