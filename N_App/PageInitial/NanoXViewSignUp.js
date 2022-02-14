@@ -108,7 +108,7 @@ class NanoXViewSignUp {
             // Get Token
             axios({
                 method: 'post',
-                url: '/nanoxSignUp',
+                url: '/nanoxsignup',
                 data: {
                     User: document.getElementById('Email').value,
                     FirstName: document.getElementById('First-Name').value,

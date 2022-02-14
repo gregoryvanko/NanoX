@@ -21,8 +21,8 @@ content-type: {{contentType}}
     "Pass":"gregory"
 }
 
-### nanoxSignUp
-POST https://{{hostname}}/nanoxSignUp
+### nanoxsignup
+POST https://{{hostname}}/nanoxsignup
 content-type: {{contentType}}
 
 {

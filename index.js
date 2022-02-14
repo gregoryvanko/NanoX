@@ -67,8 +67,9 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     if (MyApiServer){
         NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
         NanoXAddRoute("/nanoxuser", require('./N_Express/Route_User'))
+        NanoXAddRoute("/nanoxlog", require('./N_Express/Route_Log'))
         if (MyAllowSignUp){
-            NanoXAddRoute("/nanoxSignUp", require('./N_Express/Route_SignUp'))
+            NanoXAddRoute("/nanoxsignup", require('./N_Express/Route_SignUp'))
         }
     }
 }

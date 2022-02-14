@@ -6,7 +6,7 @@ const router = express.Router()
 
 // SignUp user
 router.post("/", (req, res) => {
-    LogInfo(`API nanoxSignUp : ${JSON.stringify(req.body)}`)
+    LogInfo(`API nanoxsignup : ${JSON.stringify(req.body)}`)
     if (req.body.User && req.body.FirstName && req.body.LastName && req.body.Password){
         // Creer le user si il n'exite pas
         let ModelUsers = require("../N_Mongoose/Model_User")
@@ -30,7 +30,7 @@ router.post("/", (req, res) => {
                     // Create token
                     let token = require("../N_Crypt/Crypt").EncryptDataToken(UserData)
                     res.send({Token: token})
-                    LogInfo("New User Added from nanoxSignUp")
+                    LogInfo("New User Added from nanoxsignup")
                 })
                 .catch((err) => {
                     res.status(500).send("User creation error")

@@ -169,6 +169,12 @@ function NanoXApiPost(Url = "/", SendData = {}, OnDownloadProgress = null, OnUpl
     })
 }
 
+function NanoXApiPostLog(Log= ""){
+    if(Log != ""){
+        NanoXApiPost("/nanoxlog", {Log: Log })
+    }
+}
+
 MyNanoXCore.Start()
 `
     return output
