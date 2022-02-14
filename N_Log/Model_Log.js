@@ -6,6 +6,6 @@ let LogSchema = new mongoose.Schema({
     Valeur: String,
     User: String,
     UserId: String
-}, { collection:'LogNX'});
+}, { collection:'NanoXLog'});
 
-module.exports = mongoose.model('LogNX', LogSchema)
+module.exports = mongoose.model('NanoXLog', LogSchema)

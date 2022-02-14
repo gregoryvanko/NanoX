@@ -6,6 +6,6 @@ let UsersSchema = new mongoose.Schema({
     LastName: String,
     Password: String,
     Admin: Boolean
-}, { collection:'User'});
+}, { collection:'NanoXUser'});
 
-module.exports = mongoose.model('User', UsersSchema)
+module.exports = mongoose.model('NanoXUser', UsersSchema)
