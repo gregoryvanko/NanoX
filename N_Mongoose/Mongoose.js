@@ -19,15 +19,17 @@ function InitiationUserCollection(){
                 console.log(err)
                 process.exit(1)
             } else {
+                let UserCollectionNotfound = true
+                let ModelUsers = require("./Model_User")
                 names.forEach(element => {
                     if ((element.type == "collection") && (element.name == "NanoXUser")){
-                        let ModelUsers = require("./Model_User")
+                        UserCollectionNotfound = false
                         ModelUsers.count({}, function( err, count){
                             if (count != 0){
-                                console.log("User Collection exist")
+                                console.log("User Collection found and not empty")
                                 resolve()
                             } else {
-                                console.log("User Collection not found, creation of Admin user")
+                                console.log("User Collection found but empty, creation of Admin user")
                                 const NewUser = new ModelUsers({User: "Admin", FirstName: "AdminFirstName", LastName: "AdminLastName", Password: "Admin", Admin: true})
                                 NewUser.save().catch(err => console.log(err))
                                 resolve()
@@ -35,6 +37,12 @@ function InitiationUserCollection(){
                         })
                     }
                 })
+                if (UserCollectionNotfound){
+                    console.log("User Collection not found, creation of Admin user")
+                    const NewUser = new ModelUsers({User: "Admin", FirstName: "AdminFirstName", LastName: "AdminLastName", Password: "Admin", Admin: true})
+                    NewUser.save().catch(err => console.log(err))
+                    resolve()
+                }
             }
         })
     })
