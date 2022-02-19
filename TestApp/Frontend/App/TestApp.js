@@ -31,5 +31,5 @@ class TestApp{
 }
 
 let MyTestApp = new TestApp()
-NanoXAddModule("Test1 du nouveau titre", null, MyTestApp.Start.bind(MyTestApp), false)
-//NanoXAddModule("Test2", null, null, false)
+NanoXAddModule("Test1 du nouveau titre", null, MyTestApp.Start.bind(MyTestApp), true)
+NanoXAddModule("Test2", null, null, false)

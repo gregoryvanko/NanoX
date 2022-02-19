@@ -25,7 +25,7 @@ class NanoXCore {
 
     StartModuleApp(){
         if (this._NanoXAppOption.UseAppModule){
-            this._ModuleApp.Start()
+            this._ModuleApp.Start(true)
         }
     }
 }

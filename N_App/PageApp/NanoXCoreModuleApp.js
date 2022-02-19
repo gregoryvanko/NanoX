@@ -5,7 +5,7 @@ class NanoXModuleApp{
         this._StartWithOneModule = null
     }
 
-    Start(){
+    Start(FirstAppStart = false){
         // Initiation de divapp pas avant d'exeuter la fonction start (depend du load des fichiers js)
         this._DivApp = NanoXGetDivApp()
         this._DivApp.innerHTML = ""
@@ -13,7 +13,7 @@ class NanoXModuleApp{
             if (this._ListOfModules.length == 1){
                 this.ClickAppCard(this._ListOfModules[0].Start)
             } else {
-                if (this._StartWithOneModule != null){
+                if ((this._StartWithOneModule != null) && (FirstAppStart)){
                     this.ClickAppCard(this._StartWithOneModule)
                 } else {
                     let content = NanoXBuild.DivFlexRowSpaceEvenly(null, null, "width: 90%; margin-top: 4rem;")
