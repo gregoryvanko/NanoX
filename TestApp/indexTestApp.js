@@ -19,7 +19,7 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
         AppPath: "",
         NanoXAppOption : {
             SplashScreen : `<div style="font-size: 4vh;">Splash Screen</div><div id="ProgressText" style="font-size: 3vh;">0%</div>`,
-            //SplashScreenBackgroundColor : "red",
+            SplashScreenBackgroundColor : "red",
             ShowMenuBar: true,
             MenuBarIsTranslucide: true,
             //MenuBarOnTop: true,

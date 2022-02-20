@@ -130,7 +130,7 @@ class NanoXLoader {
             setTimeout(function() {
                 // Set background white
                 if (SplashScreenBackgroundColor != null){
-                    document.body.style.backgroundColor = "white"
+                    document.body.style.removeProperty("background-color")
                 }
                 // effacer le contenu du body
                 document.body.innerHTML = ""
@@ -246,7 +246,7 @@ class NanoXLoader {
         }
         // Set background white
         if (this._SplashScreenBackgroundColor != "null"){
-            document.body.style.backgroundColor = "white"
+            document.body.style.removeProperty("background-color")
         }
         document.getElementById("ErrorMsg").innerText = Error;
         document.getElementById("LoadingButton").style.display= "block"
