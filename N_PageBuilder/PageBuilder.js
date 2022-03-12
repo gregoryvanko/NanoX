@@ -48,9 +48,9 @@ ${Js}
 <!doctype html>
 <html>
     <head>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="viewport" content="initial-scale=1, viewport-fit=cover, width=device-width, maximum-scale=1, user-scalable=0'"></meta>
+        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"></meta>
         <meta name="theme-color" content="black">
         <meta name="apple-mobile-web-app-title" content="${Titre}">
         <link rel="apple-touch-icon" href="apple-icon.png">
@@ -65,6 +65,9 @@ ${Js}
 </html>
     `
 }
+//<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+//<meta name="apple-mobile-web-app-capable" content="yes">
+//<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 module.exports.BuildPages = BuildPages
 module.exports.CreateOutputFolder = CreateOutputFolder
