@@ -6,6 +6,7 @@ class NanoXMenuBar {
         this._IdMenuBarEmpty = "IdMenuBarEmpty"
         this._IdMenuBarTranslucideLeft = "IdMenuBarTranslucideLeft"
         this._IdMenuBarTranslucideright = "IdMenuBarTranslucideright"
+        this._IdMenuBarTranslucideEmpty = "IdMenuBarTranslucideEmpty"
         this._IdBarButtonLeft = "IdBarButtonLeft"
         this._IdBarActionButtonLeft = "IdBarActionButtonLeft"
         this._IdBarActionButtonRight = "IdBarActionButtonRight"
@@ -133,11 +134,18 @@ class NanoXMenuBar {
             // Add Bar Button Left
             divMenuBarLeft.appendChild(this.BuildBarButtonLeft())
         }
+
+        if (!document.getElementById(this._IdMenuBarTranslucideEmpty)){
+            let divSafeIos = NanoXBuild.Div(this._IdMenuBarTranslucideEmpty, "NanoXHeightSafeTop", "width: 100%; background-color: transparent;")
+            // Add to body
+            document.body.insertBefore(divSafeIos, document.body.firstChild)
+        }
     }
 
     RemoveBuildMenuBarTranslucide(){
         if (document.getElementById(this._IdMenuBarTranslucideLeft)){document.body.removeChild(document.getElementById(this._IdMenuBarTranslucideLeft))}
         if (document.getElementById(this._IdMenuBarTranslucideright)){document.body.removeChild(document.getElementById(this._IdMenuBarTranslucideright))}
+        if (document.getElementById(this._IdMenuBarTranslucideEmpty)){document.body.removeChild(document.getElementById(this._IdMenuBarTranslucideEmpty))}
     }
 
     BuildMenuBar(OnTop){

@@ -14,7 +14,7 @@ class NanoXLoader {
         this._Token = null
 
         // SplashSreen data
-        this._SplashDuration = 1500
+        this._SplashDuration = 1000
         this._TicTimeSplashScreen = null
 
         // ProgressBar

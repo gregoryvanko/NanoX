@@ -1,20 +1,19 @@
 .NanoXMenuBarTranslucideLeft{
     position: fixed;
-    top:0px;
+    top: env(safe-area-inset-top, 0px);
     left:0px;
     z-index: 999;
     background-color: transparent;
 }
 .NanoXMenuBarTranslucideRight{
     position: fixed;
-    top:0px;
+    top: env(safe-area-inset-top, 0px);
     right:0px;
     z-index: 999;
     background-color: transparent;
 }
 .NanoXHeightSafeTop{
-    height: 0;
-    height: env(safe-area-inset-top);
+    height: env(safe-area-inset-top, 0px);
 }
 .NanoXMenuBar{
     border-bottom-color: lightgray;
