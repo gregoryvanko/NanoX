@@ -136,7 +136,7 @@ class NanoXMenuBar {
         }
 
         if (!document.getElementById(this._IdMenuBarTranslucideEmpty)){
-            let divSafeIos = NanoXBuild.Div(this._IdMenuBarTranslucideEmpty, "NanoXHeightSafeTop", "width: 100%; background-color: transparent;")
+            let divSafeIos = NanoXBuild.Div(this._IdMenuBarTranslucideEmpty, "NanoXHeightSafeTop", "width: 100%; background-color: black;")
             // Add to body
             document.body.insertBefore(divSafeIos, document.body.firstChild)
         }
