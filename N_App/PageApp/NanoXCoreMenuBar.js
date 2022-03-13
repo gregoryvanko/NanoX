@@ -152,7 +152,7 @@ class NanoXMenuBar {
         if (!document.getElementById(this._IdMenuBar)){
             let divMenuBar= NanoXBuild.Div(this._IdMenuBar, null, "width: 100%;")
             if(OnTop){divMenuBar.classList.add("NanoXMenuBarOnTop")}
-            let divSafeIos = NanoXBuild.Div(null, "NanoXHeightSafeTop", "width: 100%; background-color: white;")
+            let divSafeIos = NanoXBuild.Div(null, "NanoXHeightSafeTop", "width: 100%; background-color: black;")
             divMenuBar.appendChild(divSafeIos)
             let divMenu = NanoXBuild.DivFlexRowSpaceBetween(this._IdMenuBar, "NanoXMenuBar")
             divMenu.style.backgroundColor = this._NanoXAppOption.ColorMenuBar
