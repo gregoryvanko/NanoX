@@ -142,19 +142,23 @@ class NanoXMenuBar {
 
     BuildMenuBar(OnTop){
         if (!document.getElementById(this._IdMenuBar)){
-            let divMenuBar= NanoXBuild.DivFlexRowSpaceBetween(this._IdMenuBar, "NanoXMenuBar")
+            let divMenuBar= NanoXBuild.Div(this._IdMenuBar, null, "width: 100%;")
             if(OnTop){divMenuBar.classList.add("NanoXMenuBarOnTop")}
-            divMenuBar.style.backgroundColor = this._NanoXAppOption.ColorMenuBar
-            divMenuBar.style.height = this._NanoXAppOption.HeightMenuBar
-            divMenuBar.style.borderBottomWidth = "1px"
+            let divSafeIos = NanoXBuild.Div(null, "NanoXHeightSafeTop", "width: 100%; background-color: white;")
+            divMenuBar.appendChild(divSafeIos)
+            let divMenu = NanoXBuild.DivFlexRowSpaceBetween(this._IdMenuBar, "NanoXMenuBar")
+            divMenu.style.backgroundColor = this._NanoXAppOption.ColorMenuBar
+            divMenu.style.height = this._NanoXAppOption.HeightMenuBar
+            divMenu.style.borderBottomWidth = "1px"
+            divMenuBar.appendChild(divMenu)
             // Add to body
             document.body.insertBefore(divMenuBar, document.body.firstChild)
             // add fake div bellow Menu Bar
             if(OnTop){this.BuildMenuBarEmpty()}
             // Add Bar Button Left
-            divMenuBar.appendChild(this.BuildBarButtonLeft())
+            divMenu.appendChild(this.BuildBarButtonLeft())
             // Add Bar Button Right
-            divMenuBar.appendChild(this.BuildBarButtonRight())
+            divMenu.appendChild(this.BuildBarButtonRight())
         }
     }
 
@@ -166,7 +170,11 @@ class NanoXMenuBar {
     BuildMenuBarEmpty(){
         if (!document.getElementById(this._IdMenuBarEmpty)){
             let divdim = NanoXBuild.Div(this._IdMenuBarEmpty, null ,"width: 100%;")
-            divdim.style.height = this._NanoXAppOption.HeightMenuBar
+            let divSafeIos = NanoXBuild.Div(null, "NanoXHeightSafeTop", "width: 100%;")
+            divdim.appendChild(divSafeIos)
+            let divdmenu = NanoXBuild.Div(null, null ,"width: 100%;")
+            divdim.appendChild(divdmenu)
+            divdmenu.style.height = this._NanoXAppOption.HeightMenuBar
             let divMenuBar = document.getElementById(this._IdMenuBar)
             divMenuBar.parentNode.insertBefore(divdim, divMenuBar.nextSibling)
         }
