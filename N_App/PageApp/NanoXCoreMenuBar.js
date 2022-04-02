@@ -302,6 +302,7 @@ class NanoXMenuBar {
             this.RemoveViewUserMenu()
         } else {
             let divcontent = NanoXBuild.DivFlexColumn(this._IdNanoXUserMenu, "NanoXUserMenu")
+            divcontent.style.top = this._NanoXAppOption.HeightMenuBar
 
             // Home button
             if (this._NanoXAppOption.UseAppModule){
@@ -335,7 +336,9 @@ class NanoXMenuBar {
     }
 
     BuildViewMobileMenu(){
+        // let divSafeIos = NanoXBuild.Div(null, "NanoXHeightSafeTop", "width: 100%; background-color: black;") // ToDo
         let divcontent = NanoXBuild.DivFlexColumn(this._IdNanoXMobileMenu, "NanoXMobileMenu")
+        divcontent.style.top = this._NanoXAppOption.HeightMenuBar
         // Left action
         let ActionLeftExist = false
         this._ListOfActionButtonBar.forEach(element => {
@@ -382,7 +385,7 @@ class NanoXMenuBar {
         if (Titre == null){Titre = "No Titre"}
 
         let TextImagDiv = NanoXBuild.DivFlexRowStart(null, null, "width: 100%;")
-        let Image = NanoXBuild.Div(null, null, "width: 17%; display: flex;")
+        let Image = NanoXBuild.Div(null, null, "width: 1.5rem; height: 1.5rem; display: flex;")
         Image.innerHTML = Svg
         TextImagDiv.appendChild(Image)
         let text = NanoXBuild.Div(null, null, "display: flex; margin-left: 0.4rem; color:" + this.GetIconColor())

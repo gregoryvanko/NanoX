@@ -21,6 +21,7 @@ function GetCss(){
 `
 :root {
     --NanoX-appcolor: ${AppColor};
+    --sat: env(safe-area-inset-top);
 }
 `
     return Output

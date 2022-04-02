@@ -82,7 +82,6 @@
 }
 .NanoXUserMenu{
     position: fixed;
-    top: 3rem;
     right: 0;
     width: 10rem;
     background-color: white;
@@ -91,7 +90,6 @@
 }
 .NanoXMobileMenu{
     position: fixed;
-    top: 3rem;
     right: 0;
     max-height: 50vh;
     width: 10rem;
