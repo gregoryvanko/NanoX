@@ -5,6 +5,11 @@ class TestApp{
     }
 
     Start(){
+        NanoXClearMenuButtonLeft()
+        NanoXAddMenuButtonLeft("Titre","Titre", null, this.TestButton.bind(this))
+        NanoXClearMenuButtonRight()
+        NanoXAddMenuButtonRight("Titre1","Titre tres long", null, this.TestButton.bind(this))
+
         this._DivApp.appendChild(NanoXBuild.ProgressRing({Id:"test",  Progress:50}))
 
         let div = NanoXBuild.DivFlexRowStart()
@@ -27,6 +32,10 @@ class TestApp{
 
     TestToggleSwitchOnChange(e){
         console.log(this._ToogleTest + " " + e.target.checked)
+    }
+
+    TestButton(){
+        console.log("Testbutton")
     }
 }
 
