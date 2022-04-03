@@ -341,7 +341,7 @@ class NanoXMenuBar {
         let divSafeIos = NanoXBuild.Div(null, "NanoXHeightSafeTop", "width: 100%; background-color: transparent;")
         divbar.appendChild(divSafeIos)
         // menu bar content
-        let divcontent = NanoXBuild.DivFlexColumn(null, null, "width: 100%; background-color: white; border: 1px solid #dfdfe8; position: absolute;")
+        let divcontent = NanoXBuild.DivFlexColumn(null, null, "width: 100%; background-color: white; border: 1px solid #dfdfe8; position: relative;")
         divcontent.style.top = this._NanoXAppOption.HeightMenuBar
         divbar.appendChild(divcontent)
         // Left action
