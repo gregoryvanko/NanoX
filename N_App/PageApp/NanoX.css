@@ -91,10 +91,10 @@
 .NanoXMobileMenu{
     position: fixed;
     right: 0;
+    top: 0;
     max-height: 50vh;
     width: 10rem;
-    background-color: white;
-    border: 1px solid #dfdfe8;
+    background-color: transparent;
     z-index: 999;
 }
 .NanoXMobileMenuButton{
