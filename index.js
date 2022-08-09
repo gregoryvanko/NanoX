@@ -29,9 +29,9 @@ let ListOfPageToBuild = []
 function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", NanoXAppOption = null}) {
     MyAppName = AppName
     MyAppColor = AppColor
-    MyNAppPort = AppPort
+    MyNAppPort = process.env.PORT || AppPort
     MyAppSecret = AppSecret
-    MyMongoUrl = MongoUrl
+    MyMongoUrl = process.env.MONGOURL || MongoUrl
     MyDebug = Debug
     MyIconPath = IconPath
     MyApiServer = ApiServer

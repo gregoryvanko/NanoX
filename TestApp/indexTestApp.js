@@ -9,9 +9,9 @@ async function Start(Name = "NanoXDev", Debug = false, Port = 1234, ){
     const OptionNanoX = {
         AppName: Name,
         AppColor: "rgb(20, 163, 255)",
-        AppPort: process.env.PORT || Port,
+        AppPort: Port,
         AppSecret: "TestNonoXSecret",
-        MongoUrl: process.env.MONGOURL || "mongodb://localhost:27017",
+        MongoUrl: "mongodb://localhost:27017",
         Debug: Debug,
         IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,
