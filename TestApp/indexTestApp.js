@@ -3,15 +3,15 @@ let LogInfo = require('../index').NanoXLogInfo
 let LogError = require('../index').NanoXLogError
 
 // Start TestApp
-async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
+async function Start(Name = "NanoXDev", Debug = false, Port = 1234, ){
 
     // NonoX Option
     const OptionNanoX = {
         AppName: Name,
         AppColor: "rgb(20, 163, 255)",
-        AppPort: Port,
+        AppPort: process.env.PORT || Port,
         AppSecret: "TestNonoXSecret",
-        MongoUrl: "mongodb://localhost:27017",
+        MongoUrl: process.env.MONGOURL || "mongodb://localhost:27017",
         Debug: Debug,
         IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,
@@ -48,9 +48,6 @@ async function Start(Port = 1234, Name = "NanoXDev", Debug = false){
 
     // Test Log fonction
     //TestLog()
-
-    // Test Mongoose
-    //TestMongooseSave()
 }
 
 // Test User
@@ -59,12 +56,6 @@ let TestUser = {User: "Test", Id: "TestID"}
 function TestLog(){
     LogInfo("Premier test from app de test", TestUser)
     LogError("Premier erreur", TestUser)
-}
-// Test Mongo Save
-function TestMongooseSave(){
-    var Model_Livre = require("./Backend/TestMongoose/Model_Livres")
-    const NewLivre = new Model_Livre({Nom: "Roman", Auteur: "Gregory"})
-    NewLivre.save().then(()=> {console.log("New Livre saved in db")}).catch(err => console.log(err))
 }
 // Test Add route
 function TestAddRoute(){

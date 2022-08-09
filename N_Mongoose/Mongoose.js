@@ -6,8 +6,12 @@ function Connect(MongoDB = "MyNanoXApp", MongoUrl = "mongodb://localhost:27017")
         .once("open", function() {
             console.log("MongoDB connected successfully")
         })
-        .on('error', console.error.bind(console, 'MongoDB connection error:'));
-        await mongoose.connect(`${MongoUrl}/${MongoDB}`, {useNewUrlParser: true, useUnifiedTopology: true}).catch(err => console.log(err))
+        .on('error', function (err) {  
+            console.log('Mongoose default connection error: ' + err);
+            process.exit(1)
+        });
+
+        await mongoose.connect(`${MongoUrl}/${MongoDB}`, {useNewUrlParser: true, useUnifiedTopology: true})
         resolve()
     })
 }
