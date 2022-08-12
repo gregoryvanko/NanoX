@@ -131,9 +131,8 @@ function GetAppVersion(){
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
         version = "Debug" + characters.charAt(Math.floor(Math.random() * characters.length))
     } else {
-        let packagepath = process.cwd() + "/package.json"
-        let packagejson = require(packagepath)
-        version = packagejson.version
+        const OutputPath = require("./N_PageBuilder/PageBuilder").GetOutputPath()
+        version = require('fs').statSync(OutputPath + '/app.json').birthtime
     }
     return version
 }

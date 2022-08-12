@@ -1,4 +1,6 @@
-const Port = 5000
-const Name = "NanoXDev"
-const Debug = true
-require('./TestApp/indexTestApp').Start(Name, Debug, Port)
+const Option = {
+    Port:5000,
+    Name:"NanoXDev",
+    Debug: true,
+}
+require('./TestApp/indexTestApp').Start(Option)

@@ -3,7 +3,7 @@ let LogInfo = require('../index').NanoXLogInfo
 let LogError = require('../index').NanoXLogError
 
 // Start TestApp
-async function Start(Name = "NanoXDev", Debug = false, Port = 1234, ){
+async function Start({Port = 9000, Name = "NanoX", Debug = false, SplashScreenFilePath = null} = {}){
 
     // NonoX Option
     const OptionNanoX = {

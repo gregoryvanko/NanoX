@@ -53,12 +53,13 @@ module.exports.Start = Start
 ```
 ## Le fichier "Start.js"
 ```js
-const Port = 5000
-const Name = "NanoXDev"
-const Debug = true 
-const SplashScreenFilePath = __dirname + "/Frontend/SplashScreen/SplashScreen.html"
-
-require('./index').Start(Port, Name, Debug, SplashScreenFilePath)
+const Option = {
+    Port:5000,
+    Name:"NanoXDev",
+    Debug: true,
+    SplashScreenFilePath: __dirname + "/SplashScreen.html"
+}
+require('./index').Start(Option)
 ```
 ## Paramètres d'initiation
 |Paramètre      |Descritpion        |
@@ -194,7 +195,7 @@ Lorsque l’application Frontend est occupée à se télécharger il est possibl
 Un nouveau module est ajouter comme ceci:
 ```js
 let MyTestApp = new TestApp()
-NanoXAddModule("Test1 du nouveau titre", "svgcontent", MyTestApp.Start.bind(MyTestApp), false)
+NanoXAddModule("Titre du module", "svgcontentimage", MyTestApp.Start.bind(MyTestApp), false)
 ```
 ### Les fonction globale du Frontend
 ```js
