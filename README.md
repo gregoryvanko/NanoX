@@ -23,6 +23,7 @@ async function Start(Port = 1234, Name = « NanoXDev »,  Debug = false, Splas
         Debug: Debug,
         IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,
+        AllowVideo: true
         AllowSignUp: true,
         AppPath: "",
         NanoXAppOption : {
@@ -72,6 +73,7 @@ require('./index').Start(Option)
 |Debug	|Flag permettant d’activer le mode debug|
 |IconPath	|Le chemin vers le fichier png représentant l’icône du projet|
 |ApiServer	|Flag permettant de démarrer un serveur API|
+|AllowVideo	|Flag permettant d’activer l’API video|
 |AllowSignUp	|Flag permettant d’activer l’API de création d’un utilisateur|
 |AppPath	|Le chemin de l’API qui permet de télécharger l’application NanoX|
 |NanoXAppOption	|Le option du frontend NanoX|
@@ -100,6 +102,33 @@ Lors de l'intiatiion
     - Si on a autorisé un « AllowSignUp », la route « /nanoxSignUp » permet de créer un nouveau user (les paramètres suivants sont obligatoire : User, FirstName, LastName et Password)
 
 
+
+
+## Video
+La lecture d'un video MP4 se fait via un alias dans la configuration Nginx. Les fichiers video doivent se trouver sous /var/www pour que nginx puisse y avoir accès.
+```bash
+location /video/ {
+    alias /var/www/Video/Memorx/;
+}
+```
+Pour securiser la lecture video avec le token du user, il faut addapter la configuration de Nginx comme suite:
+```bash
+location /video/ {
+    auth_request /auth;
+    alias /var/www/Video/Memorx/;
+}
+
+location = /auth {
+    internal;
+    proxy_pass              http://localhost:5000$request_uri;
+    proxy_pass_request_body off;
+    proxy_set_header        Content-Length "";
+}
+```
+Lorsque les video sont sécurisée, pour lire une video "testsmall.mov" il faut ajouter dans l'application FrontEnd le lien suivant:
+```bash
+"/video/testsmall.mov?token=" + NanoXGetToken()
+```
 
 
 ## Server side
@@ -192,11 +221,14 @@ Lorsque l’application Frontend est occupée à se télécharger il est possibl
 
 
 ## Frontend
+
+### Ajout d'un nouveau module
 Un nouveau module est ajouter comme ceci:
 ```js
 let MyTestApp = new TestApp()
 NanoXAddModule("Titre du module", "svgcontentimage", MyTestApp.Start.bind(MyTestApp), false)
 ```
+
 ### Les fonction globale du Frontend
 ```js
 NanoXGetDivApp()

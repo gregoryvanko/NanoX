@@ -7,6 +7,7 @@ let MyMongoDbName = MyAppName
 let MyDebug = false
 let MyIconPath = null
 let MyApiServer = false
+let MyAllowVideo = false
 let MyAllowSignUp = false
 let MyAppPath = null
 let MySplashScreen = null
@@ -26,7 +27,7 @@ let LogStat = LogR.LogStat
 let ListOfRoute = []
 let ListOfPageToBuild = []
 
-function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowSignUp = false, AppPath="", NanoXAppOption = null}) {
+function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowVideo = false, AllowSignUp = false, AppPath="", NanoXAppOption = null}) {
     MyAppName = AppName
     MyAppColor = AppColor
     MyNAppPort = process.env.PORT || AppPort
@@ -35,6 +36,7 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     MyDebug = Debug
     MyIconPath = IconPath
     MyApiServer = ApiServer
+    MyAllowVideo = AllowVideo
     MyAllowSignUp = AllowSignUp
     MyAppPath = AppPath
     if (NanoXAppOption){
@@ -68,6 +70,9 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
         NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
         NanoXAddRoute("/nanoxuser", require('./N_Express/Route_User'))
         NanoXAddRoute("/nanoxlog", require('./N_Express/Route_Log'))
+        if (MyAllowVideo){
+            NanoXAddRoute("/video", require('./N_Express/Route_Video'))
+        }
         if (MyAllowSignUp){
             NanoXAddRoute("/nanoxsignup", require('./N_Express/Route_SignUp'))
         }

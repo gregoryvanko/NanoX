@@ -15,6 +15,7 @@ async function Start({Port = 9000, Name = "NanoX", Debug = false, SplashScreenFi
         Debug: Debug,
         IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,
+        AllowVideo : true,
         AllowSignUp: true,
         AppPath: "",
         NanoXAppOption : {

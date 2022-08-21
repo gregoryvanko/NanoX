@@ -12,9 +12,12 @@ class TestApp{
 
         this._DivApp.appendChild(NanoXBuild.ProgressRing({Id:"test",  Progress:50}))
 
+        this._DivApp.appendChild(NanoXBuild.Video("/video/testsmall.mov?token=" + NanoXGetToken()))
+
         let div = NanoXBuild.DivFlexRowStart()
         this._DivApp.appendChild(div)
         div.appendChild(NanoXBuild.DivText('coucou'))
+        
 
         // Test TestToggleSwitch
         let TestToggleSwitch = NanoXBuild.ToggleSwitch({Id:"test1", Checked: true, OnChange: this.TestToggleSwitchOnChange.bind(this),HeightRem: 1.5})
