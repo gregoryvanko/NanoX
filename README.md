@@ -23,7 +23,7 @@ async function Start(Port = 1234, Name = « NanoXDev »,  Debug = false, Splas
         Debug: Debug,
         IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,
-        AllowVideo: true
+        AllowVideo: true,
         AllowSignUp: true,
         AppPath: "",
         NanoXAppOption : {
@@ -100,36 +100,6 @@ Lors de l'intiatiion
     - La route « /nanoxauth » qui permet de recevoir un token d’identification en communiquant un « User » et un « Password »
     - La route « /nanoxuser » qui permet de recevoir ou de modifier les informations sur le user accédant à cette route via son token
     - Si on a autorisé un « AllowSignUp », la route « /nanoxSignUp » permet de créer un nouveau user (les paramètres suivants sont obligatoire : User, FirstName, LastName et Password)
-
-
-
-
-## Video
-La lecture d'un video MP4 se fait via un alias dans la configuration Nginx. Les fichiers video doivent se trouver sous /var/www pour que nginx puisse y avoir accès.
-```bash
-location /video/ {
-    alias /var/www/Video/Memorx/;
-}
-```
-Pour securiser la lecture video avec le token du user, il faut addapter la configuration de Nginx comme suite:
-```bash
-location /video/ {
-    auth_request /auth;
-    alias /var/www/Video/Memorx/;
-}
-
-location = /auth {
-    internal;
-    proxy_pass              http://localhost:5000$request_uri;
-    proxy_pass_request_body off;
-    proxy_set_header        Content-Length "";
-}
-```
-Lorsque les video sont sécurisée, pour lire une video "testsmall.mov" il faut ajouter dans l'application FrontEnd le lien suivant:
-```bash
-"/video/testsmall.mov?token=" + NanoXGetToken()
-```
-
 
 ## Server side
 
@@ -219,7 +189,6 @@ Lorsque l’application Frontend est occupée à se télécharger il est possibl
 - Une valeur communiquée à l’option « Value » d’un d’élément HTML devant avoir l’ID « ProgressBar » (document.getElementById("ProgressBar").value = percentage)
 - Une valeur communiquée à l’option « innerText » d’un d’élément HTML devant avoir l’ID « ProgressText » (document.getElementById("ProgressText").innerText = percentage + « % »)
 
-
 ## Frontend
 
 ### Ajout d'un nouveau module
@@ -288,3 +257,30 @@ NanoXApiPost(Url = "/", SendData = {}, OnDownloadProgress = null, OnUploadProgre
 NanoXApiPostLog(Log= "")
 //Cette fonction permet d’enregistrer un message texte de log sur le serveur
 ```
+
+## Video
+La lecture d'un video MP4 se fait via un alias dans la configuration Nginx. Les fichiers video doivent se trouver sous /var/www pour que nginx puisse y avoir accès.
+```bash
+location /video/ {
+    alias /var/www/Video/Memorx/;
+}
+```
+Pour securiser la lecture video avec le token du user, il faut addapter la configuration de Nginx comme suite:
+```bash
+location /video/ {
+    auth_request /auth;
+    alias /var/www/Video/Memorx/;
+}
+
+location = /auth {
+    internal;
+    proxy_pass              http://localhost:5000$request_uri;
+    proxy_pass_request_body off;
+    proxy_set_header        Content-Length "";
+}
+```
+Lorsque les video sont sécurisée, pour lire une video "testsmall.mov" il faut ajouter dans l'application FrontEnd le lien suivant:
+```bash
+"/video/testsmall.mov?token=" + NanoXGetToken()
+```
+Attention, il faut mettre le parametre AllowVideo à true dans les options de Nanox
