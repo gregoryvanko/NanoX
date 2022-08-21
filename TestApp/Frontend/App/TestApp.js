@@ -22,12 +22,16 @@ class TestApp{
         div.appendChild(TestToggleSwitch)
 
         // Test Axios
-        NanoXApiGet("/test").then( reponse => {
+        NanoXApiGet("/test", {}, this.OnDownloadTest.bind(this)).then( reponse => {
             console.log(reponse)
         }, Err => {
             console.log(Err)
         })
 
+    }
+
+    OnDownloadTest(Pourcent){
+        console.log(Pourcent)
     }
 
     TestToggleSwitchOnChange(e){

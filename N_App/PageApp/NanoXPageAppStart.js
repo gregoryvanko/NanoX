@@ -54,7 +54,7 @@ function NanoXStartHomeModule(){
     MyNanoXCore.ModuleApp.Start()
 }
 
-function NanoXApiGet(Url = "/", Params = {}){
+function NanoXApiGet(Url = "/", Params = {}, OnDownloadProgress = null){
     return new Promise((resolve, reject)=>{
         axios({
             method: 'get',
@@ -64,6 +64,12 @@ function NanoXApiGet(Url = "/", Params = {}){
                 'Content-Type': 'application/json'
             },
             params: Params,
+            onDownloadProgress : progressEvent => {
+                if (OnDownloadProgress != null){
+                    const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    OnDownloadProgress(percentage)
+                }
+            }
         })
         .then((response) => {
             resolve(response.data)
