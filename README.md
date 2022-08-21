@@ -241,8 +241,8 @@ NanoXLogout()
 NanoXGetToken()
 //Cette fonction renvoie les token du user
 
-NanoXApiGet(Url = « / », Params = {})
-//Cette fonction retourne une Promise. Elle fait un appel à la fonction Axios Get
+NanoXApiGet(Url = « / », Params = {}, OnDownloadProgress = null)
+//Cette fonction retourne une Promise. Elle fait un appel à la fonction Axios Get. Il est possible de suivre la progression du Download via une fonction distinctes.
 
 NanoXApiDelete(Url = "/")
 //Cette fonction retourne une Promise. Elle fait un appel à la fonction Axios Delete
@@ -251,7 +251,7 @@ NanoXApiPatch(Url = "/", SendData = {})
 //Cette fonction retourne une Promise. Elle fait un appel à la fonction Axios Patch
 
 NanoXApiPost(Url = "/", SendData = {}, OnDownloadProgress = null, OnUploadProgress = null)
-//Cette fonction retourne une Promise. Elle fait un appel à la fonction Axios Post. Il est possible de suivre la progression du Download et de Upload via de fonction distinctes.
+//Cette fonction retourne une Promise. Elle fait un appel à la fonction Axios Post. Il est possible de suivre la progression du Download et de Upload via des fonctions distinctes.
 
 NanoXApiPostLog(Log= "")
 //Cette fonction permet d’enregistrer un message texte de log sur le serveur
