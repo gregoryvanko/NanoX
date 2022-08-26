@@ -3,7 +3,7 @@ let LogInfo = require('../index').NanoXLogInfo
 let LogError = require('../index').NanoXLogError
 
 // Start TestApp
-async function Start({Port = 9000, Name = "NanoX", Debug = false, SplashScreenFilePath = null} = {}){
+async function Start({Port = 9000, Name = "NanoX", Debug = false, SplashScreenFilePath = null, MongoDbUrl = "mongodb://localhost:27017"} = {}){
 
     // NonoX Option
     const OptionNanoX = {
@@ -11,7 +11,7 @@ async function Start({Port = 9000, Name = "NanoX", Debug = false, SplashScreenFi
         AppColor: "rgb(20, 163, 255)",
         AppPort: Port,
         AppSecret: "TestNonoXSecret",
-        MongoUrl: "mongodb://localhost:27017",
+        MongoUrl: MongoDbUrl,
         Debug: Debug,
         IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,

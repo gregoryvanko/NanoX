@@ -157,7 +157,7 @@ class NanoXBuild{
      */
     static Line (Width = "100%", height= "1px", color= "var(--NanoX-appcolor)"){
         let element = document.createElement("hr")
-        element.setAttribute("Style", `width: ${Width}; border: ${height} solid ${color}; margin:0;`)
+        element.setAttribute("Style", `width: ${Width}; border: 0px solid transparent; border-top: ${height} solid ${color}; margin:0;`)
         return element
     }
 

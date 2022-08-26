@@ -230,6 +230,12 @@ NanoXAddMenuButtonRight(Id= null, Titre= null, Svg= null, Action= null)
 NanoXClearMenuButtonRight()
 //Cette fonction permet de supprimer tous les bouton se trouvant à droite dans la barre de menu.
 
+NanoXAddMenuButtonSettings(Id= null, Titre= null, Svg= null, Action= null)
+//Cette fonction permet d’ajouter une action dans le bouton settings. Les paramètres sont l’Id du bouton, le titre du bouton, le Svg de l’image du bouton, et l’action a effectuer lorsque l’on fait un événement click sur le bouton.
+
+NanoXClearMenuButtonSettings()
+//Cette fonction permet de supprimer tous les bouton se trouvant à droite dans la barre de menu.
+
 NanoXAddModule(Titre= null, Svg= null, Start= null, StartWithThisModule= false)
 //Cette fonction permet d’ajouter un module dans l’application. Les paramètres de cette fonction sont le titre du module, le Svg de l’image de ce module, la fonction start du module, si ce module doit s’afficher au démarrage de l’application. Si ce n’est pas le cas, l’application démarrera sur la vue Home qui reprend toutes les carte identifiant les modules.
 

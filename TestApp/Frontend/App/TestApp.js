@@ -9,10 +9,13 @@ class TestApp{
         NanoXAddMenuButtonLeft("Titre","Titre", null, this.TestButton.bind(this))
         NanoXClearMenuButtonRight()
         NanoXAddMenuButtonRight("Titre1","Titre tres long", null, this.TestButton.bind(this))
+        NanoXClearMenuButtonSettings()
+        NanoXAddMenuButtonSettings("Settings1", "Test settings1", null, this.TestButton.bind(this))
+        NanoXAddMenuButtonSettings("Settings2", "Test settings2", null, this.TestButton.bind(this))
 
         this._DivApp.appendChild(NanoXBuild.ProgressRing({Id:"test",  Progress:50}))
 
-        this._DivApp.appendChild(NanoXBuild.Video("/video/testsmall.mov?token=" + NanoXGetToken()))
+        this._DivApp.appendChild(NanoXBuild.Video("/video/2021-10-Bussang.mp4?token=" + NanoXGetToken()))
 
         let div = NanoXBuild.DivFlexRowStart()
         this._DivApp.appendChild(div)

@@ -89,7 +89,7 @@ class NanoXMenuBar {
         document.getElementById(this._IdBarActionButtonLeft).innerHTML = ""
         let newlist =[]
         this._ListOfActionButtonBar.forEach(element => {
-            if (element.Type == "Right"){
+            if (element.Type != "Left"){
                 newlist.push(element)
             }
         });
@@ -108,7 +108,23 @@ class NanoXMenuBar {
         document.getElementById(this._IdBarActionButtonRight).innerHTML = ""
         let newlist =[]
         this._ListOfActionButtonBar.forEach(element => {
-            if (element.Type == "Left"){
+            if (element.Type != "Right"){
+                newlist.push(element)
+            }
+        });
+        this._ListOfActionButtonBar = newlist
+    }
+
+    AddMenuButtonSettings(Id = null, Titre= null, Svg= null, Action= null){
+        if(Titre == null){Titre = "No Titre"}
+        if (Action == null) {Action = ()=>{alert("Action not define")}}
+        this._ListOfActionButtonBar.push({Type: "Settings", Id: Id, Svg:Svg, Titre: Titre, Action: Action})
+    }
+
+    ClearMenuButtonSettings(){
+        let newlist =[]
+        this._ListOfActionButtonBar.forEach(element => {
+            if (element.Type != "Settings"){
                 newlist.push(element)
             }
         });
@@ -205,7 +221,7 @@ class NanoXMenuBar {
         let blur = (this._NanoXAppOption.MenuBarIsTranslucide)? " backdrop-filter: blur(4px);" : ""
         let divBarButtonRight = NanoXBuild.DivFlexRowEnd(null, null, "margin-right: 0.8rem; border-radius: 10px; border: transparent solid;" + blur)
         divBarButtonRight.appendChild(NanoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
-        divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgTroisDots(this.GetIconColor()), this.ClickOnUser.bind(this)))
+        divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgTroisDots(this.GetIconColor()), this.ClickOnMenu.bind(this)))
         // Add HambergerIcon
         this.BuildHamburgerIcon(divBarButtonRight)
         return divBarButtonRight
@@ -293,21 +309,33 @@ class NanoXMenuBar {
 
 
 
-    ClickOnUser(){
-        this.BuildViewUserMenu()
+    ClickOnMenu(){
+        this.BuildViewMenu()
     }
 
-    BuildViewUserMenu(){
+    BuildViewMenu(){
         if (document.getElementById(this._IdNanoXUserMenu)){
             this.RemoveViewUserMenu()
         } else {
             let divcontent = NanoXBuild.DivFlexColumn(this._IdNanoXUserMenu, "NanoXUserMenu")
             divcontent.style.top = this._NanoXAppOption.HeightMenuBar
 
+            // Settings action
+            let ActionSettingsExist = false
+            this._ListOfActionButtonBar.forEach(element => {
+                if (element.Type == "Settings"){
+                    let action = element.Action
+                    divcontent.appendChild(this.BuildMobileMenuButton(element.Titre, element.Id, element.Svg, ()=>{this.RemoveViewUserMenu(); action()}))
+                    ActionSettingsExist = true
+                }
+            });
+            // Line
+            if (ActionSettingsExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "black"))}
+
             // Home button
             if (this._NanoXAppOption.UseAppModule){
                 divcontent.appendChild(this.BuildMobileMenuButton("Home", "NxHome", this.SvgHome(this.GetIconColor()), ()=>{this.RemoveViewUserMenu(); this.ClickOnHome()}))
-                divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))
+                divcontent.appendChild(NanoXBuild.Line("100%", "1px", "black"))
             }
 
             // Button Mon compte
@@ -346,6 +374,7 @@ class NanoXMenuBar {
         let divcontent = NanoXBuild.DivFlexColumn(null, null, "width: 100%; background-color: white; border: 1px solid #dfdfe8; position: relative;")
         divcontent.style.top = this._NanoXAppOption.HeightMenuBar
         divbar.appendChild(divcontent)
+
         // Left action
         let ActionLeftExist = false
         this._ListOfActionButtonBar.forEach(element => {
@@ -356,7 +385,8 @@ class NanoXMenuBar {
             }
         });
         // Line
-        if (ActionLeftExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))}
+        if (ActionLeftExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "black"))}
+
         // Right action
         let ActionRightExist = false
         this._ListOfActionButtonBar.forEach(element => {
@@ -367,15 +397,30 @@ class NanoXMenuBar {
             }
         });
         // Line
-        if (ActionRightExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))}
+        if (ActionRightExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "black"))}
+
+        // Settings action
+        let ActionSettingsExist = false
+        this._ListOfActionButtonBar.forEach(element => {
+            if (element.Type == "Settings"){
+                let action = element.Action
+                divcontent.appendChild(this.BuildMobileMenuButton(element.Titre, element.Id, element.Svg, ()=>{this.RemoveViewUserMenu(); action()}))
+                ActionSettingsExist = true
+            }
+        });
+        // Line
+        if (ActionSettingsExist){divcontent.appendChild(NanoXBuild.Line("100%", "1px", "black"))}
+
         // Home button
         if (this._NanoXAppOption.UseAppModule){
             divcontent.appendChild(this.BuildMobileMenuButton("Home", "Home", this.SvgHome(this.GetIconColor()),()=>{this.ClickHambergerIcon(); this.ClickOnHome()}))
             // Line
-            divcontent.appendChild(NanoXBuild.Line("100%", "1px", "balck"))
+            divcontent.appendChild(NanoXBuild.Line("100%", "1px", "black"))
         }
+
         // Button Mon compte
         divcontent.appendChild(this.BuildMobileMenuButton("Mon Compte", "NxGetMyData", this.SvgUser(this.GetIconColor()), ()=>{this.ClickHambergerIcon(); this.ClickOnGetMyData()}))
+        
         // Button LogOut   
         divcontent.appendChild(this.BuildMobileMenuButton("Logout", "NxLogOut", this.SvgLogout(this.GetIconColor()), ()=>{this.ClickHambergerIcon(); this.ClickOnLogOut()}))
 

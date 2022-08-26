@@ -44,6 +44,14 @@ function NanoXClearMenuButtonRight(){
     MyNanoXCore.MenuBar.ClearMenuButtonRight()
 }
 
+function NanoXAddMenuButtonSettings(Id= null, Titre= null, Svg= null, Action= null){
+    MyNanoXCore.MenuBar.AddMenuButtonSettings(Id, Titre, Svg, Action)
+}
+
+function NanoXClearMenuButtonSettings(){
+    MyNanoXCore.MenuBar.ClearMenuButtonSettings()
+}
+
 function NanoXAddModule(Titre= null, Svg= null, Start= null, StartWithThisModule= false){
     if (MyNanoXCore.ModuleApp != null){
         MyNanoXCore.ModuleApp.AddModule(Titre, Svg, Start, StartWithThisModule)
