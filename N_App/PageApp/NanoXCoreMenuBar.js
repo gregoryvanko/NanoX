@@ -404,7 +404,7 @@ class NanoXMenuBar {
         this._ListOfActionButtonBar.forEach(element => {
             if (element.Type == "Settings"){
                 let action = element.Action
-                divcontent.appendChild(this.BuildMobileMenuButton(element.Titre, element.Id, element.Svg, ()=>{this.RemoveViewUserMenu(); action()}))
+                divcontent.appendChild(this.BuildMobileMenuButton(element.Titre, element.Id, element.Svg, ()=>{this.ClickHambergerIcon(); action()}))
                 ActionSettingsExist = true
             }
         });
