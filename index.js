@@ -13,7 +13,7 @@ let MyAppPath = null
 let MySplashScreen = null
 let MySplashScreenBackgroundColor = 'white'
 let MyNanoXAppOption = {ShowMenuBar: true, MenuBarOnTop: true, MenuBarIsTranslucide: false, ShowNameInMenuBar: true, CssClassForName: null, ColorMenuBar: "white", ColorIconMenuBar: "black", HeightMenuBar: "3rem", AppFolderClient: null, AppFolderAdmin: null, UseAppModule: true}
-
+//Test
 let Mongoose = require("./N_Mongoose/Mongoose")
 
 let Express = require("./N_Express/Express")
