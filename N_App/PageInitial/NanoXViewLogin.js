@@ -9,20 +9,20 @@ class NanoXViewLogin{
         divcontent.classList.add("NanoXFlexColCenter")
         divcontent.style.width = "100%"
         // empty space
-        divcontent.appendChild(this.BuildEmptySpace("1rem"))
-        // Titre
-        let divtitre = document.createElement("div")
-        divcontent.appendChild(divtitre)
-        divtitre.classList.add("NanoxTitre")
-        divtitre.classList.add("NanoXAppColor")
-        divtitre.innerText = document.title
-        // empty space
-        divcontent.appendChild(this.BuildEmptySpace("4rem"))
+        divcontent.appendChild(this.BuildEmptySpace("5rem"))
         // Box
         let divbox = document.createElement("div")
         divcontent.appendChild(divbox)
         divbox.classList.add("NanoxBoxShadow")
         divbox.classList.add("NanoXFlexColCenter")
+        // empty space
+        divbox.appendChild(this.BuildEmptySpace("0.5rem"))
+        // Titre
+        let divtitre = document.createElement("div")
+        divbox.appendChild(divtitre)
+        divtitre.classList.add("NanoxTitre")
+        divtitre.classList.add("NanoXAppColor")
+        divtitre.innerText = document.title
         // empty space
         divbox.appendChild(this.BuildEmptySpace("0.5rem"))
         // Input email
