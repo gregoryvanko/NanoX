@@ -87,6 +87,7 @@ class NanoXViewSignUp {
         element.appendChild(Text)
         Text.classList.add("NanoxText")
         Text.style.width = "100%"
+        Text.style.marginBottom = "0.5rem"
         Text.innerText = Key.replace("-", " ")
 
         let inputStyle="box-sizing: border-box; outline: none; margin: 0; background: white; -webkit-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); -moz-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.08); -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #666; margin-bottom: 1rem; border: solid 1px rgba(0,0,0,.1); padding: 0.5rem; width: 100%;"

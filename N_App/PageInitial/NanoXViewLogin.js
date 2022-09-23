@@ -24,7 +24,7 @@ class NanoXViewLogin{
         divtitre.classList.add("NanoXAppColor")
         divtitre.innerText = document.title
         // empty space
-        divbox.appendChild(this.BuildEmptySpace("0.5rem"))
+        divbox.appendChild(this.BuildEmptySpace("2rem"))
         // Input email
         let InputMail = document.createElement("input")
         divbox.appendChild(InputMail)

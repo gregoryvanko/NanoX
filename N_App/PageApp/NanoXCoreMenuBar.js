@@ -13,6 +13,7 @@ class NanoXMenuBar {
         this._IdBarTitreName = "IdBarTitreName"
         this._IdNanoXMobileMenu = "IdNanoXMobileMenu"
         this._IdNanoXUserMenu = "IdNanoXUserMenu"
+        this._IdNanoXUserMenuBackground = "IdNanoXUserMenuBackground"
 
         this._ListOfActionButtonBar = []
     }
@@ -317,6 +318,12 @@ class NanoXMenuBar {
         if (document.getElementById(this._IdNanoXUserMenu)){
             this.RemoveViewUserMenu()
         } else {
+            // Backgroud
+            let background = NanoXBuild.Div(this._IdNanoXUserMenuBackground, "NanoXUserMenuBackground")
+            document.body.appendChild(background)
+            background.onclick = this.ClickOnMenu.bind(this)
+
+            // MenuOpen
             let divcontent = NanoXBuild.DivFlexColumn(this._IdNanoXUserMenu, "NanoXUserMenu")
             divcontent.style.top = this._NanoXAppOption.HeightMenuBar
 
@@ -350,6 +357,7 @@ class NanoXMenuBar {
 
     RemoveViewUserMenu(){
         document.body.removeChild(document.getElementById(this._IdNanoXUserMenu))
+        document.body.removeChild(document.getElementById(this._IdNanoXUserMenuBackground))
     }
 
 
@@ -364,6 +372,11 @@ class NanoXMenuBar {
     }
 
     BuildViewMobileMenu(){
+        // Backgroud
+        let background = NanoXBuild.Div(this._IdNanoXUserMenuBackground, "NanoXUserMenuBackground")
+        document.body.appendChild(background)
+        background.onclick = this.ClickHambergerIcon.bind(this)
+
         let divbar = NanoXBuild.Div(this._IdNanoXMobileMenu, "NanoXMobileMenu", "height: 0;")
         // Safe space on IOS
         let divSafeIos = NanoXBuild.Div(null, "NanoXHeightSafeTop", "width: 100%; background-color: transparent;")
@@ -429,6 +442,7 @@ class NanoXMenuBar {
 
     RemoveViewMobileMenu(){
         document.body.removeChild(document.getElementById(this._IdNanoXMobileMenu))
+        document.body.removeChild(document.getElementById(this._IdNanoXUserMenuBackground))
     }
 
     BuildMobileMenuButton(Titre = null, Id = null, Svg = null, Action=null){

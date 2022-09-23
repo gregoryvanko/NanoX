@@ -13,7 +13,7 @@ async function Start({Port = 9000, Name = "NanoX", Debug = false, SplashScreenFi
         AppSecret: "TestNonoXSecret",
         MongoUrl: MongoDbUrl,
         Debug: Debug,
-        IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
+        //IconPath:  __dirname + "/Backend/Test-apple-icon-192x192.png",
         ApiServer: true,
         AllowVideo : true,
         AllowSignUp: true,

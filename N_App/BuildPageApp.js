@@ -32,6 +32,12 @@ function GetJs(AdminApp = false){
     
     // Si on utilise le mode module, on execute les start app après avoir loadé les fichiers client
     if (NanoXAppOption.UseAppModule){
+        // Nanox Admin Module
+        if (AdminApp){
+            Output += fs.readFileSync(__dirname + "/ModuleAdmin/StatConnection.js", 'utf8')+ osEOL + osEOL
+        }
+
+        // Add commande : start module app
         Output += require("./PageApp/NanoXPageAppStart").GetJsStartModuleApp()
     }
 
