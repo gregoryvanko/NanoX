@@ -6,7 +6,7 @@ class NanoXCore {
         this._MenuBar = new NanoXMenuBar(this._NanoXAppOption)
         this._ModuleApp = null
         if (this._NanoXAppOption.UseAppModule){
-            this._ModuleApp = new NanoXModuleApp()
+            this._ModuleApp = new NanoXModuleApp(this._MenuBar)
         }
     }
 

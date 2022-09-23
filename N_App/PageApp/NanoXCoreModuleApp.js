@@ -1,8 +1,9 @@
 class NanoXModuleApp{
-    constructor(){
+    constructor(MenuBar){
         this._DivApp = null
         this._ListOfModules = []
         this._StartWithOneModule = null
+        this._MenuBar = MenuBar
     }
 
     Start(FirstAppStart = false){
@@ -16,6 +17,11 @@ class NanoXModuleApp{
                 if ((this._StartWithOneModule != null) && (FirstAppStart)){
                     this.ClickAppCard(this._StartWithOneModule)
                 } else {
+                    // Clear button on menu
+                    this._MenuBar.ClearMenuButtonLeft()
+                    this._MenuBar.ClearMenuButtonRight()
+                    this._MenuBar.ClearMenuButtonSettings()
+                    // Add module card
                     let content = NanoXBuild.DivFlexRowSpaceEvenly(null, null, "width: 90%; margin-top: 4rem;")
                     this._DivApp.appendChild(content)
                     this._ListOfModules.forEach(element => {
