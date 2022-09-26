@@ -34,6 +34,7 @@ function GetJs(AdminApp = false){
     if (NanoXAppOption.UseAppModule){
         // Nanox Admin Module
         if (AdminApp){
+            Output += fs.readFileSync(__dirname + "/ModuleAdmin/IconAdmin.js", 'utf8')+ osEOL + osEOL
             Output += fs.readFileSync(__dirname + "/ModuleAdmin/StatConnection.js", 'utf8')+ osEOL + osEOL
         }
 

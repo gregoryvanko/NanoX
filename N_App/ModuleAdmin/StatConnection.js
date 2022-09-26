@@ -10,4 +10,4 @@ class NanoXStatConnection{
 }
 
 let MyNanoXStatConnection = new NanoXStatConnection()
-NanoXAddModule("Connection", null, MyNanoXStatConnection.Start.bind(MyNanoXStatConnection), true)
+NanoXAddModule("Connection", IconAdmin.IconModule(), MyNanoXStatConnection.Start.bind(MyNanoXStatConnection), true)
