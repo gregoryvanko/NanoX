@@ -1,6 +1,6 @@
 {
   "name": "@gregvanko/nanox",
-  "version": "1.53.0",
+  "version": "1.54.0",
   "description": "NanoX",
   "main": "index.js",
   "scripts": {
