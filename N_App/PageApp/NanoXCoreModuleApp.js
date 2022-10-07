@@ -22,7 +22,7 @@ class NanoXModuleApp{
                     this._MenuBar.ClearMenuButtonRight()
                     this._MenuBar.ClearMenuButtonSettings()
                     // Add module card
-                    let content = NanoXBuild.DivFlexRowSpaceEvenly(null, null, "width: 90%; margin-top: 4rem;")
+                    let content = NanoXBuild.DivFlexRowSpaceEvenly(null, null, "width: 90%; margin-top: 4rem; margin-bottom: 4rem;")
                     this._DivApp.appendChild(content)
                     this._ListOfModules.forEach(element => {
                         content.appendChild(this.BuildAppCard(element.Titre, element.Svg, element.Start))
@@ -31,7 +31,7 @@ class NanoXModuleApp{
             }
         } else {
             // Titre de la page
-            this._DivApp.appendChild(NanoXBuild.DivText("No module defined", null, "", "margin-top: 4rem;"))
+            this._DivApp.appendChild(NanoXBuild.DivText("No module defined", null, "", "margin-top: 4rem; margin-bottom: 4rem;"))
         }
     }
 

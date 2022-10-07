@@ -221,7 +221,6 @@ class NanoXMenuBar {
         let blur = (this._NanoXAppOption.MenuBarIsTranslucide)? " backdrop-filter: blur(4px);" : ""
         let divBarButtonRight = NanoXBuild.DivFlexRowEnd(null, null, "margin-right: 0.8rem; border-radius: 10px; border: transparent solid;" + blur)
         divBarButtonRight.appendChild(NanoXBuild.Div(this._IdBarActionButtonRight, "NanoXActionBarFlexEnd"))
-        divBarButtonRight.appendChild(this.BuildActionButton("NanoXUserButton", this.SvgTroisDots(this.GetIconColor()), this.ClickMenuIcon.bind(this, false)))
         // Add HambergerIcon
         this.BuildHamburgerIcon(divBarButtonRight)
         return divBarButtonRight
@@ -258,7 +257,15 @@ class NanoXMenuBar {
         let bar3 = NanoXBuild.Div(null, "bar3")
         bar3.style.backgroundColor = ColorMenuBarIcon
         hambergerIcon.appendChild(bar3)
-        hambergerIcon.onclick = this.ClickMenuIcon.bind(this, true)
+        hambergerIcon.onclick = this.ClickMenuIcon.bind(this)
+    }
+
+    IsMobileBrowser(){
+        let check = false
+        if (window.innerWidth < 600){
+            check = true
+        }
+        return check
     }
 
 
@@ -303,25 +310,21 @@ class NanoXMenuBar {
         return `<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 172 172"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"/><g fill="${Color}"><path d="M85.87235,3.62813c-0.72195,0.0249 -1.41775,0.27642 -1.98875,0.71891l-79.12,61.7386c-1.49911,1.16886 -1.76683,3.33167 -0.59797,4.83078c1.16886,1.49911 3.33167,1.76683 4.83078,0.59797l4.76359,-3.71547v90.4411c0.00019,1.89978 1.54022,3.43981 3.44,3.44h47.58219c0.37149,0.0614 0.75054,0.0614 1.12203,0h40.15797c0.37149,0.0614 0.75054,0.0614 1.12203,0h47.61578c1.89978,-0.00019 3.43981,-1.54022 3.44,-3.44v-90.4411l4.7636,3.71547c0.96974,0.75623 2.26928,0.93763 3.40904,0.47586c1.13976,-0.46177 1.94657,-1.49654 2.11649,-2.71449c0.16992,-1.21795 -0.32287,-2.43403 -1.29273,-3.19012l-26.1964,-20.43844v-25.00719h-20.64v8.89562l-32.2836,-25.18859c-0.64007,-0.49632 -1.43474,-0.7509 -2.24406,-0.71891zM86,11.42859l65.36,51.00203v92.36937h-41.28v-65.36h-48.16v65.36h-41.28v-92.36937zM127.28,27.52h6.88v12.7589l-6.88,-5.375zM68.8,96.32h34.4v58.48h-34.4z"/></g></g></svg>`
     }
 
-    SvgTroisDots(Color = "#000000"){
-        return `<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 172 172"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"/><g fill="${Color}"><path d="M86,10.32c-11.35469,0 -20.64,9.28531 -20.64,20.64c0,11.35469 9.28531,20.64 20.64,20.64c11.35469,0 20.64,-9.28531 20.64,-20.64c0,-11.35469 -9.28531,-20.64 -20.64,-20.64zM86,17.2c7.64594,0 13.76,6.11406 13.76,13.76c0,7.64594 -6.11406,13.76 -13.76,13.76c-7.64594,0 -13.76,-6.11406 -13.76,-13.76c0,-7.64594 6.11406,-13.76 13.76,-13.76zM86,65.36c-11.35469,0 -20.64,9.28531 -20.64,20.64c0,11.35469 9.28531,20.64 20.64,20.64c11.35469,0 20.64,-9.28531 20.64,-20.64c0,-11.35469 -9.28531,-20.64 -20.64,-20.64zM86,72.24c7.64594,0 13.76,6.11406 13.76,13.76c0,7.64594 -6.11406,13.76 -13.76,13.76c-7.64594,0 -13.76,-6.11406 -13.76,-13.76c0,-7.64594 6.11406,-13.76 13.76,-13.76zM86,120.4c-11.35469,0 -20.64,9.28531 -20.64,20.64c0,11.35469 9.28531,20.64 20.64,20.64c11.35469,0 20.64,-9.28531 20.64,-20.64c0,-11.35469 -9.28531,-20.64 -20.64,-20.64zM86,127.28c7.64594,0 13.76,6.11406 13.76,13.76c0,7.64594 -6.11406,13.76 -13.76,13.76c-7.64594,0 -13.76,-6.11406 -13.76,-13.76c0,-7.64594 6.11406,-13.76 13.76,-13.76z"/></g></g></svg>`
-    }
 
-
-    ClickMenuIcon(Mobile = false){
+    ClickMenuIcon(){
         document.getElementById("Nxhamburger-icon").classList.toggle('Nxopen')
         if (document.getElementById("Nxhamburger-icon").classList.contains('Nxopen')){
-            this.BuildViewMenu(Mobile)
+            this.BuildViewMenu()
         }else{
             this.RemoveViewMenu()
         }
     }
 
-    BuildViewMenu(Mobile = false){
+    BuildViewMenu(){
         // Backgroud
         let background = NanoXBuild.Div(this._IdNanoXUserMenuBackground, "NanoXUserMenuBackground")
         document.body.appendChild(background)
-        background.onclick = this.ClickMenuIcon.bind(this, Mobile)
+        background.onclick = this.ClickMenuIcon.bind(this)
 
         let divbar = NanoXBuild.Div(this._IdNanoXUserMenu, "NanoXMobileMenu", "height: 0;")
         // Safe space on IOS
@@ -334,7 +337,7 @@ class NanoXMenuBar {
         divcontent.style.top = this._NanoXAppOption.HeightMenuBar
         divbar.appendChild(divcontent)
 
-        if (Mobile){
+        if (this.IsMobileBrowser()){
             // Left action
             let ActionLeftExist = false
             this._ListOfActionButtonBar.forEach(element => {
