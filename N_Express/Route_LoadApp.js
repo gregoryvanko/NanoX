@@ -1,5 +1,7 @@
 let LogInfo = require("../index").NanoXLogInfo
 let LogError = require("../index").NanoXLogError
+let LogStat = require("../index").NanoXLogStat
+const LogStat_ApplicationLoaded = require("../N_Log/Log").Stat_ApplicationLoaded
 const AuthBasic = require("./Mid_AuthBasic")
 
 const fs = require('fs')
@@ -7,7 +9,7 @@ const express = require("express")
 const router = express.Router()
 
 router.post("/", AuthBasic, (req, res) => {
-    LogInfo(`API loadapp`, req.user)
+    LogStat(LogStat_ApplicationLoaded, req.user)
     if (req.body.Version){
         // Get Output path
         const OutputPath = require("../N_PageBuilder/PageBuilder").GetOutputPath()

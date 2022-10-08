@@ -130,15 +130,8 @@ function BuildApp(){
 }
 
 function GetAppVersion(){
-    let version = ""
-    // Si on est en debug on fait un random de la version
-    if(MyDebug){
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-        version = "Debug" + characters.charAt(Math.floor(Math.random() * characters.length))
-    } else {
-        const OutputPath = require("./N_PageBuilder/PageBuilder").GetOutputPath()
-        version = require('fs').statSync(OutputPath + '/app.json').birthtime
-    }
+    const OutputPath = require("./N_PageBuilder/PageBuilder").GetOutputPath()
+    const version = require('fs').statSync(OutputPath + '/app.json').mtime.toISOString()
     return version
 }
 

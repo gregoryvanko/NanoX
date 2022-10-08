@@ -54,3 +54,5 @@ module.exports.LogError = LogError
 module.exports.LogStat = LogStat
 module.exports.Stat_ConnectionValided = "ConnectionValided"
 module.exports.Stat_ConnectionError = "ConnectionError"
+module.exports.Stat_Page = "Page:/"
+module.exports.Stat_ApplicationLoaded = "ApplicationLoaded"
