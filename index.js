@@ -22,7 +22,6 @@ let LogR = require('./N_Log/Log')
 let SetDebugMode = LogR.SetDebugMode
 let LogInfo = LogR.LogInfo
 let LogError = LogR.LogError
-let LogStat = LogR.LogStat
 
 let ListOfRoute = []
 let ListOfPageToBuild = []
@@ -173,7 +172,6 @@ module.exports.NanoXStart = NanoXStart
 module.exports.NanoXInitiation = NanoXInitiation
 module.exports.NanoXLogInfo = LogInfo
 module.exports.NanoXLogError = LogError
-module.exports.NanoXLogStat = LogStat
 module.exports.Mongoose = require("mongoose")
 module.exports.NanoXAddRoute = NanoXAddRoute
 module.exports.Express = require("express")

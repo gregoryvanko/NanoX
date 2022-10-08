@@ -1,6 +1,6 @@
 let LogInfo = require("../index").NanoXLogInfo
 let LogError = require("../index").NanoXLogError
-let LogStat = require("../index").NanoXLogStat
+let LogStat = require('../N_Log/Log').LogStat
 const LogStat_ApplicationLoaded = require("../N_Log/Log").Stat_ApplicationLoaded
 const AuthBasic = require("./Mid_AuthBasic")
 

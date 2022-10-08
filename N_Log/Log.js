@@ -9,11 +9,11 @@ function SetDebugMode(){
 function ConsoleLog(Now, Type, Message, User){
     if(DebugMode){
         if (Type == "Error"){
-            console.log('\x1b[31m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.User + " => " + Message)
+            console.log('\x1b[31m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.User + " => " + Message )
         } else if (Type == "Stat"){
-            console.log('\x1b[34m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.User + " => " + Message)
+            console.log('\x1b[34m%s\x1b[0m', GetDateString(Now) + " " + Type + " " + User.User + " => " + Message )
         } else {
-            console.log(GetDateString(Now) + " " + Type + " " + User.User + " => " + Message)
+            console.log(GetDateString(Now) + " " + Type + " " + User.User + " => " + Message )
         }
     }
 }
@@ -36,15 +36,15 @@ function SaveLog(Type, Message, User){
     ConsoleLog(now,Type, Message, User)
 }
 
-function LogInfo(Message = "No log message", User = MyUserServer){
+function LogInfo(Message = "NoValue", User = MyUserServer){
     SaveLog("Info", Message, User)
 }
 
-function LogError(Message = "No log message", User = MyUserServer){
+function LogError(Message = "NoValue", User = MyUserServer){
     SaveLog("Error", Message, User)
 }
 
-function LogStat(Message = "No log message", User = MyUserServer){
+function LogStat(Message = "NoValue", User = MyUserServer){
     SaveLog("Stat", Message, User)
 }
 
@@ -54,5 +54,5 @@ module.exports.LogError = LogError
 module.exports.LogStat = LogStat
 module.exports.Stat_ConnectionValided = "ConnectionValided"
 module.exports.Stat_ConnectionError = "ConnectionError"
-module.exports.Stat_Page = "Page:/"
 module.exports.Stat_ApplicationLoaded = "ApplicationLoaded"
+module.exports.Stat_TypePage = "Page: "

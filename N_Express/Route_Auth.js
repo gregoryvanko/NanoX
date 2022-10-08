@@ -1,6 +1,6 @@
 let LogInfo = require("../index").NanoXLogInfo
 let LogError = require("../index").NanoXLogError
-let LogStat = require("../index").NanoXLogStat
+let LogStat = require('../N_Log/Log').LogStat
 const LogStat_ConnectionValided = require("../N_Log/Log").Stat_ConnectionValided
 const LogStat_ConnectionError = require("../N_Log/Log").Stat_ConnectionError
 
@@ -26,12 +26,12 @@ router.post("/", (req, res) => {
                 } else {
                     res.status(401).send("Authentication error")
                     LogStat(LogStat_ConnectionError)
-                    LogError("Invalid Pass")
+                    LogError(`Invalid Pass ${JSON.stringify(req.body)}`)
                 }
             } else {
                 res.status(401).send("Authentication error")
                 LogStat(LogStat_ConnectionError)
-                LogError("Number of User found not equal to 1")
+                LogError(`Number of User found not equal to 1 ${JSON.stringify(req.body)}`)
             }
         })
         .catch((err) => {
