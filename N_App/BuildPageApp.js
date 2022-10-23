@@ -5,6 +5,7 @@ const osEOL = require('os').EOL
 function GetCss(AdminApp = false){
     let Output = fs.readFileSync(__dirname + "/PageApp/NanoX.css", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/Helper/Autocomplete.css", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/ModuleAdmin/Admin.css", 'utf8')+ osEOL + osEOL
 
     Output += GetCssOfApp(AdminApp)
 
@@ -35,7 +36,7 @@ function GetJs(AdminApp = false){
         // Nanox Admin Module
         if (AdminApp){
             Output += fs.readFileSync(__dirname + "/ModuleAdmin/IconAdmin.js", 'utf8')+ osEOL + osEOL
-            Output += fs.readFileSync(__dirname + "/ModuleAdmin/StatConnection.js", 'utf8')+ osEOL + osEOL
+            Output += fs.readFileSync(__dirname + "/ModuleAdmin/Statistics.js", 'utf8')+ osEOL + osEOL
         }
 
         // Add commande : start module app

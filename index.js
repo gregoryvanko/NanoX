@@ -69,6 +69,7 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
         NanoXAddRoute("/nanoxauth", require('./N_Express/Route_Auth'))
         NanoXAddRoute("/nanoxuser", require('./N_Express/Route_User'))
         NanoXAddRoute("/nanoxlog", require('./N_Express/Route_Log'))
+        NanoXAddRoute("/nanoxadminstat", require('./N_Express/Route_Stat'))
         if (MyAllowVideo){
             NanoXAddRoute("/video", require('./N_Express/Route_Video'))
         }
