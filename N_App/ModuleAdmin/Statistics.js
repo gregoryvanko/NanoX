@@ -19,15 +19,15 @@ class NanoXStatistics{
     }
 
     OnClickConnection(){
-        this.BuildViewStatConnection()
+        this.GetDataStatConnection()
     }
 
     OnClickPage(){
-        alert("Todo")
+        this.GetDataStatPage()
     }
 
     OnClickAPI(){
-        alert("Todo")
+        this.GetDataStatApi()
     }
 
     BuildTextGetData(){
@@ -36,18 +36,58 @@ class NanoXStatistics{
         return DivCenter
     }
 
-    BuildViewStatConnection(){
+    GetDataStatConnection(){
         // Clear view
         this._DivApp.innerHTML = ""
         // Add texte get data
         this._DivApp.appendChild(this.BuildTextGetData())
         // Call Api with Type=day and User=all
-        NanoXApiGet("/nanoxadminstat/connection/day/all").then((reponse)=>{
-            // ToDo
-            console.log(reponse)
+        NanoXApiGet("/nanoxadminstat/connection/day/alluser").then((reponse)=>{
+            this.BuildViewStatConnection(reponse)
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
         })
+    }
+
+    BuildViewStatConnection(Data){
+        // ToDo
+        console.log(Data)
+    }
+
+    GetDataStatPage(){
+        // Clear view
+        this._DivApp.innerHTML = ""
+        // Add texte get data
+        this._DivApp.appendChild(this.BuildTextGetData())
+        // Call Api with Type=day and User=all
+        NanoXApiGet("/nanoxadminstat/page/day/allpage").then((reponse)=>{
+            this.BuildViewStatPage(reponse)
+        },(erreur)=>{
+            this._DivApp.innerHTML=erreur
+        })
+    }
+
+    BuildViewStatPage(Data){
+        // ToDo
+        console.log(Data)
+    }
+
+    GetDataStatApi(){
+        // Clear view
+        this._DivApp.innerHTML = ""
+        // Add texte get data
+        this._DivApp.appendChild(this.BuildTextGetData())
+        // Call Api with Type=day and User=all
+        NanoXApiGet("/nanoxadminstat/api/day/allapi/alluser").then((reponse)=>{
+            this.BuildViewStatApi(reponse)
+        },(erreur)=>{
+            this._DivApp.innerHTML=erreur
+        })
+    }
+
+    BuildViewStatApi(Data){
+        // ToDo
+        console.log(Data)
     }
 
 }
