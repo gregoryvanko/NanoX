@@ -54,13 +54,13 @@ class NanoXStatistics{
         console.log(Data)
     }
 
-    GetDataStatPage(){
+    GetDataStatPage(DayMonth = "day", Page = "allpage"){
         // Clear view
         this._DivApp.innerHTML = ""
         // Add texte get data
         this._DivApp.appendChild(this.BuildTextGetData())
         // Call Api with Type=day and User=all
-        NanoXApiGet("/nanoxadminstat/page/day/allpage").then((reponse)=>{
+        NanoXApiGet(`/nanoxadminstat/page/${DayMonth}/${Page}`).then((reponse)=>{
             this.BuildViewStatPage(reponse)
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
@@ -72,13 +72,13 @@ class NanoXStatistics{
         console.log(Data)
     }
 
-    GetDataStatApi(){
+    GetDataStatApi(DayMonth = "day", Api = "allapi", UserId = "alluser"){
         // Clear view
         this._DivApp.innerHTML = ""
         // Add texte get data
         this._DivApp.appendChild(this.BuildTextGetData())
         // Call Api with Type=day and User=all
-        NanoXApiGet("/nanoxadminstat/api/day/allapi/alluser").then((reponse)=>{
+        NanoXApiGet(`/nanoxadminstat/api/${DayMonth}/${Api}/${UserId}`).then((reponse)=>{
             this.BuildViewStatApi(reponse)
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
