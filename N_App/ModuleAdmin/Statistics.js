@@ -36,13 +36,13 @@ class NanoXStatistics{
         return DivCenter
     }
 
-    GetDataStatConnection(){
+    GetDataStatConnection(DayMonth = "day", UserId = "alluser"){
         // Clear view
         this._DivApp.innerHTML = ""
         // Add texte get data
         this._DivApp.appendChild(this.BuildTextGetData())
         // Call Api with Type=day and User=all
-        NanoXApiGet("/nanoxadminstat/connection/day/alluser").then((reponse)=>{
+        NanoXApiGet(`/nanoxadminstat/connection/${DayMonth}/${UserId}`).then((reponse)=>{
             this.BuildViewStatConnection(reponse)
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
