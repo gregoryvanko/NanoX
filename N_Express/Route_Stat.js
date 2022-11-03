@@ -4,15 +4,13 @@ const LogError = require("../index").NanoXLogError
 const AuthAdmin = require("./Mid_AuthAdmin")
 
 const GetAllUser = require("./AdminStat").GetallUser
+const SetLabel = require("./AdminStat").SetLabel
 
 const express = require("express")
 const router = express.Router()
 
 router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
     LogInfo(`API nanoxadminstat : get connection data`, req.user)
-
-    console.log(req.params.DayMonth)
-    console.log(req.params.UserId)
 
     let reponse = {ListOfUser: null, ConnectionData: null}
     try {
@@ -21,7 +19,20 @@ router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
             reponse.ListOfUser = await GetAllUser()
 
             // Format response object
-            reponse.ConnectionData = {StatAppPage: null, StatValideConnection: null, StatErrorConnection : null}
+            reponse.ConnectionData = {Label: null, StatAppPage: null, StatValideConnection: null, StatErrorConnection : null}
+
+            // set label
+            let currentdate = new Date()
+            let date = null
+            let duration = 0
+            if (req.params.DayMonth == "month"){
+                date = new Date(currentdate.getFullYear(), currentdate.getMonth(), 1, 0, 0, 1, 0)
+                duration = 12
+            } else {
+                date = new Date(currentdate.getFullYear(), currentdate.getMonth(), currentdate.getDay(), 0, 0, 1, 0)
+                duration = 30
+            }
+            reponse.ConnectionData.Label = SetLabel(req.params.DayMonth, date, duration)
 
             // get stat connection page app
             // ToDo

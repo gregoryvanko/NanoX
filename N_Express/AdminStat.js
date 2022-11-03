@@ -16,4 +16,24 @@ async function GetAllUser(){
     })
 }
 
+function SetLabel (Type, TheDate, Duration){
+    let Label = []
+    if (Type == "month"){
+        
+        TheDate.setMonth(TheDate.getMonth() - Duration)
+        for (let index = 0; index < Duration; index++){
+            Label.push({Date: new Date(TheDate.getTime()), Jour: TheDate.getDate(), Mois: TheDate.getMonth() + 1})
+            TheDate.setMonth( TheDate.getMonth() +1 )
+        }
+    } else {
+        TheDate.setDate( TheDate.getDate() - (Duration-1) )
+        for (let index = 0; index < Duration; index++){
+            Label.push({Date: new Date(TheDate.getTime()), Jour: TheDate.getDate(), Mois: TheDate.getMonth() + 1})
+            TheDate.setDate( TheDate.getDate() +1 )
+        }
+    }
+    return Label
+}
+
 module.exports.GetallUser = GetAllUser
+module.exports.SetLabel = SetLabel
