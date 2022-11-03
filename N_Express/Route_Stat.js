@@ -15,24 +15,33 @@ router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
     console.log(req.params.UserId)
 
     let reponse = {ListOfUser: null, ConnectionData: null}
-    if (req.params.UserId == "alluser"){
-        try {
+    try {
+        if (req.params.UserId == "alluser"){
             // get all user
             reponse.ListOfUser = await GetAllUser()
-            // get connection data
-            
-            // send reponse
-            res.send(reponse)
-        } catch (error) {
-            const errormsg = `Connection error: ${error}`
-            LogError(errormsg, req.user)
-            res.status(500).send(errormsg)
-        }
-    } else {
-        // get connection data for one user
 
-        // send reponse
+            // Format response object
+            reponse.ConnectionData = {StatAppPage: null, StatValideConnection: null, StatErrorConnection : null}
+
+            // get stat connection page app
+            // ToDo
+
+            // get all valide connection for all user
+            // ToDo
+
+            // get all error connection
+            // ToDo
+        } else {
+            // get connection data for one user
+            // ToDo
+        }
+        
+        // Send reponse
         res.send(reponse)
+    } catch (error) {
+        const errormsg = `API Stat Connection error: ${error}`
+        LogError(errormsg, req.user)
+        res.status(500).send(errormsg)
     }
 })
 
@@ -45,14 +54,29 @@ router.get("/page/:DayMonth/:OnePage", AuthAdmin, (req, res) => {
     res.send("Ok page")
 })
 
-router.get("/api/:DayMonth/:OneApi/:OneUser", AuthAdmin, (req, res) => {
+router.get("/api/:DayMonth/:OneApi/:UserId", AuthAdmin, async (req, res) => {
     LogInfo(`API nanoxadminstat : get api data`, req.user)
-    // Get api data
-    // ToDo
+
     console.log(req.params.DayMonth)
     console.log(req.params.OneApi)
-    console.log(req.params.OneUser)
-    res.send("Ok api")
+    console.log(req.params.UserId)
+
+    let reponse = {ListOfUser: null, ApiData: null}
+    try {
+        if (req.params.UserId == "alluser"){
+            // get all user
+            reponse.ListOfUser = await GetAllUser()
+        }
+        // get api data
+        // ToDo
+
+        // Send reponse
+        res.send(reponse)
+    } catch (error) {
+        const errormsg = `API Stat api error: ${error}`
+        LogError(errormsg, req.user)
+        res.status(500).send(errormsg)
+    }
 })
 
 
