@@ -3,18 +3,37 @@ const LogError = require("../index").NanoXLogError
 //const AuthBasic = require("./Mid_AuthBasic")
 const AuthAdmin = require("./Mid_AuthAdmin")
 
+const GetAllUser = require("./AdminStat").GetallUser
+
 const express = require("express")
 const router = express.Router()
 
-let ModelLog = require("../N_Log/Model_Log")
-
-router.get("/connection/:DayMonth/:OneUser", AuthAdmin, (req, res) => {
+router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
     LogInfo(`API nanoxadminstat : get connection data`, req.user)
-    // Get connection data
-    // ToDo
+
     console.log(req.params.DayMonth)
-    console.log(req.params.OneUser)
-    res.send("Ok connection")
+    console.log(req.params.UserId)
+
+    let reponse = {ListOfUser: null, ConnectionData: null}
+    if (req.params.UserId == "alluser"){
+        try {
+            // get all user
+            reponse.ListOfUser = await GetAllUser()
+            // get connection data
+            
+            // send reponse
+            res.send(reponse)
+        } catch (error) {
+            const errormsg = `Connection error: ${error}`
+            LogError(errormsg, req.user)
+            res.status(500).send(errormsg)
+        }
+    } else {
+        // get connection data for one user
+
+        // send reponse
+        res.send(reponse)
+    }
 })
 
 router.get("/page/:DayMonth/:OnePage", AuthAdmin, (req, res) => {
@@ -35,5 +54,8 @@ router.get("/api/:DayMonth/:OneApi/:OneUser", AuthAdmin, (req, res) => {
     console.log(req.params.OneUser)
     res.send("Ok api")
 })
+
+
+
 
 module.exports = router
