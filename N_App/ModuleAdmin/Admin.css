@@ -21,3 +21,23 @@
     font-size: 1.2rem;
     margin-bottom: 1rem;
 }
+
+.NanoxAdminInput {
+    width: 80%;
+    max-width: 25rem;
+    padding: 1rem;
+    border: solid 1px #dcdcdc;
+    border-radius: 10px;
+    margin: 1rem;
+    text-align: right;
+}
+.NanoxAdminInput:focus,
+.NanoxAdminInput.focus {
+    outline: none;
+    border-color: var(--NanoX-appcolor);
+}
+@media (hover: hover) {
+    .NanoxAdminInput:hover{
+        border-color: var(--NanoX-appcolor);
+    }
+}

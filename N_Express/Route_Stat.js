@@ -4,6 +4,7 @@ const LogError = require("../index").NanoXLogError
 const AuthAdmin = require("./Mid_AuthAdmin")
 
 const GetAllUser = require("./AdminStat").GetallUser
+const GetStartDate = require("./AdminStat").GetStartDate
 const GetLabel = require("./AdminStat").GetLabel
 const GetConnectionStat = require("./AdminStat").GetConnectionStat
 
@@ -13,55 +14,35 @@ const router = express.Router()
 router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
     LogInfo(`API nanoxadminstat : get connection data`, req.user)
 
-    let reponse = {ListOfUser: null, ConnectionData: null}
+    // reponse envoyée au client
+    let reponse = {ListOfUser: null, ConnectionData: {Label: null, StatValideConnection: null, StatErrorConnection : null}}
+
+    // start Date definition
+    const duration = (req.params.DayMonth == "month")? 12 : 30
+    let startdate = GetStartDate(req.params.DayMonth, duration)
+    const copystrartdate = new Date(startdate.getTime())
+
+    // Set Label
+    const Label = GetLabel(req.params.DayMonth, startdate, duration)
+    reponse.ConnectionData.Label = Label.LabelTexte
+
     try {
         if (req.params.UserId == "alluser"){
             // get all user
             reponse.ListOfUser = await GetAllUser()
 
-            // Format response object
-            reponse.ConnectionData = {Label: null, StatAppPage: null, StatValideConnection: null, StatErrorConnection : null}
-
-            // Date definition
-            let currentdate = new Date()
-            let startdate = null
-            let duration = 0
-            if (req.params.DayMonth == "month"){
-                startdate = Date.UTC(currentdate.getFullYear(), currentdate.getMonth(), 1, 0, 0, 0, 1)
-                startdate = new Date(startdate)
-                duration = 12
-                startdate = startdate.setMonth(startdate.getMonth() - duration)
-            } else {
-                startdate = Date.UTC(currentdate.getFullYear(), currentdate.getMonth(), currentdate.getDate(), 0, 0, 0, 1)
-                startdate = new Date(startdate)
-                duration = 10
-                startdate = startdate.setDate( startdate.getDate() - (duration-1) )
-                startdate = new Date(startdate)
-            }
-            const copystrartdate = new Date(startdate.getTime())
-
-            // Set Label
-            const Label = GetLabel(req.params.DayMonth, startdate, duration)
-            reponse.ConnectionData.Label = Label.LabelTexte
-
-            // get stat connection page app
-            reponse.ConnectionData.StatAppPage = null
-            // ToDo
-
             // get all valide connection for all user
-            const ConnectionValided = require("../N_Log/Log").Stat_ConnectionValided
-            reponse.ConnectionData.StatValideConnection = await GetConnectionStat(req.params.DayMonth, ConnectionValided, copystrartdate, Label.LabelDetail)
-            // ToDo
+            const ApplicationLoaded = require("../N_Log/Log").Stat_ApplicationLoaded
+            reponse.ConnectionData.StatValideConnection = await GetConnectionStat(req.params.DayMonth, ApplicationLoaded, copystrartdate, Label.LabelDetail, null)
 
             // get all error connection
             const ConnectionError = require("../N_Log/Log").Stat_ConnectionError
-            reponse.ConnectionData.StatErrorConnection = await GetConnectionStat(req.params.DayMonth, ConnectionError, copystrartdate, Label.LabelDetail)
-            // ToDo
+            reponse.ConnectionData.StatErrorConnection = await GetConnectionStat(req.params.DayMonth, ConnectionError, copystrartdate, Label.LabelDetail, null)
         } else {
-            // get connection data for one user
-            // ToDo
+            // get all valide connection for one user
+            const ApplicationLoaded = require("../N_Log/Log").Stat_ApplicationLoaded
+            reponse.ConnectionData.StatValideConnection = await GetConnectionStat(req.params.DayMonth, ApplicationLoaded, copystrartdate, Label.LabelDetail, req.params.UserId)
         }
-        
         // Send reponse
         res.send(reponse)
     } catch (error) {
