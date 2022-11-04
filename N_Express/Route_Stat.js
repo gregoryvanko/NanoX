@@ -4,7 +4,8 @@ const LogError = require("../index").NanoXLogError
 const AuthAdmin = require("./Mid_AuthAdmin")
 
 const GetAllUser = require("./AdminStat").GetallUser
-const SetLabel = require("./AdminStat").SetLabel
+const GetLabel = require("./AdminStat").GetLabel
+const GetConnectionStat = require("./AdminStat").GetConnectionStat
 
 const express = require("express")
 const router = express.Router()
@@ -21,26 +22,40 @@ router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
             // Format response object
             reponse.ConnectionData = {Label: null, StatAppPage: null, StatValideConnection: null, StatErrorConnection : null}
 
-            // set label
+            // Date definition
             let currentdate = new Date()
-            let date = null
+            let startdate = null
             let duration = 0
             if (req.params.DayMonth == "month"){
-                date = new Date(currentdate.getFullYear(), currentdate.getMonth(), 1, 0, 0, 1, 0)
+                startdate = Date.UTC(currentdate.getFullYear(), currentdate.getMonth(), 1, 0, 0, 0, 1)
+                startdate = new Date(startdate)
                 duration = 12
+                startdate = startdate.setMonth(startdate.getMonth() - duration)
             } else {
-                date = new Date(currentdate.getFullYear(), currentdate.getMonth(), currentdate.getDay(), 0, 0, 1, 0)
-                duration = 30
+                startdate = Date.UTC(currentdate.getFullYear(), currentdate.getMonth(), currentdate.getDate(), 0, 0, 0, 1)
+                startdate = new Date(startdate)
+                duration = 10
+                startdate = startdate.setDate( startdate.getDate() - (duration-1) )
+                startdate = new Date(startdate)
             }
-            reponse.ConnectionData.Label = SetLabel(req.params.DayMonth, date, duration)
+            const copystrartdate = new Date(startdate.getTime())
+
+            // Set Label
+            const Label = GetLabel(req.params.DayMonth, startdate, duration)
+            reponse.ConnectionData.Label = Label.LabelTexte
 
             // get stat connection page app
+            reponse.ConnectionData.StatAppPage = null
             // ToDo
 
             // get all valide connection for all user
+            const ConnectionValided = require("../N_Log/Log").Stat_ConnectionValided
+            reponse.ConnectionData.StatValideConnection = await GetConnectionStat(req.params.DayMonth, ConnectionValided, copystrartdate, Label.LabelDetail)
             // ToDo
 
             // get all error connection
+            const ConnectionError = require("../N_Log/Log").Stat_ConnectionError
+            reponse.ConnectionData.StatErrorConnection = await GetConnectionStat(req.params.DayMonth, ConnectionError, copystrartdate, Label.LabelDetail)
             // ToDo
         } else {
             // get connection data for one user
