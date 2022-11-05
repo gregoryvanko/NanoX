@@ -54,11 +54,23 @@ router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
 
 router.get("/page/:DayMonth/:OnePage", AuthAdmin, (req, res) => {
     LogInfo(`API nanoxadminstat : get page data`, req.user)
-    // Get page data
+
+    // reponse envoyée au client
+    let reponse = {ListOfPage: null, PageData: {Label: null, ListeOfStatPage: null}}
+
+    // start Date definition
+    const duration = (req.params.DayMonth == "month")? 12 : 30
+    let startdate = GetStartDate(req.params.DayMonth, duration)
+    const copystrartdate = new Date(startdate.getTime())
+
+    // Set Label
+    const Label = GetLabel(req.params.DayMonth, startdate, duration)
+    reponse.PageData.Label = Label.LabelTexte
+
     // ToDo
     console.log(req.params.DayMonth)
     console.log(req.params.OnePage)
-    res.send("Ok page")
+    res.send(reponse)
 })
 
 router.get("/api/:DayMonth/:OneApi/:UserId", AuthAdmin, async (req, res) => {

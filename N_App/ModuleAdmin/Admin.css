@@ -23,12 +23,10 @@
 }
 
 .NanoxAdminInput {
-    width: 80%;
-    max-width: 25rem;
     padding: 1rem;
     border: solid 1px #dcdcdc;
     border-radius: 10px;
-    margin: 1rem;
+    margin: 0.5rem;
     text-align: right;
 }
 .NanoxAdminInput:focus,
@@ -36,6 +34,24 @@
     outline: none;
     border-color: var(--NanoX-appcolor);
 }
+
+.NanoxAdminInputUserValue{
+    width: 80%;
+    max-width: 25rem;
+}
+
+.NanoxAdminInputAggregationType{
+    width: 40%;
+    max-width: 10rem;
+}
+
+.NanoxAdminDivChart{
+    max-width: 60rem;
+    width: 96%;
+    height: 70vh;
+    max-height: 30rem;
+}
+
 @media (hover: hover) {
     .NanoxAdminInput:hover{
         border-color: var(--NanoX-appcolor);
