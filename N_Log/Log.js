@@ -48,6 +48,10 @@ function LogStat(Message = "NoValue", User = MyUserServer){
     SaveLog("Stat", Message, User)
 }
 
+function LogStatApi(ApiName = "NoValue", User = MyUserServer){
+    this.LogStat("Api: " + ApiName, User)
+}
+
 module.exports.SetDebugMode = SetDebugMode
 module.exports.LogInfo = LogInfo
 module.exports.LogError = LogError

@@ -50,11 +50,11 @@ router.patch("/", AuthBasic, (req, res) => {
             user.save()
             .then(() => {
                 res.send({Data:"OK"})
-                LogInfo("User updated")
+                LogInfo("User updated", req.user)
             })
             .catch((err) => {
                 res.status(500).send("User update error")
-                LogError(`Mongoose update user error: ${err.message}`)
+                LogError(`Mongoose update user error: ${err.message}`, req.user)
             })
 
         } else {

@@ -11,10 +11,11 @@ class NanoXStatistics{
         this._TypeAggregation = "day"
         this._ListeOfTypeAggragation = ["day", "month"]
         this._UserID = "alluser"
-        this._InputUserValue = "All user"
+        this._InputUserValue = "All User"
         this._ListOfPage = null
         this._PageName = "allpage"
         this._InputPageValue = "All Page"
+        this._ApiName = "allapi"
     }
 
     Start(){
@@ -51,7 +52,7 @@ class NanoXStatistics{
     }
 
     OnClickAPI(){
-        this.GetDataStatApi()
+        this.GetDataStatApi(this._TypeAggregation, this._ApiName, this._UserID)
     }
 
     BuildTextGetData(){
@@ -69,6 +70,13 @@ class NanoXStatistics{
         NanoXAddMenuButtonSettings("IdBack", "Back", IconAdmin.Back(NanoXGetColorIconMenuBar()), this.Start.bind(this))
     }
 
+    DynamicColors(){
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        return "rgb(" + r + "," + g + "," + b + ")";
+    }
+
     GetDataStatConnection(DayMonth = "day", UserId = "alluser"){
         // Clear view
         this._DivApp.innerHTML = ""
@@ -84,7 +92,10 @@ class NanoXStatistics{
 
     BuildViewStatConnection(Data){
         if (Data.ListOfUser != null){
-            this._ListeOfUser = Data.ListOfUser
+            this._ListeOfUser = [{label: "All User", id: "alluser"}]
+            Data.ListOfUser.forEach(element => {
+                this._ListeOfUser.push({label: element.LastName + " " + element.FirstName, id: element._id})
+            });
         }
         // Clear view
         this.InitStatView()
@@ -130,13 +141,8 @@ class NanoXStatistics{
             emptyMsg: 'No suggestion',
             fetch: function(text, update) {
                 text = text.toLowerCase();
-                let GroupFiltred = me._ListeOfUser.filter(n => n.LastName.toLowerCase().startsWith(text))
-                let suggestions = [{label: "All user", id: "alluser"}]
-                GroupFiltred.forEach(element => {
-                    const MyObject = {label: element.LastName + " " + element.FirstName, id: element._id}
-                    suggestions.push(MyObject)
-                });
-                update(suggestions);
+                let GroupFiltred = me._ListeOfUser.filter(n => n.label.toLowerCase().startsWith(text))
+                update(GroupFiltred);
             },
             onSelect: function(item) {
                 document.getElementById("InputUserValue").value = item.label;
@@ -154,7 +160,7 @@ class NanoXStatistics{
         if (this._UserID == "alluser"){
             thedataset = [
                 {
-                    label: 'Connection',
+                    label: this._InputUserValue,
                     type: "bar",
                     backgroundColor: "rgba(75, 192, 192, 1)",
                     data: Data.ConnectionData.StatValideConnection,
@@ -169,7 +175,7 @@ class NanoXStatistics{
         } else {
             thedataset = [
                 {
-                    label: 'Connection',
+                    label: this._InputUserValue,
                     type: "bar",
                     backgroundColor: "rgba(75, 192, 192, 1)",
                     data: Data.ConnectionData.StatValideConnection,
@@ -231,7 +237,10 @@ class NanoXStatistics{
 
     BuildViewStatPage(Data){
         if (Data.ListOfPage != null){
-            this._ListOfPage = Data.ListOfPage
+            this._ListOfPage = [{label: "All Page", id: "allpage"}]
+            Data.ListOfPage.forEach(element => {
+                this._ListOfPage.push({label: "/" + element, id: element})
+            });
         }
         // Clear view
         this.InitStatView()
@@ -276,13 +285,8 @@ class NanoXStatistics{
             emptyMsg: 'No suggestion',
             fetch: function(text, update) {
                 text = text.toLowerCase();
-                let GroupFiltred = (me._ListOfPage != null)? me._ListOfPage.filter(n => n.toLowerCase().startsWith(text)) : []
-                let suggestions = [{label: "All Page", id: "allpage"}]
-                GroupFiltred.forEach(element => {
-                    const MyObject = {label: "/" + element, id:element}
-                    suggestions.push(MyObject)
-                });
-                update(suggestions);
+                let GroupFiltred = (me._ListOfPage != null)? me._ListOfPage.filter(n => n.label.toLowerCase().startsWith(text)) : []
+                update(GroupFiltred);
             },
             onSelect: function(item) {
                 document.getElementById("InputPageValue").value = item.label;
@@ -297,18 +301,17 @@ class NanoXStatistics{
         // define the dataset
         let thedataset = []
         if (Data.PageData.ListeOfStatPage != null){
-            // Data.PageData.ListeOfStatPage.forEach(element => {
-            //     thedataset.push(
-            //         {
-            //             label: element.Page,
-            //             type: "line",
-            //             borderColor: "rgba(54, 162, 235, 1)",
-            //             fill: false,
-            //             data: element.Stat
-            //         })
-            // })
-            thedataset.push( {label: Data.PageData.ListeOfStatPage[0].Page, borderColor: 'blue', fill: false,data: Data.PageData.ListeOfStatPage[0].Stat})
-            thedataset.push( {label: Data.PageData.ListeOfStatPage[1].Page, borderColor: 'red', fill: false,data: Data.PageData.ListeOfStatPage[1].Stat})
+            Data.PageData.ListeOfStatPage.forEach(element => {
+                thedataset.push(
+                    {
+                        label: element.Page,
+                        type: "line",
+                        //borderColor: "rgba(54, 162, 235, 1)",
+                        borderColor: this.DynamicColors(),
+                        fill: false,
+                        data: element.Stat
+                    })
+            })
         }
         // Add graph
         let divchart = NanoXBuild.Div("", "NanoxAdminDivChart")
@@ -317,38 +320,40 @@ class NanoXStatistics{
         canvas.setAttribute("id", "myChart")
         divchart.appendChild(canvas)
         let ctx = document.getElementById('myChart').getContext('2d');
-        let myChart = new Chart(ctx, 
-            {
-                type: 'line',
-                data: {
-                    labels: Data.PageData.Label,
-                    datasets: thedataset
+        let myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Data.PageData.Label,
+                datasets: thedataset
+            },
+            options: {
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    text: "Page"
                 },
-                options: {
-                    maintainAspectRatio: false,
-                    title: {
-                        display: true,
-                        text: "Page"
-                    },
-                    legend: {
-                        display: true,
-                        position: "bottom"
-                    },
-                    scales: {
-                        xAxes: [{
-                            gridLines: {color: "rgba(0, 0, 0, 0)"},
-                            stacked: true
-                        }],
-                        yAxes: [{
-                            stacked: true,
-                            ticks: {
-                                beginAtZero: true,
-                                precision: 0
-                            }
-                        }]
+                legend: {
+                    display: true,
+                    position: "bottom",
+                    labels:{
+                        boxWidth: 10,
                     }
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {color: "rgba(0, 0, 0, 0)"},
+                        stacked: false
+                    }],
+                    yAxes: [{
+                        stacked: false,
+                        ticks: {
+                            beginAtZero: true,
+                            precision: 0
+                        }
+                    }]
                 }
-            })
+            }
+        })
     }   
 
     GetDataStatApi(DayMonth = "day", Api = "allapi", UserId = "alluser"){
