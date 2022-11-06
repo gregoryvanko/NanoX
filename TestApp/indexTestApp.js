@@ -42,7 +42,7 @@ async function Start({Port = 9000, Name = "NanoX", Debug = false, SplashScreenFi
     TestAddRoute()
 
     // Test add page builder
-    //TestAddPageBuilder()
+    TestAddPageBuilder()
 
     // Start NanoX
     await require('../index').NanoXStart()

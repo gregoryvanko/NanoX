@@ -279,7 +279,7 @@ class NanoXStatistics{
                 let GroupFiltred = (me._ListOfPage != null)? me._ListOfPage.filter(n => n.toLowerCase().startsWith(text)) : []
                 let suggestions = [{label: "All Page", id: "allpage"}]
                 GroupFiltred.forEach(element => {
-                    const MyObject = {label: element, id:element}
+                    const MyObject = {label: "/" + element, id:element}
                     suggestions.push(MyObject)
                 });
                 update(suggestions);
@@ -289,23 +289,26 @@ class NanoXStatistics{
                 if (item.label != "No suggestion"){
                     me._PageName = item.id
                     me._InputPageValue = item.label
-                    me.GetDataStatPage(me._TypeAggregation, me._PageName)
+                    const PageToSend = (me._PageName == "")? "NanoXEmptyValue" : me._PageName 
+                    me.GetDataStatPage(me._TypeAggregation, PageToSend)
                 }
             }
         })
         // define the dataset
         let thedataset = []
         if (Data.PageData.ListeOfStatPage != null){
-            Data.PageData.ListeOfStatPage.forEach(element => {
-                thedataset.push(
-                    {
-                        label: element.Page,
-                        type: "line",
-                        borderColor: "rgba(54, 162, 235, 1)",
-                        fill: false,
-                        data: element.Stat,
-                    })
-            })
+            // Data.PageData.ListeOfStatPage.forEach(element => {
+            //     thedataset.push(
+            //         {
+            //             label: element.Page,
+            //             type: "line",
+            //             borderColor: "rgba(54, 162, 235, 1)",
+            //             fill: false,
+            //             data: element.Stat
+            //         })
+            // })
+            thedataset.push( {label: Data.PageData.ListeOfStatPage[0].Page, borderColor: 'blue', fill: false,data: Data.PageData.ListeOfStatPage[0].Stat})
+            thedataset.push( {label: Data.PageData.ListeOfStatPage[1].Page, borderColor: 'red', fill: false,data: Data.PageData.ListeOfStatPage[1].Stat})
         }
         // Add graph
         let divchart = NanoXBuild.Div("", "NanoxAdminDivChart")
@@ -314,38 +317,39 @@ class NanoXStatistics{
         canvas.setAttribute("id", "myChart")
         divchart.appendChild(canvas)
         let ctx = document.getElementById('myChart').getContext('2d');
-        let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: Data.PageData.Label,
-                datasets: thedataset
-            },
-            options: {
-                maintainAspectRatio: false,
-                title: {
-                    display: true,
-                    text: "Page"
+        let myChart = new Chart(ctx, 
+            {
+                type: 'line',
+                data: {
+                    labels: Data.PageData.Label,
+                    datasets: thedataset
                 },
-                legend: {
-                    display: true,
-                    position: "bottom"
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {color: "rgba(0, 0, 0, 0)"},
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        stacked: true,
-                        ticks: {
-                            beginAtZero: true,
-                            precision: 0
-                        }
-                    }]
+                options: {
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: "Page"
+                    },
+                    legend: {
+                        display: true,
+                        position: "bottom"
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {color: "rgba(0, 0, 0, 0)"},
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            stacked: true,
+                            ticks: {
+                                beginAtZero: true,
+                                precision: 0
+                            }
+                        }]
+                    }
                 }
-            }
-        })
-    }
+            })
+    }   
 
     GetDataStatApi(DayMonth = "day", Api = "allapi", UserId = "alluser"){
         // Clear view

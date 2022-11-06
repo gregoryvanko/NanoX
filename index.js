@@ -25,6 +25,7 @@ let LogError = LogR.LogError
 
 let ListOfRoute = []
 let ListOfPageToBuild = []
+let ListOfPageRoute = []
 
 function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", AppPort=3000, AppSecret="EncryptSecret", MongoUrl="mongodb://localhost:27017", Debug = false, IconPath = null, ApiServer = false, AllowVideo = false, AllowSignUp = false, AppPath="", NanoXAppOption = null}) {
     MyAppName = AppName
@@ -145,6 +146,7 @@ function NanoXAddPageToBuild(PageName = null, PageRoute = null, Titre = null, Cs
     if ((PageName != null) && (PageRoute != null)){
         let PageToBuild = {PageName:PageName, PageRoute:PageRoute, Titre:Titre, Css:Css, Js:Js, Body:Body}
         ListOfPageToBuild.push(PageToBuild)
+        ListOfPageRoute.push(PageRoute)
     }
 }
 
@@ -169,6 +171,10 @@ function GetNanoXAppOption(){
     return MyNanoXAppOption
 }
 
+function GetListOfPageRoute(){
+    return ListOfPageRoute
+}
+
 module.exports.NanoXStart = NanoXStart
 module.exports.NanoXInitiation = NanoXInitiation
 module.exports.NanoXLogInfo = LogInfo
@@ -185,3 +191,4 @@ module.exports.NanoXAddPageToBuild = NanoXAddPageToBuild
 module.exports.NanoXGetAppVersion = GetAppVersion
 module.exports.NanoXGetSplashScreenData = GetSplashScreenData
 module.exports.NanoXGetNanoXAppOption = GetNanoXAppOption
+module.exports.NanoXGetListOfPageRoute = GetListOfPageRoute

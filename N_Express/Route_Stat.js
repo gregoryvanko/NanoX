@@ -7,6 +7,7 @@ const GetAllUser = require("./AdminStat").GetallUser
 const GetStartDate = require("./AdminStat").GetStartDate
 const GetLabel = require("./AdminStat").GetLabel
 const GetConnectionStat = require("./AdminStat").GetConnectionStat
+const GetPageStat = require("./AdminStat").GetPageStat
 
 const express = require("express")
 const router = express.Router()
@@ -52,8 +53,10 @@ router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
     }
 })
 
-router.get("/page/:DayMonth/:OnePage", AuthAdmin, (req, res) => {
+router.get("/page/:DayMonth/:OnePage", AuthAdmin, async (req, res) => {
     LogInfo(`API nanoxadminstat : get page data`, req.user)
+
+    const PageNameValue = (req.params.OnePage == "NanoXEmptyValue")? "" : req.params.OnePage
 
     // reponse envoyée au client
     let reponse = {ListOfPage: null, PageData: {Label: null, ListeOfStatPage: null}}
@@ -63,14 +66,24 @@ router.get("/page/:DayMonth/:OnePage", AuthAdmin, (req, res) => {
     let startdate = GetStartDate(req.params.DayMonth, duration)
     const copystrartdate = new Date(startdate.getTime())
 
+    // Set ListOfPage
+    reponse.ListOfPage = require("../index").NanoXGetListOfPageRoute()
+
     // Set Label
     const Label = GetLabel(req.params.DayMonth, startdate, duration)
     reponse.PageData.Label = Label.LabelTexte
 
-    // ToDo
-    console.log(req.params.DayMonth)
-    console.log(req.params.OnePage)
-    res.send(reponse)
+    try {
+        // Get stat of pages
+        reponse.PageData.ListeOfStatPage = await GetPageStat(req.params.DayMonth, copystrartdate, Label.LabelDetail, PageNameValue, reponse.ListOfPage)
+        
+        // Send reponse
+        res.send(reponse)
+    } catch (error) {
+        const errormsg = `API Stat Connection error: ${error}`
+        LogError(errormsg, req.user)
+        res.status(500).send(errormsg)
+    }
 })
 
 router.get("/api/:DayMonth/:OneApi/:UserId", AuthAdmin, async (req, res) => {
