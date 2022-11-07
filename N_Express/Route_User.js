@@ -1,5 +1,6 @@
-let LogInfo = require("../index").NanoXLogInfo
-let LogError = require("../index").NanoXLogError
+const LogInfo = require("../index").NanoXLogInfo
+const LogStatApi = require("../index").NanoXLogStatApi
+const LogError = require("../index").NanoXLogError
 const AuthBasic = require("./Mid_AuthBasic")
 //const AuthAdmin = require("./Mid_AuthAdmin")
 
@@ -11,7 +12,8 @@ let ModelUsers = require("../N_Mongoose/Model_User")
 
 // Get user info
 router.get("/", AuthBasic, (req, res) => {
-    LogInfo(`API nanoxuser : get user data`, req.user)
+    LogStatApi("nanoxuser", "get", req.user)
+    LogInfo(`nanoxuser : get user data`, req.user)
     // Get User info
     ModelUsers.findById(req.user._id)
     .then(user => {
@@ -32,6 +34,7 @@ router.get("/", AuthBasic, (req, res) => {
 
 // Update user info
 router.patch("/", AuthBasic, (req, res) => {
+    LogStatApi("nanoxuser", "patch", req.user)
     ModelUsers.findById(req.user._id)
     .then(user => {
         if (user != null){

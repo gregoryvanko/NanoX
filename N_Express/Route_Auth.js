@@ -1,4 +1,5 @@
 let LogInfo = require("../index").NanoXLogInfo
+let LogStatApi = require("../index").NanoXLogStatApi
 let LogError = require("../index").NanoXLogError
 let LogStat = require('../N_Log/Log').LogStat
 const LogStat_ConnectionValided = require("../N_Log/Log").Stat_ConnectionValided
@@ -8,7 +9,8 @@ const express = require("express")
 const router = express.Router()
 
 router.post("/", (req, res) => {
-    LogInfo(`API nanoxauth : ${JSON.stringify(req.body)}`)
+    LogStatApi("nanoxauth", "post")
+    LogInfo(`nanoxauth : ${JSON.stringify(req.body)}`)
     // Vérifier si les parametres User et Pass sont present
     if (req.body.User && req.body.Pass){
         // Get User

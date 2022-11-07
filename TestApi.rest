@@ -54,7 +54,7 @@ x-auth-token: {{tokenGreg}}
 }
 
 ### nanoxuser get load app tokenAdmin
-post https://{{hostname}}/loadapp
+post https://{{hostname}}/nanoxloadapp
 content-type: {{contentType}}
 x-auth-token: {{tokenAdmin}}
 
@@ -63,7 +63,7 @@ x-auth-token: {{tokenAdmin}}
 }
 
 ### nanoxuser get load app tokenGreg
-post https://{{hostname}}/loadapp
+post https://{{hostname}}/nanoxloadapp
 content-type: {{contentType}}
 x-auth-token: {{tokenGreg}}
 

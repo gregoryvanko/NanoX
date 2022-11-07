@@ -78,7 +78,7 @@ class NanoXLoader {
         document.body.appendChild(this.GetWaintingScreen() )
         axios({
             method: 'post',
-            url: '/loadapp',
+            url: '/nanoxloadapp',
             headers: {
                 'x-auth-token': `${this.GetToken()}`,
                 'Content-Type': 'application/json'

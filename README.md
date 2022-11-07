@@ -125,13 +125,15 @@ NewUser.save().catch(err => console.log(err))
 ### Log
 Pour utiliser le système de log de NanoX, il faut importer les fonction suivantes:
 ```js
-let LogInfo = require("@gregvanko/nanox").NanoXLogInfo
-let LogError = require("@gregvanko/nanox").NanoXLogError
+const LogInfo = require("@gregvanko/nanox").NanoXLogInfo
+const LogError = require("@gregvanko/nanox").NanoXLogError
+const LogStatApi = require("@gregvanko/nanox").NanoXLogStatApi
 
 this._UserServer = {User: "Server", _id: "ServerId"}
 
 LogInfo("Premier test from app de test", this._UserServer)
 LogError("Premier erreur", this._UserServer)
+LogStatApi("GetData/Blog", "get", this._UserServer)
 ```
 
 ### Ajouter une route via un Router Express

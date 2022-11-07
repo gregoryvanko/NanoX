@@ -1,6 +1,7 @@
-let LogInfo = require("../index").NanoXLogInfo
-let LogError = require("../index").NanoXLogError
-let LogStat = require('../N_Log/Log').LogStat
+const LogInfo = require("../index").NanoXLogInfo
+const LogStatApi = require("../index").NanoXLogStatApi
+const LogError = require("../index").NanoXLogError
+const LogStat = require('../N_Log/Log').LogStat
 const LogStat_ApplicationLoaded = require("../N_Log/Log").Stat_ApplicationLoaded
 const AuthBasic = require("./Mid_AuthBasic")
 
@@ -9,7 +10,7 @@ const express = require("express")
 const router = express.Router()
 
 router.post("/", AuthBasic, (req, res) => {
-    LogStat(LogStat_ApplicationLoaded, req.user)
+    LogStatApi("nanoxloadapp", "post", req.user)
     if (req.body.Version){
         // Get Output path
         const OutputPath = require("../N_PageBuilder/PageBuilder").GetOutputPath()
@@ -18,6 +19,7 @@ router.post("/", AuthBasic, (req, res) => {
         if(req.user.Admin){
             // Send appAdmin
             if (fs.existsSync(`${OutputPath}/appadmin.json`)){
+                LogStat(LogStat_ApplicationLoaded, req.user)
                 if (req.body.Version == CurrentVersion){
                     res.json({Version: CurrentVersion, CodeAppJS: null, CodeAppCSS: null})
                     LogInfo(`Admin App from browser`, req.user)
@@ -32,6 +34,7 @@ router.post("/", AuthBasic, (req, res) => {
             }
         } else {
             if (fs.existsSync(`${OutputPath}/app.json`)){
+                LogStat(LogStat_ApplicationLoaded, req.user)
                 if (req.body.Version == CurrentVersion){
                     res.json({Version: CurrentVersion, CodeAppJS: null, CodeAppCSS: null})
                     LogInfo(`App from browser`, req.user)

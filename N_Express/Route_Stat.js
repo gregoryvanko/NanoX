@@ -1,5 +1,5 @@
-const LogInfo = require("../index").NanoXLogInfo
 const LogError = require("../index").NanoXLogError
+const LogStatApi = require("../index").NanoXLogStatApi
 //const AuthBasic = require("./Mid_AuthBasic")
 const AuthAdmin = require("./Mid_AuthAdmin")
 
@@ -8,12 +8,14 @@ const GetStartDate = require("./AdminStat").GetStartDate
 const GetLabel = require("./AdminStat").GetLabel
 const GetConnectionStat = require("./AdminStat").GetConnectionStat
 const GetPageStat = require("./AdminStat").GetPageStat
+const GetApiLabel = require("./AdminStat").GetApiLabel
+const GetApiStat = require("./AdminStat").GetApiStat
 
 const express = require("express")
 const router = express.Router()
 
 router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
-    LogInfo(`API nanoxadminstat : get connection data`, req.user)
+    LogStatApi("nanoxadminstat/connection", "get", req.user)
 
     // reponse envoyée au client
     let reponse = {ListOfUser: null, ConnectionData: {Label: null, StatValideConnection: null, StatErrorConnection : null}}
@@ -54,7 +56,7 @@ router.get("/connection/:DayMonth/:UserId", AuthAdmin, async (req, res) => {
 })
 
 router.get("/page/:DayMonth/:OnePage", AuthAdmin, async (req, res) => {
-    LogInfo(`API nanoxadminstat : get page data`, req.user)
+    LogStatApi("nanoxadminstat/page", "get", req.user)
 
     const PageNameValue = (req.params.OnePage == "NanoXEmptyValue")? "" : req.params.OnePage
 
@@ -87,20 +89,34 @@ router.get("/page/:DayMonth/:OnePage", AuthAdmin, async (req, res) => {
 })
 
 router.get("/api/:DayMonth/:OneApi/:UserId", AuthAdmin, async (req, res) => {
-    LogInfo(`API nanoxadminstat : get api data`, req.user)
+    LogStatApi("nanoxadminstat/api", "get", req.user)
 
-    console.log(req.params.DayMonth)
-    console.log(req.params.OneApi)
-    console.log(req.params.UserId)
+    //console.log(req.params.DayMonth)
+    //console.log(req.params.OneApi)
+    //console.log(req.params.UserId)
 
-    let reponse = {ListOfUser: null, ApiData: null}
+    let reponse = {ListOfUser: null, ListOfApi: null, ApiData: {Label: null, ListeOfStatApi: null}}
+
+    // start Date definition
+    const duration = (req.params.DayMonth == "month")? 12 : 30
+    let startdate = GetStartDate(req.params.DayMonth, duration)
+    const copystrartdate = new Date(startdate.getTime())
+
+    // Set Label
+    const Label = GetLabel(req.params.DayMonth, startdate, duration)
+    reponse.ApiData.Label = Label.LabelTexte
+
     try {
         if (req.params.UserId == "alluser"){
             // get all user
             reponse.ListOfUser = await GetAllUser()
         }
-        // get api data
-        // ToDo
+
+        // Get list of label for all apiroute
+        reponse.ListOfApi = await GetApiLabel()
+
+        // Get stat of Api
+        reponse.ApiData.ListeOfStatApi = await GetApiStat(req.params.DayMonth, copystrartdate, Label.LabelDetail, req.params.OneApi, reponse.ListOfApi, req.params.UserId)
 
         // Send reponse
         res.send(reponse)

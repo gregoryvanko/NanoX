@@ -22,6 +22,7 @@ class NanoXStatistics{
         this.InitiationClassData()
         this.ClearMenuButton()
         this._DivApp.appendChild(this.BuildViewConnection())
+        NanoXApiPostLog("User Load admin module Statistics, view Start")
     }
 
     ClearMenuButton(){
@@ -88,6 +89,7 @@ class NanoXStatistics{
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
         })
+        NanoXApiPostLog("User Load admin module Statistics, view Connection")
     }
 
     BuildViewStatConnection(Data){
@@ -233,6 +235,7 @@ class NanoXStatistics{
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
         })
+        NanoXApiPostLog("User Load admin module Statistics, view Page")
     }
 
     BuildViewStatPage(Data){
@@ -367,6 +370,7 @@ class NanoXStatistics{
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
         })
+        NanoXApiPostLog("User Load admin module Statistics, view Api")
     }
 
     BuildViewStatApi(Data){

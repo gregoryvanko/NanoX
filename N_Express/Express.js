@@ -8,10 +8,8 @@ function StartExpressServer(Port = 3000, PagesToBuild = [], Routes = [], IconPat
         let MyPort = Port
 
         // Get Nonox Log
-        let LogError = require('../index').NanoXLogError
-        let LogStat = require('../N_Log/Log').LogStat
-
-        const LogStat_TypePage = require("../N_Log/Log").Stat_TypePage
+        const LogError = require('../index').NanoXLogError
+        const LogStatPage = require("../N_Log/Log").LogStatPage
 
         // On demarre le serveur que si il existe au moins une route ou une page
         if ((Routes.length != 0) || (PagesToBuild.length != 0)){
@@ -31,7 +29,7 @@ function StartExpressServer(Port = 3000, PagesToBuild = [], Routes = [], IconPat
                     require("../N_PageBuilder/PageBuilder").BuildPages(element)
                     MyServer.get(`/${element.PageRoute}`, (req, res) => {
                         res.sendFile(`${OutputPath}/${element.PageName}`)
-                        LogStat(LogStat_TypePage + "/" + element.PageRoute)
+                        LogStatPage(element.PageRoute)
                     })
                     console.log(`Page build and added in the server: (PageName:${element.PageName}, PageRoute:/${element.PageRoute})`)
                 });

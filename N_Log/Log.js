@@ -47,9 +47,15 @@ function LogError(Message = "NoValue", User = MyUserServer){
 function LogStat(Message = "NoValue", User = MyUserServer){
     SaveLog("Stat", Message, User)
 }
+const Stat_TypePage = "Page: "
+function LogStatPage(PageName = "NoValue", User = MyUserServer){
+    LogStat(Stat_TypePage + "/" + PageName, User)
+}
 
-function LogStatApi(ApiName = "NoValue", User = MyUserServer){
-    this.LogStat("Api: " + ApiName, User)
+const Stat_ApiRoute = "Api: "
+const Stat_ApiVerbe = ", Verbe: "
+function LogStatApi(ApiRoute = "NoValue", ApiVerbe = "NoValue", User = MyUserServer){
+    LogStat(Stat_ApiRoute + ApiRoute + Stat_ApiVerbe + ApiVerbe, User)
 }
 
 module.exports.SetDebugMode = SetDebugMode
@@ -59,4 +65,8 @@ module.exports.LogStat = LogStat
 module.exports.Stat_ConnectionValided = "ConnectionValided"
 module.exports.Stat_ConnectionError = "ConnectionError"
 module.exports.Stat_ApplicationLoaded = "ApplicationLoaded"
-module.exports.Stat_TypePage = "Page: "
+module.exports.Stat_TypePage = Stat_TypePage
+module.exports.LogStatPage = LogStatPage
+module.exports.Stat_ApiRoute = Stat_ApiRoute
+module.exports.Stat_ApiVerbe = Stat_ApiVerbe
+module.exports.LogStatApi = LogStatApi

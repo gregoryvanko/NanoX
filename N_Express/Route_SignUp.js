@@ -1,4 +1,5 @@
 let LogInfo = require("../index").NanoXLogInfo
+let LogStatApi = require("../index").NanoXLogStatApi
 let LogError = require("../index").NanoXLogError
 
 const express = require("express")
@@ -6,7 +7,8 @@ const router = express.Router()
 
 // SignUp user
 router.post("/", (req, res) => {
-    LogInfo(`API nanoxsignup : ${JSON.stringify(req.body)}`)
+    LogStatApi("nanoxsignup", "post")
+    LogInfo(`nanoxsignup : ${JSON.stringify(req.body)}`)
     if (req.body.User && req.body.FirstName && req.body.LastName && req.body.Password){
         // Creer le user si il n'exite pas
         let ModelUsers = require("../N_Mongoose/Model_User")

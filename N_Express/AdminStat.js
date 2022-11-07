@@ -1,3 +1,7 @@
+/**
+ * Retourne la liste de tous les user
+ * @returns {Promise<[{_id: GUID, User: String, FirstName: String, LastName: String}]>}
+ */
 async function GetAllUser(){
     return new Promise ((resolve, reject)=>{
         let ModelUsers = require("../N_Mongoose/Model_User")
@@ -15,6 +19,12 @@ async function GetAllUser(){
     })
 }
 
+/**
+ * Retourne la date de debut en fonction d'aujourd'hui, de la duree et du type d'agregation
+ * @param {Strin} TypeAgregation Type d'agregation (day, month)
+ * @param {Number} Duration le duree que l'on veut observer
+ * @returns {Date} Date de debut
+ */
 function GetStartDate(TypeAgregation, Duration){
     let startdate = null
     let currentdate = new Date()
@@ -28,6 +38,13 @@ function GetStartDate(TypeAgregation, Duration){
     return startdate
 }
 
+/**
+ * Retourne la liste des details des labels et la liste des textes des labels
+ * @param {String} Type Type d'agregatiopn (day, month)
+ * @param {Date} StartDate Date de debut des label
+ * @param {Number} Duration le nombre de Label
+ * @returns {{LabelDetail: [{Date: Date, Jour: Number, Mois: Number}], LabelTexte: String}} un objet contenant la liste des detail du label et la liste des textes des labels
+ */
 function GetLabel (Type, StartDate, Duration){
     let Label = {LabelDetail: [], LabelTexte: []}
     if (Type == "month"){
@@ -56,7 +73,8 @@ function GetLabel (Type, StartDate, Duration){
  * @param {String} TypeConnection Type de connection (ConnectionError, ConnectionValided)
  * @param {Date} StartDate Date de debut de la recherche
  * @param {Object} LabelDetail Detail des label
- * @returns {Promise<[Number]>}
+ * @param {String} UserId UserId de l'utilisateur
+ * @returns {Promise<[Number]>} Promise contenant la liste des valeurs
  */
 async function GetConnectionStat(TypeAgregation, TypeConnection, StartDate, LabelDetail, UserId = null){
     return new Promise((resolve, reject)=>{
@@ -120,12 +138,13 @@ async function GetConnectionStat(TypeAgregation, TypeConnection, StartDate, Labe
 }
 
 /**
- * 
+ * Get graph data for stat page
  * @param {String} TypeAgregation Type d' agregation (day, month)
  * @param {Date} StartDate Date de debut de la recherche
  * @param {Object} LabelDetail detail des labels
  * @param {String} PageName Nom de la page ou "allpage"
- * @returns {Promise<[{Page: String, Stat:[Number]}]>}
+ * @param {[String]} ListOfPage Liste de toutes les differentest Page
+ * @returns {Promise<[{Page: String, Stat:[Number]}]>} Promise contenant une liste d'objet {Page: String, Stat:[Number]}
  */
 async function GetPageStat(TypeAgregation, StartDate, LabelDetail, PageName, ListOfPage){
     return new Promise((resolve, reject)=>{
@@ -222,8 +241,38 @@ async function GetPageStat(TypeAgregation, StartDate, LabelDetail, PageName, Lis
     })
 }
 
+/**
+ * Get la liste des toutes les differentes api enregistrée dans les log db
+ * @returns {Promise<[String]} Promise contenant la liste de toutes les differentes API
+ */
+async function GetApiLabel(){
+    return new Promise((resolve, reject)=>{
+        let output = []
+        resolve(output)
+    })
+}
+
+/**
+ * Get graph data for stat api
+ * @param {String} TypeAgregation Type d' agregation (day, month)
+ * @param {Date} StartDate Date de debut de la recherche
+ * @param {Object} LabelDetail detail des labels
+ * @param {String} ApiName Nom de l'api ou "allapi"
+ * @param {[String]} ListOfApi Liste de toutes les differents API
+ * @param {String} UserId UserId de l'utilisateur
+ * @returns {Promise<[{Api: String, Stat:[Number]}]>} Promise contenant une liste d'objets {Api: String, Stat:[Number]}
+ */
+async function GetApiStat(TypeAgregation, StartDate, LabelDetail, ApiName, ListOfApi, UserId){
+    return new Promise((resolve, reject)=>{
+        let output = []
+        resolve(output)
+    })
+}
+
 module.exports.GetallUser = GetAllUser
 module.exports.GetStartDate = GetStartDate
 module.exports.GetLabel = GetLabel
 module.exports.GetConnectionStat = GetConnectionStat
 module.exports.GetPageStat = GetPageStat
+module.exports.GetApiLabel = GetApiLabel
+module.exports.GetApiStat = GetApiStat

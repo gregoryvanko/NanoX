@@ -18,10 +18,11 @@ let Mongoose = require("./N_Mongoose/Mongoose")
 
 let Express = require("./N_Express/Express")
 
-let LogR = require('./N_Log/Log')
-let SetDebugMode = LogR.SetDebugMode
-let LogInfo = LogR.LogInfo
-let LogError = LogR.LogError
+const LogR = require('./N_Log/Log')
+const SetDebugMode = LogR.SetDebugMode
+const LogInfo = LogR.LogInfo
+const LogError = LogR.LogError
+const LogStatApi = LogR.LogStatApi
 
 let ListOfRoute = []
 let ListOfPageToBuild = []
@@ -127,7 +128,7 @@ function BuildApp(){
     console.log(`User AppAdmin builded`)
 
     // Create Route
-    NanoXAddRoute("/loadapp", require('./N_Express/Route_LoadApp'))
+    NanoXAddRoute("/nanoxloadapp", require('./N_Express/Route_LoadApp'))
 }
 
 function GetAppVersion(){
@@ -179,6 +180,7 @@ module.exports.NanoXStart = NanoXStart
 module.exports.NanoXInitiation = NanoXInitiation
 module.exports.NanoXLogInfo = LogInfo
 module.exports.NanoXLogError = LogError
+module.exports.NanoXLogStatApi = LogStatApi
 module.exports.Mongoose = require("mongoose")
 module.exports.NanoXAddRoute = NanoXAddRoute
 module.exports.Express = require("express")
