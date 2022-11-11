@@ -91,10 +91,6 @@ router.get("/page/:DayMonth/:OnePage", AuthAdmin, async (req, res) => {
 router.get("/api/:DayMonth/:OneApi/:UserId", AuthAdmin, async (req, res) => {
     LogStatApi("nanoxadminstat/api", "get", req.user)
 
-    //console.log(req.params.DayMonth)
-    //console.log(req.params.OneApi)
-    //console.log(req.params.UserId)
-
     let reponse = {ListOfUser: null, ListOfApi: null, ApiData: {Label: null, ListeOfStatApi: null}}
 
     // start Date definition
@@ -113,7 +109,7 @@ router.get("/api/:DayMonth/:OneApi/:UserId", AuthAdmin, async (req, res) => {
         }
 
         // Get list of label for all apiroute
-        reponse.ListOfApi = await GetApiLabel()
+        reponse.ListOfApi = await GetApiLabel(copystrartdate)
 
         // Get stat of Api
         reponse.ApiData.ListeOfStatApi = await GetApiStat(req.params.DayMonth, copystrartdate, Label.LabelDetail, req.params.OneApi, reponse.ListOfApi, req.params.UserId)

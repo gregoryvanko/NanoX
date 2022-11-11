@@ -151,13 +151,13 @@ async function GetPageStat(TypeAgregation, StartDate, LabelDetail, PageName, Lis
         const ModelLog = require("../N_Log/Model_Log")
         const LogStat_TypePage = require("../N_Log/Log").Stat_TypePage
 
-        let MathValue = null
+        let MatchValue = null
         if (PageName == "allpage"){
-            MathValue = new RegExp("^"+ LogStat_TypePage)
+            MatchValue = new RegExp("^"+ LogStat_TypePage)
         } else {
-            MathValue = LogStat_TypePage + "/" + PageName
+            MatchValue = LogStat_TypePage + "/" + PageName
         }
-        let MatchQuerry = {$and:[{Type: "Stat"} , {Valeur:  MathValue}, {Date: {$gte: StartDate}}]} 
+        let MatchQuerry = {$and:[{Type: "Stat"} , {Valeur:  MatchValue}, {Date: {$gte: StartDate}}]} 
 
         let GroupQuerry = null
         if (TypeAgregation == "month"){
@@ -245,10 +245,38 @@ async function GetPageStat(TypeAgregation, StartDate, LabelDetail, PageName, Lis
  * Get la liste des toutes les differentes api enregistrée dans les log db
  * @returns {Promise<[String]} Promise contenant la liste de toutes les differentes API
  */
-async function GetApiLabel(){
+async function GetApiLabel(StartDate){
     return new Promise((resolve, reject)=>{
-        let output = []
-        resolve(output)
+        const ModelLog = require("../N_Log/Model_Log")
+        const LogStat_ApiRoute = require("../N_Log/Log").Stat_ApiRoute
+        const LogStat_ApiVerbe = require("../N_Log/Log").Stat_ApiVerbe
+
+        let MatchValue = new RegExp("^" + LogStat_ApiRoute)
+        let MatchQuerry = {$and:[{Type: "Stat"} , {Valeur:  MatchValue}, {Date: {$gte: StartDate}}]} 
+
+        ModelLog.aggregate(
+            [
+                { $match: MatchQuerry },
+                { $group: { _id: "$Valeur"} },
+                { $sort: {_id: 1} }
+            ],
+            (err, result) => {
+                if (err) {
+                    reject(`Mongoose aggragate Api stat error => ${err}`)
+                } else {
+                    let output = []
+                    result.forEach(element => {
+                        let ReadableApi = element._id.replace(LogStat_ApiRoute, '')
+                        ReadableApi = ReadableApi.replace("/", ".")
+                        ReadableApi = ReadableApi.replace(LogStat_ApiVerbe, "-")
+                        output.push(ReadableApi)
+                    });
+                    //console.log(output)
+
+                    resolve(output)
+                }
+            }
+        )
     })
 }
 
@@ -264,8 +292,107 @@ async function GetApiLabel(){
  */
 async function GetApiStat(TypeAgregation, StartDate, LabelDetail, ApiName, ListOfApi, UserId){
     return new Promise((resolve, reject)=>{
-        let output = []
-        resolve(output)
+        const ModelLog = require("../N_Log/Model_Log")
+        const LogStat_ApiRoute = require("../N_Log/Log").Stat_ApiRoute
+        const LogStat_ApiVerbe = require("../N_Log/Log").Stat_ApiVerbe
+
+        let MatchValue = null
+        if (ApiName == "allapi"){
+            MatchValue = new RegExp("^"+ LogStat_ApiRoute)
+        } else {
+            MatchValue = ApiName.replace("-", LogStat_ApiVerbe)
+            MatchValue = MatchValue.replace(".", "/")
+            MatchValue = LogStat_ApiRoute + MatchValue
+        }
+
+        if (UserId == "alluser"){
+            MatchQuerry = {$and:[{Type: "Stat"} , {Valeur:  MatchValue}, {Date: {$gte: StartDate}}]} 
+        } else {
+            MatchQuerry = {$and:[{Type: "Stat"} , {Valeur:  MatchValue}, {Date: {$gte: StartDate}}, {UserId:  UserId}]} 
+        }
+
+        let GroupQuerry = null
+        if (TypeAgregation == "month"){
+            GroupQuerry = {$month: "$Date"}
+        } else {
+            GroupQuerry = { $dateToString: { format: "%Y-%m-%d", date: "$Date" } }
+        }
+
+        ModelLog.aggregate(
+            [
+                { 
+                    $match: MatchQuerry
+                },
+                {
+                    $group: {
+                        _id: {Valeur:"$Valeur", Date:GroupQuerry},
+                        count: { $sum: 1 }
+                    }
+                }
+            ],
+            (err, result) => {
+                if (err) {
+                    reject(`Mongoose aggragate Api stat error => ${err}`)
+                } else {
+                    let output = [] // Liste d'objet {Api: String, Stat:[Number]}
+                    // convertir le resutat [{ _id: { Valeur: 'api: ', Date: '2022-11-06' }, count: 2 },{ _id: { Valeur: 'Api: ', Date: '2022-11-06' }, count: 7 }] en tableau pour le graph
+                    
+                    if (ApiName == "allapi"){
+                        ListOfApi.forEach(elementListOfApi => {
+                            let reponseOneApi = {Api: elementListOfApi, Stat: []}
+                            // Valeur de la page a rechercher dans le result
+                            let findvalue = elementListOfApi.replace("-", LogStat_ApiVerbe)
+                            findvalue = findvalue.replace(".", "/")
+                            findvalue = LogStat_ApiRoute + findvalue
+
+                            // trier le resulte en ne prenant que les element lié à la page
+                            const subresult = result.filter(data => data._id.Valeur ==  findvalue)
+                            // On definit le array pour le graph
+                            LabelDetail.forEach(element => {
+                                let SearchKey = null
+                                if (TypeAgregation == "month"){
+                                    SearchKey = element.Mois
+                                } else {
+                                    SearchKey = element.Date.toISOString().split('T')[0]
+                                }
+                                
+                                let LabelValue = subresult.find(data => data._id.Date == SearchKey)
+                                if (LabelValue){
+                                    reponseOneApi.Stat.push(LabelValue.count)
+                                } else {
+                                    reponseOneApi.Stat.push(0)
+                                }
+                            });
+                            output.push(reponseOneApi)
+                        });
+                    } else {
+                        let reponseOneApi = {Api: ApiName, Stat: []}
+                        // On definit le array pour le graph
+                        LabelDetail.forEach(element => {
+                            let SearchKey = null
+                            if (TypeAgregation == "month"){
+                                SearchKey = element.Mois
+                            } else {
+                                SearchKey = element.Date.toISOString().split('T')[0]
+                            }
+                            
+                            let LabelValue = result.find(data => data._id.Date == SearchKey)
+                            if (LabelValue){
+                                reponseOneApi.Stat.push(LabelValue.count)
+                            } else {
+                                reponseOneApi.Stat.push(0)
+                            }
+                        });
+                        output.push(reponseOneApi)
+                    }
+                    
+                    //console.log(LabelDetail)
+                    //console.log(result)
+                    //console.log(output)
+                    resolve(output)
+                }
+            }
+        )
     })
 }
 
