@@ -384,6 +384,12 @@ class NanoXStatistics{
         NanoXApiPostLog("User Load admin module Statistics, view Api")
     }
 
+    ReplaceApiLabel(label){
+        label = label.replace(".", "/")
+        label = label.replace("-", " ")
+        return label
+    }
+
     BuildViewStatApi(Data){
         if (Data.ListOfUser != null){
             this._ListeOfUser = [{label: this._ConstAllUserText, id: this._ConstAllUser }]
@@ -395,7 +401,7 @@ class NanoXStatistics{
         if (Data.ListOfApi != null){
             this._ListOfApi = [{label: this._ConstAllApiText, id: this._ConstAllApi}]
             Data.ListOfApi.forEach(element => {
-                this._ListOfApi.push({label: element, id: element})
+                this._ListOfApi.push({label: this.ReplaceApiLabel(element), id: element})
             });
         }
         // Clear view
@@ -485,7 +491,7 @@ class NanoXStatistics{
             Data.ApiData.ListeOfStatApi.forEach(element => {
                 thedataset.push(
                     {
-                        label: element.Api,
+                        label: this.ReplaceApiLabel(element.Api),
                         type: "line",
                         borderColor: this.DynamicColors(),
                         fill: false,
