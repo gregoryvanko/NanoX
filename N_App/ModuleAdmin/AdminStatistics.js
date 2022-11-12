@@ -31,7 +31,7 @@ class NanoXStatistics{
     Start(){
         this.InitiationClassData()
         this.ClearMenuButton()
-        this._DivApp.appendChild(this.BuildViewConnection())
+        this._DivApp.appendChild(this.BuildViewStart())
         NanoXApiPostLog("User Load admin module Statistics, view Start")
     }
 
@@ -44,7 +44,7 @@ class NanoXStatistics{
         NanoXClearMenuButtonSettings()
     }
 
-    BuildViewConnection(){
+    BuildViewStart(){
         const DivCenter = NanoXBuild.DivFlexColumn("MainCenterDiv")
         DivCenter.appendChild(NanoXBuild.DivText("Statistics", "", "NanoXAdminTitre", ""))
         DivCenter.appendChild(NanoXBuild.Button("Connection", this.OnClickConnection.bind(this),null, "NanoXAdminButtonStat", null))
@@ -545,4 +545,4 @@ class NanoXStatistics{
 }
 
 let MyNanoXStatistics = new NanoXStatistics()
-NanoXAddModule("Statistics", IconAdmin.IconModule(), MyNanoXStatistics.Start.bind(MyNanoXStatistics), true)
+NanoXAddModule("Statistics", IconAdmin.IconModuleStat(), MyNanoXStatistics.Start.bind(MyNanoXStatistics), false)

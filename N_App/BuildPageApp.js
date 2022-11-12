@@ -36,7 +36,8 @@ function GetJs(AdminApp = false){
         // Nanox Admin Module
         if (AdminApp){
             Output += fs.readFileSync(__dirname + "/ModuleAdmin/IconAdmin.js", 'utf8')+ osEOL + osEOL
-            Output += fs.readFileSync(__dirname + "/ModuleAdmin/Statistics.js", 'utf8')+ osEOL + osEOL
+            Output += fs.readFileSync(__dirname + "/ModuleAdmin/AdminStatistics.js", 'utf8')+ osEOL + osEOL
+            Output += fs.readFileSync(__dirname + "/ModuleAdmin/AdminLog.js", 'utf8')+ osEOL + osEOL
         }
 
         // Add commande : start module app

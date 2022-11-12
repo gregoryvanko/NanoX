@@ -45,6 +45,16 @@
     max-width: 10rem;
 }
 
+.NanoxAdminInputLogType{
+    width: 30%;
+    max-width: 8rem;
+}
+
+.NanoxAdminInputStartDate{
+    width: 30%;
+    max-width: 8rem;
+}
+
 .NanoxAdminDivChart{
     max-width: 60rem;
     width: 96%;
