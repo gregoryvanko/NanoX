@@ -17,7 +17,7 @@ class NanoXLog {
         this._UserID = this._ConstAllUser
         this._InputUserValue = this._ConstAllUserText
         this._TypeLog = this._ConstAllType
-        this._StartData = new Date()
+        this._StartData = new Date().getTime()
         this._SearchText = this._NoSearchText
     }
 
@@ -49,6 +49,7 @@ class NanoXLog {
         // Add texte get data
         this._DivApp.appendChild(this.BuildTextGetData())
 
+        // Si le texte a chercher est vide, il faut remplacer cette valeur par un string pour que le get fonctionne
         if (SearchText == ""){
             SearchText = this._NoSearchText
         }
@@ -109,11 +110,30 @@ class NanoXLog {
         })
 
         // Add Start Date
-        const DateAfficher = this._StartData.toISOString().split('T')[0]
-        const InputStartDate = NanoXBuild.Input(DateAfficher, "text", "InputStartDate", "Type", "InputStartDate", "NanoxAdminInput NanoxAdminInputStartDate NanoxText", "")
+        const DateAfficher = this.FormatDateToString(this._StartData)
+        const InputStartDate = NanoXBuild.Input(DateAfficher, "text", "InputStartDate", "Date", "InputStartDate", "NanoxAdminInput NanoxAdminInputStartDate NanoxText", "")
         InputStartDate.autocomplete = "off"
+        InputStartDate.setAttribute("inputmode","none")
         divinputbox.appendChild(InputStartDate)
-        InputStartDate.addEventListener('focusout', (event) => {this.GetLogData(this._TypeLog, this._StartData, this._UserID, this._SearchText)});
+        // https://mymth.github.io/vanillajs-datepicker
+        const datepicker = new Datepicker(InputStartDate, {
+            autohide : true,
+            format : "dd/mm/yyyy",
+            language : "fr",
+            todayHighlight : true,
+            updateOnBlur : false
+        });
+        InputStartDate.addEventListener('focusout', (event) => {
+            // Convert sting dd/mm/yyyy to timestemp
+            this._StartData = new Date(this.FormatStringToDate(InputStartDate.value)).getTime()
+            this.GetLogData(this._TypeLog, this._StartData, this._UserID, this._SearchText)
+        });
+        InputStartDate.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              InputStartDate.blur()
+            }
+        });
 
         // Add autocomplete box for user
         const InputUserValue = NanoXBuild.Input(this._InputUserValue, "text", "InputUserValue", "User name", "InputUserValue", "NanoxAdminInput NanoxAdminInputUserValue NanoxText", "")
@@ -153,7 +173,7 @@ class NanoXLog {
               event.preventDefault();
               InputSearchText.blur()
             }
-          });
+        });
 
 
         // Add Div Log
@@ -161,6 +181,24 @@ class NanoXLog {
         this._DivApp.appendChild(divlog)
     }
 
+    FormatDateToString(inputTimestemp) {
+        let InputDate = new Date(inputTimestemp)
+        let date, month, year
+        date = InputDate.getDate();
+        month = InputDate.getMonth() + 1;
+        year = InputDate.getFullYear();
+      
+        date = date.toString().padStart(2, '0');
+      
+        month = month.toString().padStart(2, '0');
+      
+        return `${date}/${month}/${year}`;
+    }
+
+    FormatStringToDate(InputDate){
+        let dateParts = InputDate.split("/");
+        return new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0], 23, 59, 59); 
+    }
     
 }
 

@@ -12,7 +12,7 @@ router.post("/", AuthBasic, (req, res) => {
 router.get("/:TypeLog/:StartDate/:UserID/:SearchText", AuthAdmin, (req, res) =>{
     let reponse = {ListOfUser: null, LogData: null}
     console.log(req.params.TypeLog)
-    console.log(req.params.StartDate)
+    console.log(new Date(req.params.StartDate))
     console.log(req.params.UserID)
     console.log(req.params.SearchText)
 

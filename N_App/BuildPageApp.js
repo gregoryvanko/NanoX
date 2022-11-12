@@ -5,6 +5,7 @@ const osEOL = require('os').EOL
 function GetCss(AdminApp = false){
     let Output = fs.readFileSync(__dirname + "/PageApp/NanoX.css", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/Helper/Autocomplete.css", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/Helper/DatePicker.css", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/ModuleAdmin/Admin.css", 'utf8')+ osEOL + osEOL
 
     Output += GetCssOfApp(AdminApp)
@@ -25,6 +26,7 @@ function GetJs(AdminApp = false){
     Output += fs.readFileSync(__dirname + "/PageApp/NanoXCore.js", 'utf8')+ osEOL + osEOL
     // Helper
     Output += fs.readFileSync(__dirname + "/Helper/Autocomplete.js", 'utf8')+ osEOL + osEOL
+    Output += fs.readFileSync(__dirname + "/Helper/DatePicker.js", 'utf8')+ osEOL + osEOL
     Output += fs.readFileSync(__dirname + "/Helper/Chart.js", 'utf8')+ osEOL + osEOL
 
     Output += require("./PageApp/NanoXPageAppStart").GetJsStart()
