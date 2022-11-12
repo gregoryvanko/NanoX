@@ -17,7 +17,7 @@ class NanoXLog {
         this._UserID = this._ConstAllUser
         this._InputUserValue = this._ConstAllUserText
         this._TypeLog = this._ConstAllType
-        this._StartData = new Date().getTime()
+        this._StartData = new Date()
         this._SearchText = this._NoSearchText
     }
 
@@ -125,7 +125,7 @@ class NanoXLog {
         });
         InputStartDate.addEventListener('focusout', (event) => {
             // Convert sting dd/mm/yyyy to timestemp
-            this._StartData = new Date(this.FormatStringToDate(InputStartDate.value)).getTime()
+            this._StartData = new Date(this.FormatStringToDate(InputStartDate.value))
             this.GetLogData(this._TypeLog, this._StartData, this._UserID, this._SearchText)
         });
         InputStartDate.addEventListener("keypress", function(event) {
@@ -179,10 +179,11 @@ class NanoXLog {
         // Add Div Log
         let divlog = NanoXBuild.DivFlexColumn("DivLog", "", "")
         this._DivApp.appendChild(divlog)
+
+        // Add Data to divlog
     }
 
-    FormatDateToString(inputTimestemp) {
-        let InputDate = new Date(inputTimestemp)
+    FormatDateToString(InputDate) {
         let date, month, year
         date = InputDate.getDate();
         month = InputDate.getMonth() + 1;
