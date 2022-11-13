@@ -1,6 +1,5 @@
 const LogError = require("../index").NanoXLogError
 const LogStatApi = require("../index").NanoXLogStatApi
-//const AuthBasic = require("./Mid_AuthBasic")
 const AuthAdmin = require("./Mid_AuthAdmin")
 
 const GetAllUser = require("./AdminStat").GetallUser

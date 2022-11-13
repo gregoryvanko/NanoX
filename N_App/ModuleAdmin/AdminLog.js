@@ -19,6 +19,7 @@ class NanoXLog {
         this._TypeLog = this._ConstAllType
         this._StartData = new Date()
         this._SearchText = this._NoSearchText
+        this._PageLog = 0
     }
 
     Start(){
@@ -43,7 +44,7 @@ class NanoXLog {
         return DivCenter
     }
 
-    GetLogData(TypeLog = this._TypeLog, StartDate = this._StartData, UserID = this._UserID, SearchText = this._SearchText){
+    GetLogData(TypeLog = this._TypeLog, StartDate = this._StartData, UserID = this._UserID, SearchText = this._SearchText, PageLog = this._PageLog){
         // Clear view
         this._DivApp.innerHTML = ""
         // Add texte get data
@@ -54,7 +55,7 @@ class NanoXLog {
             SearchText = this._NoSearchText
         }
         // Call Api with Type=day and User=all
-        NanoXApiGet(`/nanoxlog/${TypeLog}/${StartDate}/${UserID}/${SearchText}`).then((reponse)=>{
+        NanoXApiGet(`/nanoxlog/${TypeLog}/${StartDate}/${UserID}/${SearchText}/${PageLog}`).then((reponse)=>{
             this.BuildLogView(reponse)
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
@@ -104,7 +105,7 @@ class NanoXLog {
                 document.getElementById("InputTypeOfLog").value = item.label;
                 if (item.label != "No suggestion"){
                     me._TypeLog = item.label
-                    me.GetLogData(me._TypeLog, me._StartData, me._UserID, me._SearchText)
+                    me.GetLogData(me._TypeLog, me._StartData, me._UserID, me._SearchText,me._PageLog)
                 }
             }
         })
@@ -126,7 +127,7 @@ class NanoXLog {
         InputStartDate.addEventListener('focusout', (event) => {
             // Convert sting dd/mm/yyyy to timestemp
             this._StartData = new Date(this.FormatStringToDate(InputStartDate.value))
-            this.GetLogData(this._TypeLog, this._StartData, this._UserID, this._SearchText)
+            this.GetLogData(this._TypeLog, this._StartData, this._UserID, this._SearchText, me._PageLog)
         });
         InputStartDate.addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
@@ -153,7 +154,7 @@ class NanoXLog {
                 if (item.label != "No suggestion"){
                     me._UserID = item.id
                     me._InputUserValue = item.label
-                    me.GetLogData(me._TypeLog, me._StartData, me._UserID, me._SearchText)
+                    me.GetLogData(me._TypeLog, me._StartData, me._UserID, me._SearchText, me._PageLog)
                 }
             }
         })
@@ -165,7 +166,7 @@ class NanoXLog {
         divinputbox.appendChild(InputSearchText)
         InputSearchText.addEventListener('focusout', (event) => {
             this._SearchText = InputSearchText.value
-            this.GetLogData(this._TypeLog, this._StartData, this._UserID, this._SearchText)
+            this.GetLogData(this._TypeLog, this._StartData, this._UserID, this._SearchText, this._PageLog)
         
         })
         InputSearchText.addEventListener("keypress", function(event) {
@@ -181,6 +182,11 @@ class NanoXLog {
         this._DivApp.appendChild(divlog)
 
         // Add Data to divlog
+        if (Data.LogData == null){
+            divlog.appendChild(NanoXBuild.DivText("End of log", "", "NanoxText", "color: red"))
+        } else {
+            //ToDo
+        }
     }
 
     FormatDateToString(InputDate) {
