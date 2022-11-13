@@ -15,7 +15,7 @@ router.get("/:TypeLog/:StartDate/:UserID/:SearchText/:PageLog", AuthAdmin, async
 
     let reponse = {ListOfUser: null, LogData: null}
 
-    if(req.params.PageLog == 1){
+    if(req.params.PageLog == 0){
         LogStatApi("nanoxlog", "get")
     }
 
