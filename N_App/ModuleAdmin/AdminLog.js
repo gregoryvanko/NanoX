@@ -208,6 +208,7 @@ class NanoXLog {
                 divlogbox.appendChild(NanoXBuild.DivText(element.Valeur, "", "NanoxAdminLoglarge"))
             });
         }
+        // ToDo add next page of log
     }
 
     FormatDateToString(InputDate) {
