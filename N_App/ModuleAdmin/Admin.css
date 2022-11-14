@@ -62,6 +62,19 @@
     max-height: 30rem;
 }
 
+.NanoxAdminLogSmall{
+    width: 20%;
+    max-width: 4rem;
+}
+.NanoxAdminLogMedium{
+    width: 30%;
+    max-width: 14rem;
+}
+.NanoxAdminLoglarge{
+    width: 80%;
+    max-width: 38rem;
+}
+
 @media (hover: hover) {
     .NanoxAdminInput:hover{
         border-color: var(--NanoX-appcolor);

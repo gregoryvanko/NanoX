@@ -178,14 +178,24 @@ class NanoXLog {
 
 
         // Add Div Log
-        let divlog = NanoXBuild.DivFlexColumn("DivLog", "", "")
+        let divlog = NanoXBuild.DivFlexColumn("DivLog", "", "width: 90%;")
         this._DivApp.appendChild(divlog)
 
         // Add Data to divlog
         if (Data.LogData == null){
             divlog.appendChild(NanoXBuild.DivText("End of log", "", "NanoxText", "color: red"))
         } else {
-            //ToDo
+            Data.LogData.forEach(element => {
+                let color = ""
+                if (element.Type == "Stat"){color = "color: blue"}
+                if (element.Type == "Error"){color = "color: red"}
+                let divlogbox = NanoXBuild.DivFlexRowStart("", "", "width: 100%; margin-bottom: 1rem; " + color)
+                divlog.appendChild(divlogbox)
+                divlogbox.appendChild(NanoXBuild.DivText(this.FormatDatetoStringDayHour(element.Date), "", "NanoxAdminLogMedium"))
+                divlogbox.appendChild(NanoXBuild.DivText(element.Type, "", "NanoxAdminLogSmall"))
+                divlogbox.appendChild(NanoXBuild.DivText(element.UserId, "", "NanoxAdminLogMedium"))
+                divlogbox.appendChild(NanoXBuild.DivText(element.Valeur, "", "NanoxAdminLoglarge"))
+            });
         }
     }
 
@@ -205,6 +215,12 @@ class NanoXLog {
     FormatStringToDate(InputDate){
         let dateParts = InputDate.split("/");
         return new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0], 23, 59, 59); 
+    }
+
+    FormatDatetoStringDayHour(TheDate){
+        let td = new Date(TheDate).toISOString().split('T')[0];
+        var t = new Date(TheDate).toTimeString().split(' ')[0];
+        return td + ' ' + t
     }
     
 }

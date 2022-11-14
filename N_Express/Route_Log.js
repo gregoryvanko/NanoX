@@ -16,7 +16,7 @@ router.get("/:TypeLog/:StartDate/:UserID/:SearchText/:PageLog", AuthAdmin, async
     let reponse = {ListOfUser: null, LogData: null}
 
     if(req.params.PageLog == 0){
-        LogStatApi("nanoxlog", "get")
+        LogStatApi("nanoxlog", "get", req.user)
     }
 
     try {
@@ -45,10 +45,9 @@ async function GetLog(TypeLog, StartDate, UserID, SearchText, PageLog){
             Listeofquerry.push({UserId: UserID})
         }
         if (SearchText != "notext") {
-            Listeofquerry.push({Valeur: SearchText}) //ToDo
+            Listeofquerry.push({Valeur: { $regex: SearchText, $options: 'i' }})
         }
         const query = {$and: Listeofquerry}
-        console.log(query)
         const projection = {} 
 
         ModelLog.find(query, projection, (err, result) => {
