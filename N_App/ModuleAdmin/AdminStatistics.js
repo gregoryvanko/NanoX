@@ -117,12 +117,15 @@ class NanoXStatistics{
         // Add autocomplete box for type aggregation
         const Inputaggregation = NanoXBuild.Input(this._TypeAggregation, "text", "Inputaggregation", "Aggregation", "Inputaggregation", "NanoxAdminInput NanoxAdminInputAggregationType NanoxText", "")
         Inputaggregation.autocomplete = "off"
+        Inputaggregation.setAttribute("inputmode","none")
+        Inputaggregation.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(Inputaggregation)
         let me = this
         autocomplete({
             input: document.getElementById("Inputaggregation"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = me._ListeOfTypeAggragation.filter(n => n.toLowerCase().startsWith(text))
@@ -146,11 +149,14 @@ class NanoXStatistics{
         // Add autocomplete box for user
         const InputUserValue = NanoXBuild.Input(this._InputUserValue, "text", "InputUserValue", "User name", "InputUserValue", "NanoxAdminInput NanoxAdminInputUserValue NanoxText", "")
         InputUserValue.autocomplete = "off"
+        InputUserValue.setAttribute("inputmode","none")
+        InputUserValue.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(InputUserValue)
         autocomplete({
             input: document.getElementById("InputUserValue"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = me._ListeOfUser.filter(n => n.label.toLowerCase().startsWith(text))
@@ -264,12 +270,15 @@ class NanoXStatistics{
         // Add autocomplete box for type aggregation
         const Inputaggregation = NanoXBuild.Input(this._TypeAggregation, "text", "Inputaggregation", "Aggregation", "Inputaggregation", "NanoxAdminInput NanoxAdminInputAggregationType NanoxText", "")
         Inputaggregation.autocomplete = "off"
+        Inputaggregation.setAttribute("inputmode","none")
+        Inputaggregation.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(Inputaggregation)
         let me = this
         autocomplete({
             input: document.getElementById("Inputaggregation"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = me._ListeOfTypeAggragation.filter(n => n.toLowerCase().startsWith(text))
@@ -292,11 +301,14 @@ class NanoXStatistics{
         // Add autocomplete box for Pages
         const InputPageValue = NanoXBuild.Input(this._InputPageValue, "text", "InputPageValue", "Page", "InputPageValue", "NanoxAdminInput NanoxAdminInputUserValue NanoxText", "")
         InputPageValue.autocomplete = "off"
+        InputPageValue.setAttribute("inputmode","none")
+        InputPageValue.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(InputPageValue)
         autocomplete({
             input: document.getElementById("InputPageValue"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = (me._ListOfPage != null)? me._ListOfPage.filter(n => n.label.toLowerCase().startsWith(text)) : []
@@ -413,12 +425,15 @@ class NanoXStatistics{
         // Add autocomplete box for type aggregation
         const Inputaggregation = NanoXBuild.Input(this._TypeAggregation, "text", "Inputaggregation", "Aggregation", "Inputaggregation", "NanoxAdminInput NanoxAdminInputAggregationType NanoxText", "")
         Inputaggregation.autocomplete = "off"
+        Inputaggregation.setAttribute("inputmode","none")
+        Inputaggregation.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(Inputaggregation)
         let me = this
         autocomplete({
             input: document.getElementById("Inputaggregation"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = me._ListeOfTypeAggragation.filter(n => n.toLowerCase().startsWith(text))
@@ -441,11 +456,14 @@ class NanoXStatistics{
         // Add autocomplete box for Api
         const InputApiValue = NanoXBuild.Input(this._InputApiValue, "text", "InputApiValue", "Api", "InputApiValue", "NanoxAdminInput NanoxAdminInputUserValue NanoxText", "")
         InputApiValue.autocomplete = "off"
+        InputApiValue.setAttribute("inputmode","none")
+        InputApiValue.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(InputApiValue)
         autocomplete({
             input: document.getElementById("InputApiValue"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = (me._ListOfApi != null)? me._ListOfApi.filter(n => n.label.toLowerCase().startsWith(text)) : []
@@ -464,11 +482,14 @@ class NanoXStatistics{
         // Add autocomplete box for user
         const InputUserValue = NanoXBuild.Input(this._InputUserValue, "text", "InputUserValue", "User name", "InputUserValue", "NanoxAdminInput NanoxAdminInputUserValue NanoxText", "")
         InputUserValue.autocomplete = "off"
+        InputUserValue.setAttribute("inputmode","none")
+        InputUserValue.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(InputUserValue)
         autocomplete({
             input: document.getElementById("InputUserValue"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = me._ListeOfUser.filter(n => n.label.toLowerCase().startsWith(text))

@@ -72,6 +72,7 @@ class NanoXLog {
     BuildLogView(Data){
         if (Data.ListOfUser != null){
             this._ListeOfUser = [{label: this._ConstAllUserText, id: this._ConstAllUser }]
+            this._ListeOfUser.push({label: "Server", id: "ServerId" })
             Data.ListOfUser.forEach(element => {
                 this._ListeOfUser.push({label: element.LastName + " " + element.FirstName, id: element._id})
             });
@@ -85,12 +86,15 @@ class NanoXLog {
         // Add autocomplete box for type of log
         const InputTypeOfLog = NanoXBuild.Input(this._TypeLog, "text", "InputTypeOfLog", "Type", "InputTypeOfLog", "NanoxAdminInput NanoxAdminInputLogType NanoxText", "")
         InputTypeOfLog.autocomplete = "off"
+        InputTypeOfLog.setAttribute("inputmode","none")
+        InputTypeOfLog.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(InputTypeOfLog)
         let me = this
         autocomplete({
             input: document.getElementById("InputTypeOfLog"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = me._ListeOfStatType.filter(n => n.toLowerCase().startsWith(text))
@@ -135,15 +139,21 @@ class NanoXLog {
               InputStartDate.blur()
             }
         });
+        InputStartDate.addEventListener("changeDate", function(event) {
+            InputStartDate.blur()
+        });
 
         // Add autocomplete box for user
         const InputUserValue = NanoXBuild.Input(this._InputUserValue, "text", "InputUserValue", "User name", "InputUserValue", "NanoxAdminInput NanoxAdminInputUserValue NanoxText", "")
         InputUserValue.autocomplete = "off"
+        InputUserValue.setAttribute("inputmode","none")
+        InputUserValue.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(InputUserValue)
         autocomplete({
             input: document.getElementById("InputUserValue"),
             minLength: 0,
             emptyMsg: 'No suggestion',
+            showOnFocus: true,
             fetch: function(text, update) {
                 text = text.toLowerCase();
                 let GroupFiltred = (me._ListeOfUser == null)? [{label: me._ConstAllUserText, id: me._ConstAllUser }] : me._ListeOfUser.filter(n => n.label.toLowerCase().startsWith(text))
@@ -159,10 +169,11 @@ class NanoXLog {
             }
         })
 
-        // Add Start Date
+        // Add Search text
         let InputText = (this._SearchText == this._NoSearchText)? "" : this._SearchText
         const InputSearchText = NanoXBuild.Input(InputText, "text", "InputSearchText", "Search text", "InputSearchText", "NanoxAdminInput NanoxAdminInputUserValue NanoxText", "")
         InputSearchText.autocomplete = "off"
+        InputSearchText.setAttribute ("onfocus" , "this.value = ''; ")
         divinputbox.appendChild(InputSearchText)
         InputSearchText.addEventListener('focusout', (event) => {
             this._SearchText = InputSearchText.value
@@ -182,7 +193,7 @@ class NanoXLog {
         this._DivApp.appendChild(divlog)
 
         // Add Data to divlog
-        if (Data.LogData == null){
+        if ((Data.LogData == null) || (Data.LogData.length == 0) ){
             divlog.appendChild(NanoXBuild.DivText("End of log", "", "NanoxText", "color: red"))
         } else {
             Data.LogData.forEach(element => {
@@ -193,7 +204,7 @@ class NanoXLog {
                 divlog.appendChild(divlogbox)
                 divlogbox.appendChild(NanoXBuild.DivText(this.FormatDatetoStringDayHour(element.Date), "", "NanoxAdminLogMedium"))
                 divlogbox.appendChild(NanoXBuild.DivText(element.Type, "", "NanoxAdminLogSmall"))
-                divlogbox.appendChild(NanoXBuild.DivText(element.UserId, "", "NanoxAdminLogMedium"))
+                divlogbox.appendChild(NanoXBuild.DivText(this.FindNameOfUserID(element.UserId), "", "NanoxAdminLogMedium"))
                 divlogbox.appendChild(NanoXBuild.DivText(element.Valeur, "", "NanoxAdminLoglarge"))
             });
         }
@@ -221,6 +232,11 @@ class NanoXLog {
         let td = new Date(TheDate).toISOString().split('T')[0];
         var t = new Date(TheDate).toTimeString().split(' ')[0];
         return td + ' ' + t
+    }
+
+    FindNameOfUserID(UserId){
+        let result = this._ListeOfUser.find(n => n.id == UserId)
+        return result.label
     }
     
 }
