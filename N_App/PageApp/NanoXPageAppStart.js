@@ -52,9 +52,9 @@ function NanoXClearMenuButtonSettings(){
     MyNanoXCore.MenuBar.ClearMenuButtonSettings()
 }
 
-function NanoXAddModule(Titre= null, Svg= null, Start= null, StartWithThisModule= false){
+function NanoXAddModule(Titre= null, Svg= null, Start= null, StartWithThisModule= false, AdminModule= false){
     if (MyNanoXCore.ModuleApp != null){
-        MyNanoXCore.ModuleApp.AddModule(Titre, Svg, Start, StartWithThisModule)
+        MyNanoXCore.ModuleApp.AddModule(Titre, Svg, Start, StartWithThisModule, AdminModule)
     }
 }
 

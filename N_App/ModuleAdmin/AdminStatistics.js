@@ -405,6 +405,7 @@ class NanoXStatistics{
     BuildViewStatApi(Data){
         if (Data.ListOfUser != null){
             this._ListeOfUser = [{label: this._ConstAllUserText, id: this._ConstAllUser }]
+            this._ListeOfUser.push({label: "Server", id: "ServerId" })
             Data.ListOfUser.forEach(element => {
                 this._ListeOfUser.push({label: element.LastName + " " + element.FirstName, id: element._id})
             });
@@ -566,4 +567,4 @@ class NanoXStatistics{
 }
 
 let MyNanoXStatistics = new NanoXStatistics()
-NanoXAddModule("Statistics", IconAdmin.IconModuleStat(), MyNanoXStatistics.Start.bind(MyNanoXStatistics), false)
+NanoXAddModule("Statistics", IconAdmin.IconModuleStat(), MyNanoXStatistics.Start.bind(MyNanoXStatistics), false, true)

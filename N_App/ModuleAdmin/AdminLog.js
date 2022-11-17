@@ -20,6 +20,21 @@ class NanoXLog {
         this._StartData = new Date()
         this._SearchText = this._NoSearchText
         this._PageLog = 0
+        let me = this
+        this._Observer = new IntersectionObserver((entries)=>{
+            entries.forEach(function (obersable){
+                if (obersable.intersectionRatio > 0.5){
+                    me._PageLog ++
+                    // Call Api get log
+                    NanoXApiGet(`/nanoxlog/${me._TypeLog}/${me._StartData}/${me._UserID}/${me._SearchText}/${me._PageLog}`).then((reponse)=>{
+                        me.AddLoginlisteview(reponse)
+                    },(erreur)=>{
+                        me._DivApp.innerHTML=erreur
+                    })
+                    me._Observer.unobserve(obersable.target)
+                }
+            })
+        }, {threshold: [1]})
     }
 
     Start(){
@@ -44,18 +59,20 @@ class NanoXLog {
         return DivCenter
     }
 
-    GetLogData(TypeLog = this._TypeLog, StartDate = this._StartData, UserID = this._UserID, SearchText = this._SearchText, PageLog = this._PageLog){
+    GetLogData(){
         // Clear view
         this._DivApp.innerHTML = ""
         // Add texte get data
         this._DivApp.appendChild(this.BuildTextGetData())
 
         // Si le texte a chercher est vide, il faut remplacer cette valeur par un string pour que le get fonctionne
-        if (SearchText == ""){
-            SearchText = this._NoSearchText
+        if (this._SearchText == ""){
+            this._SearchText = this._NoSearchText
         }
+        // Clear page of log
+        this._PageLog = 0
         // Call Api with Type=day and User=all
-        NanoXApiGet(`/nanoxlog/${TypeLog}/${StartDate}/${UserID}/${SearchText}/${PageLog}`).then((reponse)=>{
+        NanoXApiGet(`/nanoxlog/${this._TypeLog}/${this._StartData}/${this._UserID}/${this._SearchText}/${this._PageLog}`).then((reponse)=>{
             this.BuildLogView(reponse)
         },(erreur)=>{
             this._DivApp.innerHTML=erreur
@@ -192,23 +209,41 @@ class NanoXLog {
         let divlog = NanoXBuild.DivFlexColumn("DivLog", "", "width: 90%;")
         this._DivApp.appendChild(divlog)
 
+        // Add Div empty space
+        let divempty = NanoXBuild.Div("", "", "height: 2rem;")
+        this._DivApp.appendChild(divempty)
+
         // Add Data to divlog
+        this.AddLoginlisteview(Data)
+    }
+
+    AddLoginlisteview(Data){
+        let Divlog = document.getElementById("DivLog")
+        let CurrentpointData = 0
+        const MiddlepointData = Math.ceil(Data.LogData.length / 2)-1
+
         if ((Data.LogData == null) || (Data.LogData.length == 0) ){
-            divlog.appendChild(NanoXBuild.DivText("End of log", "", "NanoxText", "color: red"))
+            Divlog.appendChild(NanoXBuild.DivText("End of log", "", "NanoxText", "color: red"))
         } else {
             Data.LogData.forEach(element => {
                 let color = ""
                 if (element.Type == "Stat"){color = "color: blue"}
                 if (element.Type == "Error"){color = "color: red"}
                 let divlogbox = NanoXBuild.DivFlexRowStart("", "", "width: 100%; margin-bottom: 1rem; " + color)
-                divlog.appendChild(divlogbox)
+                Divlog.appendChild(divlogbox)
                 divlogbox.appendChild(NanoXBuild.DivText(this.FormatDatetoStringDayHour(element.Date), "", "NanoxAdminLogMedium"))
                 divlogbox.appendChild(NanoXBuild.DivText(element.Type, "", "NanoxAdminLogSmall"))
                 divlogbox.appendChild(NanoXBuild.DivText(this.FindNameOfUserID(element.UserId), "", "NanoxAdminLogMedium"))
                 divlogbox.appendChild(NanoXBuild.DivText(element.Valeur, "", "NanoxAdminLoglarge"))
+
+                // si l'element est l'element milieu
+                if (CurrentpointData == MiddlepointData){
+                    // ajouter le listener pour declancher le GetPosts
+                    this._Observer.observe(divlogbox)
+                }
+                CurrentpointData ++
             });
         }
-        // ToDo add next page of log
     }
 
     FormatDateToString(InputDate) {
@@ -243,4 +278,4 @@ class NanoXLog {
 }
 
 let MyNanoXLog = new NanoXLog()
-NanoXAddModule("Log", IconAdmin.IconModuleLog(), MyNanoXLog.Start.bind(MyNanoXLog), false)
+NanoXAddModule("Log", IconAdmin.IconModuleLog(), MyNanoXLog.Start.bind(MyNanoXLog), false, true)

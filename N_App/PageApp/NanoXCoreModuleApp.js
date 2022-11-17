@@ -21,11 +21,31 @@ class NanoXModuleApp{
                     this._MenuBar.ClearMenuButtonLeft()
                     this._MenuBar.ClearMenuButtonRight()
                     this._MenuBar.ClearMenuButtonSettings()
-                    // Add module card
-                    let content = NanoXBuild.DivFlexRowSpaceEvenly(null, null, "width: 90%; margin-top: 4rem; margin-bottom: 4rem;")
+                    // Add div content for module
+                    let content = NanoXBuild.DivFlexRowSpaceEvenly(null, null, "width: 96%; margin-top: 2rem; margin-bottom: 2rem; justify-content: center;")
                     this._DivApp.appendChild(content)
+
+                    let contentadmin = null
+                    const Adminmodule = this._ListOfModules.filter(n => n.AdminModule == true)
+                    if (Adminmodule.length != 0){
+                        // Add Admin module texte
+                        this._DivApp.appendChild(NanoXBuild.DivText("Admin modules", "", "", "font-size: 2rem; margin-bottom: 1rem;"))
+
+                        // Add div content for admin module
+                        contentadmin = NanoXBuild.DivFlexRowSpaceEvenly(null, null, "width: 96%; margin-bottom: 2rem; justify-content: center;")
+                        this._DivApp.appendChild(contentadmin)
+                    }
+                    
+                    // Ajouter les modules
                     this._ListOfModules.forEach(element => {
-                        content.appendChild(this.BuildAppCard(element.Titre, element.Svg, element.Start))
+                        if (element.AdminModule){
+                            if (contentadmin){
+                                contentadmin.appendChild(this.BuildAppCard(element.Titre, element.Svg, element.Start))
+                            }
+                        } else {
+                            content.appendChild(this.BuildAppCard(element.Titre, element.Svg, element.Start))
+                        }
+                        
                     })
                 }
             }
@@ -50,12 +70,12 @@ class NanoXModuleApp{
         Start()
     }
 
-    AddModule(Titre= null, Svg= null, Start= null, StartWithThisModule= false){
+    AddModule(Titre= null, Svg= null, Start= null, StartWithThisModule= false, AdminModule= false){
         if (Titre == null){Titre = "No title"}
         if (Svg == null){Svg = this.GetNoSvg()}
         if (Start == null) {Start = ()=>{alert("Start fonction not define")}}
 
-        this._ListOfModules.push({Titre: Titre, Svg: Svg, Start: Start})
+        this._ListOfModules.push({Titre: Titre, Svg: Svg, Start: Start, AdminModule: AdminModule})
         if (StartWithThisModule){
             if (this._StartWithOneModule == null){this._StartWithOneModule = Start}
         }
