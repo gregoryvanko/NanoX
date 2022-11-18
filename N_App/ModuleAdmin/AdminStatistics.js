@@ -31,6 +31,9 @@ class NanoXStatistics{
     Start(){
         this.InitiationClassData()
         this.ClearMenuButton()
+        // Set menubar
+        NanoXShowMenuBar()
+        NanoXShowNameInMenuBar()
         this._DivApp.appendChild(this.BuildViewStart())
         NanoXApiPostLog("User Load admin module Statistics, view Start")
     }

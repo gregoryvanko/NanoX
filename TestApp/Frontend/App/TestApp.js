@@ -13,6 +13,8 @@ class TestApp{
         NanoXAddMenuButtonSettings("Settings1", "Test settings1", null, this.TestButton.bind(this))
         NanoXAddMenuButtonSettings("Settings2", "Test settings2", null, this.TestButton.bind(this))
 
+        NanoXSetMenuBarTranslucide(true)
+
         this._DivApp.appendChild(NanoXBuild.ProgressRing({Id:"test",  Progress:50}))
 
         this._DivApp.appendChild(NanoXBuild.Video("/video/2021-10-Bussang.mp4?token=" + NanoXGetToken()))

@@ -21,6 +21,10 @@ class NanoXModuleApp{
                     this._MenuBar.ClearMenuButtonLeft()
                     this._MenuBar.ClearMenuButtonRight()
                     this._MenuBar.ClearMenuButtonSettings()
+                    // Show menu bar
+                    this._MenuBar.ShowMenuBar(true, true, false)
+                    this._MenuBar.ShowNameInMenuBar(true)
+                    NanoXShowMenuBar()
                     // Add div content for module
                     let content = NanoXBuild.DivFlexRowSpaceEvenly(null, null, "width: 96%; margin-top: 2rem; margin-bottom: 2rem; justify-content: center;")
                     this._DivApp.appendChild(content)
@@ -67,6 +71,10 @@ class NanoXModuleApp{
 
     ClickAppCard(Start){
         this._DivApp.innerHTML = ""
+        // Reset menu bar
+        this._MenuBar.ShowMenuBar()
+        this._MenuBar.ShowNameInMenuBar()
+        // Start module
         Start()
     }
 

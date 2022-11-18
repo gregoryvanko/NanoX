@@ -40,6 +40,10 @@ class NanoXLog {
     Start(){
         this.InitiationClassData()
         this.ClearMenuButton()
+        // Set menubar
+        NanoXShowMenuBar()
+        NanoXShowNameInMenuBar()
+        // Get log
         this.GetLogData()
         NanoXApiPostLog("User Load admin module Log, view Start")
     }

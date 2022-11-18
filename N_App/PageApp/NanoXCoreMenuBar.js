@@ -42,7 +42,7 @@ class NanoXMenuBar {
         }
     }
 
-    ShowNameInMenuBar(Show = true){
+    ShowNameInMenuBar(Show = this._NanoXAppOption.ShowNameInMenuBar){
         if(Show){
             if (! document.getElementById(this._IdBarTitreName)){
                 let ClassName =(this._NanoXAppOption.CssClassForName != null)? this._NanoXAppOption.CssClassForName : "NanoXActionBarTitre"
