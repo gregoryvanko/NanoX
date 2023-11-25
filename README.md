@@ -291,4 +291,4 @@ Lorsque les video sont sécurisée, pour lire une video "testsmall.mov" il faut 
 ```bash
 "/video/testsmall.mov?token=" + NanoXGetToken()
 ```
-Attention, il faut mettre le parametre AllowVideo à true dans les options de Nanox
+Attention, il faut mettre le parametre AllowVideo à true dans les options de Nanox pour lire des vidéo
