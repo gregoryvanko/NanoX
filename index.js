@@ -176,6 +176,7 @@ function GetListOfPageRoute(){
     return ListOfPageRoute
 }
 
+
 module.exports.NanoXStart = NanoXStart
 module.exports.NanoXInitiation = NanoXInitiation
 module.exports.NanoXLogInfo = LogInfo

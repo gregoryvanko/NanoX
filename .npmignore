@@ -1,6 +1,7 @@
 exemple.js
 .vscode
 node_modules
+.npmrc
 TestApp
 TestApi.rest
 N_PageBuilder/Output
