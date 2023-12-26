@@ -13,7 +13,13 @@ class TestApp{
         NanoXAddMenuButtonSettings("Settings1", "Test settings1", null, this.TestButton.bind(this))
         NanoXAddMenuButtonSettings("Settings2", "Test settings2", null, this.TestButton.bind(this))
 
+        
         NanoXSetMenuBarTranslucide(true)
+        NanoXSetMenuBarOnTop(true)
+       
+        NanoXShowNameInMenuBar(true)
+
+        console.log(NanoXDetAppName())
 
         this._DivApp.appendChild(NanoXBuild.ProgressRing({Id:"test",  Progress:50}))
 
@@ -27,7 +33,7 @@ class TestApp{
         // Test TestToggleSwitch
         let TestToggleSwitch = NanoXBuild.ToggleSwitch({Id:"test1", Checked: true, OnChange: this.TestToggleSwitchOnChange.bind(this),HeightRem: 1.5})
         //TestToggleSwitch.onchange = this.TestToggleSwitchOnChange.bind(this)
-        div.appendChild(TestToggleSwitch)
+        this._DivApp.appendChild(TestToggleSwitch)
 
         // Test Axios
         NanoXApiGet("/test", {}, this.OnDownloadTest.bind(this)).then( reponse => {

@@ -4,9 +4,6 @@ class NanoXMenuBar {
 
         this._IdMenuBar = "IdMenuBar"
         this._IdMenuBarEmpty = "IdMenuBarEmpty"
-        this._IdMenuBarTranslucideLeft = "IdMenuBarTranslucideLeft"
-        this._IdMenuBarTranslucideright = "IdMenuBarTranslucideright"
-        this._IdMenuBarTranslucideEmpty = "IdMenuBarTranslucideEmpty"
         this._IdBarButtonLeft = "IdBarButtonLeft"
         this._IdBarActionButtonLeft = "IdBarActionButtonLeft"
         this._IdBarActionButtonRight = "IdBarActionButtonRight"
@@ -22,15 +19,8 @@ class NanoXMenuBar {
         if(Show){
             // remove all element of menu bar
             this.RemoveMenuBar()
-            this.RemoveBuildMenuBarTranslucide()
-            // la bar de menu est elle translucide?
-            if(Istranslucide){
-                // afficher un bar de menu translucide
-                this.BuildMenuBarTranslucide()
-            } else {
-                // afficher un bar de menu non translucide
-                this.BuildMenuBar(OnTop)
-            }
+            // BuildMenu Bar
+            this.BuildMenuBar(OnTop, Istranslucide)
             // Show name
             this.ShowNameInMenuBar(this._NanoXAppOption.ShowNameInMenuBar)
             // Build Button
@@ -38,7 +28,6 @@ class NanoXMenuBar {
         } else {
             // remove all element of menu bar
             this.RemoveMenuBar()
-            this.RemoveBuildMenuBarTranslucide()
         }
     }
 
@@ -60,11 +49,10 @@ class NanoXMenuBar {
     SetMenuBarOnTop(OnTop = true){
         if (OnTop){
             this._NanoXAppOption.MenuBarOnTop = true
-            this.ShowMenuBar(true, this._NanoXAppOption.MenuBarOnTop, this._NanoXAppOption.MenuBarIsTranslucide)
         } else {
             this._NanoXAppOption.MenuBarOnTop = false
-            this.ShowMenuBar(true, this._NanoXAppOption.MenuBarOnTop, this._NanoXAppOption.MenuBarIsTranslucide)
         }
+        this.ShowMenuBar(true, this._NanoXAppOption.MenuBarOnTop, this._NanoXAppOption.MenuBarIsTranslucide)
     }
 
     SetMenuBarTranslucide(Translucide = true){
@@ -131,54 +119,37 @@ class NanoXMenuBar {
         this._ListOfActionButtonBar = newlist
     }
 
-
-    BuildMenuBarTranslucide(){
-        if (!document.getElementById(this._IdMenuBarTranslucideright)){
-            let divMenuBarRight= NanoXBuild.Div(this._IdMenuBarTranslucideright, "NanoXMenuBarTranslucideRight")
-            divMenuBarRight.style.height = this._NanoXAppOption.HeightMenuBar
-            // Add to body
-            document.body.insertBefore(divMenuBarRight, document.body.firstChild)
-            // Add Bar Button Left
-            divMenuBarRight.appendChild(this.BuildBarButtonRight())
-        }
-
-        if (!document.getElementById(this._IdMenuBarTranslucideLeft)){
-            let divMenuBarLeft= NanoXBuild.Div(this._IdMenuBarTranslucideLeft, "NanoXMenuBarTranslucideLeft")
-            divMenuBarLeft.style.height = this._NanoXAppOption.HeightMenuBar
-            // Add to body
-            document.body.insertBefore(divMenuBarLeft, document.body.firstChild)
-            // Add Bar Button Left
-            divMenuBarLeft.appendChild(this.BuildBarButtonLeft())
-        }
-
-        if (!document.getElementById(this._IdMenuBarTranslucideEmpty)){
-            let divSafeIos = NanoXBuild.Div(this._IdMenuBarTranslucideEmpty, "NanoXHeightSafeTop", "width: 100%; background-color: black;")
-            // Add to body
-            document.body.insertBefore(divSafeIos, document.body.firstChild)
-        }
-    }
-
-    RemoveBuildMenuBarTranslucide(){
-        if (document.getElementById(this._IdMenuBarTranslucideLeft)){document.body.removeChild(document.getElementById(this._IdMenuBarTranslucideLeft))}
-        if (document.getElementById(this._IdMenuBarTranslucideright)){document.body.removeChild(document.getElementById(this._IdMenuBarTranslucideright))}
-        if (document.getElementById(this._IdMenuBarTranslucideEmpty)){document.body.removeChild(document.getElementById(this._IdMenuBarTranslucideEmpty))}
-    }
-
-    BuildMenuBar(OnTop){
+    BuildMenuBar(OnTop, Istranslucide){
         if (!document.getElementById(this._IdMenuBar)){
             let divMenuBar= NanoXBuild.Div(this._IdMenuBar, null, "width: 100%;")
-            if(OnTop){divMenuBar.classList.add("NanoXMenuBarOnTop")}
+            if (Istranslucide){
+                if(OnTop){
+                    divMenuBar.classList.add("NanoXMenuBarOnTop")
+                } else {
+                    divMenuBar.classList.add("NanoXMenuBarOnTopAbolute")
+                }
+            } else {
+                if(OnTop){divMenuBar.classList.add("NanoXMenuBarOnTop")}
+            }
+            
             let divSafeIos = NanoXBuild.Div(null, "NanoXHeightSafeTop", "width: 100%; background-color: black;")
             divMenuBar.appendChild(divSafeIos)
             let divMenu = NanoXBuild.DivFlexRowSpaceBetween(this._IdMenuBar, "NanoXMenuBar")
-            divMenu.style.backgroundColor = this._NanoXAppOption.ColorMenuBar
             divMenu.style.height = this._NanoXAppOption.HeightMenuBar
-            divMenu.style.borderBottomWidth = "1px"
             divMenuBar.appendChild(divMenu)
+            if (Istranslucide){
+                divMenu.style.backgroundColor = "transparent"
+                divMenu.style.borderBottomWidth = "0px"
+            } else {
+                divMenu.style.backgroundColor = this._NanoXAppOption.ColorMenuBar
+                divMenu.style.borderBottomWidth = "1px"
+            }
             // Add to body
             document.body.insertBefore(divMenuBar, document.body.firstChild)
-            // add fake div bellow Menu Bar
-            if(OnTop){this.BuildMenuBarEmpty()}
+            if (!Istranslucide){
+                // add fake div bellow Menu Bar
+                if(OnTop){this.BuildMenuBarEmpty()}
+            }
             // Add Bar Button Left
             divMenu.appendChild(this.BuildBarButtonLeft())
             // Add Bar Button Right
@@ -188,7 +159,7 @@ class NanoXMenuBar {
 
     RemoveMenuBar(){
         if (document.getElementById(this._IdMenuBar)){document.body.removeChild(document.getElementById(this._IdMenuBar))}
-        this.RemoveMenuBarEmpty()
+        if (document.getElementById(this._IdMenuBarEmpty)){document.body.removeChild(document.getElementById(this._IdMenuBarEmpty))}
     }
 
     BuildMenuBarEmpty(){
@@ -202,10 +173,6 @@ class NanoXMenuBar {
             let divMenuBar = document.getElementById(this._IdMenuBar)
             divMenuBar.parentNode.insertBefore(divdim, divMenuBar.nextSibling)
         }
-    }
-
-    RemoveMenuBarEmpty(){
-        if (document.getElementById(this._IdMenuBarEmpty)){document.body.removeChild(document.getElementById(this._IdMenuBarEmpty))}
     }
 
     BuildBarButtonLeft(){
@@ -267,7 +234,6 @@ class NanoXMenuBar {
         }
         return check
     }
-
 
     BuildMenuButton(){
         this._ListOfActionButtonBar.forEach(element => {
@@ -411,7 +377,6 @@ class NanoXMenuBar {
         let button = NanoXBuild.Button(TextImagDiv.outerHTML, Action.bind(this), Id, "NanoXMobileMenuButton")
         return button
     }
-
 
     ClickOnGetMyData(){
         let MyNanoXUserData = new NanoXUserData()

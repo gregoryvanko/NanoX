@@ -57,7 +57,7 @@ function NanoXInitiation({AppName = "MyNanoXApp", AppColor="rgb(20, 163, 255)", 
     }
 
     // Set MongoDb name
-    MyMongoDbName = AppName
+    MyMongoDbName = AppName.replace(/ /g,"_")
     // Set Debug mode
     if (Debug){SetDebugMode()}
     // Set App

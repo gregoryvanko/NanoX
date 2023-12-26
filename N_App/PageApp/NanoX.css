@@ -20,6 +20,12 @@
     border-bottom-style: solid;
     width: 100%;
 }
+.NanoXMenuBarOnTopAbolute{
+    position: absolute;
+    top:0px;
+    z-index: 998;
+}
+
 .NanoXMenuBarOnTop{
     position: fixed;
     top:0px;

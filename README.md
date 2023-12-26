@@ -205,6 +205,9 @@ NanoXAddModule("Titre du module", "svgcontentimage", MyTestApp.Start.bind(MyTest
 NanoXGetDivApp()
 //Cette fonction retourne l’élément HTML Div qui doit être utilisé pour l’application Frontend. Ce Div est un élément Flex Column avec un width de 100%
 
+NanoXDetAppName()
+//Cette fonction retourne le nom de l'application
+
 NanoXGetColorIconMenuBar()
 //Cette fonction retourne la couleur des icônes de la bar de menu
 

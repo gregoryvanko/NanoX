@@ -2,6 +2,7 @@ let mongoose = require("mongoose")
 
 function Connect(MongoDB = "MyNanoXApp", MongoUrl = "mongodb://localhost:27017"){
     return new Promise(async (resolve) => {
+        mongoose.set("strictQuery", false)
         mongoose.connection
         .once("open", function() {
             console.log("MongoDB connected successfully")
