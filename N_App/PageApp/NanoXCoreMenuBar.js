@@ -33,13 +33,14 @@ class NanoXMenuBar {
 
     ShowNameInMenuBar(Show = this._NanoXAppOption.ShowNameInMenuBar){
         if(Show){
+            this._NanoXAppOption.ShowNameInMenuBar = true
             if (! document.getElementById(this._IdBarTitreName)){
                 let ClassName =(this._NanoXAppOption.CssClassForName != null)? this._NanoXAppOption.CssClassForName : "NanoXActionBarTitre"
-
                 let divName = NanoXBuild.DivText(this._NanoXAppOption.AppName, this._IdBarTitreName, "NanoXAppColor " +  ClassName, null)
                 document.getElementById(this._IdBarButtonLeft).insertBefore(divName, document.getElementById(this._IdBarButtonLeft).firstChild)
             }
         } else {
+            this._NanoXAppOption.ShowNameInMenuBar = false
             if (document.getElementById(this._IdBarTitreName)){
                 document.getElementById(this._IdBarButtonLeft).removeChild(document.getElementById(this._IdBarTitreName))
             }

@@ -13,11 +13,11 @@ class TestApp{
         NanoXAddMenuButtonSettings("Settings1", "Test settings1", null, this.TestButton.bind(this))
         NanoXAddMenuButtonSettings("Settings2", "Test settings2", null, this.TestButton.bind(this))
 
-        
+        NanoXShowNameInMenuBar(false)
         NanoXSetMenuBarTranslucide(true)
         NanoXSetMenuBarOnTop(true)
        
-        NanoXShowNameInMenuBar(true)
+        
 
         console.log(NanoXDetAppName())
 
