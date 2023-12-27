@@ -8,7 +8,7 @@ function NanoXGetDivApp(){
     return MyNanoXCore.DivApp
 }
 
-function NanoXDetAppName(){
+function NanoXGetAppName(){
     return "${NanoXAppOption.AppName}"
 }
 

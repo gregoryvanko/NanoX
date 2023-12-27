@@ -19,7 +19,7 @@ class TestApp{
        
         
 
-        console.log(NanoXDetAppName())
+        console.log(NanoXGetAppName())
 
         this._DivApp.appendChild(NanoXBuild.ProgressRing({Id:"test",  Progress:50}))
 
